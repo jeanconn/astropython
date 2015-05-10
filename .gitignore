@@ -40,4 +40,12 @@ $RECYCLE.BIN/
 .AppleDesktop
 Network Trash Folder
 Temporary Items
+Lib/*
+Include/*
+Scripts/*
 .apdisk
+*.h
+*.pyc
+pip-selfcheck.json
+*.sqlite3
+*.sqlite3
