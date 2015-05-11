@@ -1,46 +1,83 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 {% block head_title %}
 Welcome to
 {% endblock %}
 
 {% block content %}
-<div id="headerwrap">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2">
-				<h3>Welcome to Astropython !</h3>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/><br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/><br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-		</div><!-- /row -->
-	</div> <!-- /container -->
-</div><!-- /headerwrap -->
-dfk;lkl;dsf
-;dfklsd;k;sdf;label
+	<!-- *****************************************************************************************************************
+	 HEADERWRAP
+	 ***************************************************************************************************************** -->
+	<div id="headerwrap" style='background-image: url("{%static "img/wallpaper1.jpg"%}");background-size: 100%;'>
+	    <div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h1><img src='{% static "img/logo.png" %}' height="60px" width="60px">   AstroPython</h1>
+				</div>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+		<br>
+		<br>
+		<br>
+		<div class="container_search">
+			<div class="row">
+				<div class="col-md-6 col-lg-offset-3">
+					<div id="custom-search-input">
+						<div class="input-group col-md-12">
+							<input type="text" class="form-control input-lg" placeholder="What are we looking for today?" />
+							<span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div style="margin-top:200px">
+		  <a class="ghost-button-border-color" href="#">Tutorials</a>
+		  <a class="ghost-button-border-color" href="#">Forum</a>
+		  <a class="ghost-button-border-color" href="#">Blog</a>
+		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
+		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
+		</div>
+	</div><!-- /headerwrap -->
+	 
+	 
+	<!-- *****************************************************************************************************************
+	 MIDDLE CONTENT
+	 ***************************************************************************************************************** -->
+
+	 <div class="container mtb">
+	 	<div class="row">
+	 		<div class="col-lg-4 col-lg-offset-1">
+		 		<h4>Contribute.</h4>
+		 		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+ 				<p><br/><a href="#" class="btn btn-theme">More Info</a></p>
+	 		</div>
+	 		
+	 		<div class="col-lg-3">
+	 			<h4>Most Popular</h4>
+	 			<div class="hline"></div>
+	 			<p><a href="#">Post 1</a></p>
+	 			<p><a href="#">Post 2</a></p>
+	 			<p><a href="#">Post 3</a></p>
+	 			<p><a href="#">Post 4</a></p>
+	 			<p><a href="#">Post 5</a></p>
+	 		</div>
+	 		
+	 		<div class="col-lg-3">
+	 			<h4>Latest Posts</h4>
+	 			<div class="hline"></div>
+	 			<p><a href="#">Post 1</a></p>
+	 			<p><a href="#">Post 2</a></p>
+	 			<p><a href="#">Post 3</a></p>
+	 			<p><a href="#">Post 4</a></p>
+	 			<p><a href="#">Post 5</a></p>
+	 		</div>
+	 		
+	 	</div><! --/row -->
+	 </div><! --/container -->
+
 {% endblock %}
