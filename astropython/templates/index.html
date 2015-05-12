@@ -3,7 +3,9 @@
 {% block head_title %}
 Welcome to
 {% endblock %}
-
+{% block styles %}
+<link rel='stylesheet' href='{% static "css/home.css" %}' >
+{% endblock %}
 {% block content %}
 	<!-- *****************************************************************************************************************
 	 HEADERWRAP
@@ -19,12 +21,13 @@ Welcome to
 		<br>
 		<br>
 		<br>
+		{% if user.is_authenticated %}
 		<div class="container_search">
 			<div class="row">
 				<div class="col-md-6 col-lg-offset-3">
 					<div id="custom-search-input">
 						<div class="input-group col-md-12">
-							<input type="text" class="form-control input-lg" placeholder="What are we looking for today?" />
+							<input type="text" class="form-control input-lg" placeholder="What are we looking for today,{{request.user.username}} ?" />
 							<span class="input-group-btn">
 								<button class="btn btn-info btn-lg" type="button">
 									<i class="glyphicon glyphicon-search"></i>
@@ -42,6 +45,53 @@ Welcome to
 		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
 		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
 		</div>
+		{% else %}
+		<div class="container_search">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div id="custom-search-input" >
+						<div class="input-group" style="margin:10px;">
+							<input type="text" class="form-control input-lg" placeholder="Username" />
+							<span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-user"></i>
+								</button>
+							</span>
+						</div>
+						<br/>
+						<div class="input-group" style="margin:10px;">
+							<input type="password" class="form-control input-lg" placeholder="Password" />
+							<span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-lock"></i>
+								</button>
+							</span>
+						</div class="input-group" style="margin:10px;">
+						<div class="btn-block">
+								<button class="btn btn-success" type="submit" style="background:white;margin:10px;padding-left:75px;padding-right:75px;padding-top:15px;padding-bottom:15px;color:grey">Login</button>
+						</div>
+						<hr/>
+						<div style="margin-top:20px">
+						  <a class="ghost-button-border-color" href="#">Facebook</a>
+						  <a class="ghost-button-border-color" href="#">Github</a>
+						  <a class="ghost-button-border-color" href="#">Google+</a>
+						  <a class="ghost-button-border-color" href="#">Yahoo</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="margin-top:50px">
+		  <a class="ghost-button-border-color" href="#">Tutorials</a>
+		  <a class="ghost-button-border-color" href="#">Forum</a>
+		  <a class="ghost-button-border-color" href="#">Blog</a>
+		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
+		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
+		</div>
+		
+		{% endif %}
+		
+	</div>
 	</div><!-- /headerwrap -->
 	 
 	 
