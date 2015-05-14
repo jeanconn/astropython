@@ -46,10 +46,9 @@ Welcome to
 		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
 		</div>
 		{% else %}
-		<div class="container_search">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<div id="custom-search-input" >
+				<div class="col-md-5" id="custom-search-input" >
 						<div class="input-group" style="margin:10px;">
 							<input type="text" class="form-control input-lg" placeholder="Username" />
 							<span class="input-group-btn">
@@ -66,27 +65,39 @@ Welcome to
 									<i class="glyphicon glyphicon-lock"></i>
 								</button>
 							</span>
-						</div class="input-group" style="margin:10px;">
+						</div>
+						<div class="input-group" style="margin:10px;">
 						<div class="btn-block">
 								<button class="btn btn-success" type="submit" style="background:white;margin:10px;padding-left:75px;padding-right:75px;padding-top:15px;padding-bottom:15px;color:grey">Login</button>
-						</div>
+						</div></div>
 						<hr/>
+						
 						<div style="margin-top:20px">
 						  <a class="ghost-button-border-color" href="#">Facebook</a>
 						  <a class="ghost-button-border-color" href="#">Github</a>
 						  <a class="ghost-button-border-color" href="#">Google+</a>
 						  <a class="ghost-button-border-color" href="#">Yahoo</a>
 						</div>
-					</div>
 				</div>
-			</div>
-		</div>
-		<div style="margin-top:50px">
+		
+		<div class="col-md-6 col-md-offset-1" style="margin-top:50px;">
+			<div id="custom-search-input" style="margin-bottom:50px;">
+						<div class="input-group col-md-12">
+							<input type="text" class="form-control input-lg" placeholder="What are we looking for today,{{request.user.username}} ?" />
+							<span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
+				</div>
 		  <a class="ghost-button-border-color" href="#">Tutorials</a>
 		  <a class="ghost-button-border-color" href="#">Forum</a>
 		  <a class="ghost-button-border-color" href="#">Blog</a>
 		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
 		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
+		</div>
+		</div>
 		</div>
 		
 		{% endif %}
@@ -102,8 +113,8 @@ Welcome to
 	 <div class="container mtb">
 	 	<div class="row">
 	 		<div class="col-lg-4 col-lg-offset-1">
-		 		<h4>Contribute.</h4>
-		 		<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+		 		<h4>About</h4>
+		 		<p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic. A traditional "blog" view of the most recently posted topics is visible from the site Home page.</p>
  				<p><br/><a href="#" class="btn btn-theme">More Info</a></p>
 	 		</div>
 	 		
@@ -129,5 +140,43 @@ Welcome to
 	 		
 	 	</div><! --/row -->
 	 </div><! --/container -->
+	 
+<!-- *****************************************************************************************************************
+	 CONTRIBUTE
+	 ***************************************************************************************************************** -->
+	 <div id="twrap" style='background: url("{%static "img/community.jpg"%}");no-repeat center top;'>
+	 	<div class="container centered">
+	 		<div class="row">
+	 			<div class="col-lg-8 col-lg-offset-2">
+				<h2>Contribute</h2>
+	 			<h4>Contributions from the community are strongly encouraged. If you are interested please contact the AstroPython team via the Contribute page. We can either post material on your behalf or give you an astropython.org user account to allow your own postings.</h4>
+	 			<h4><br/>Astropy Community</h4>
+	 			</div>
+	 		</div><! --/row -->
+	 	</div><! --/container -->
+	 </div><! --/twrap -->
+	 
+	 	<!-- *****************************************************************************************************************
+	 COMMUNITY PARTNERS
+	 ***************************************************************************************************************** -->
+	 <div id="cwrap">
+		 <div class="container">
+		 	<div class="row centered">
+			 	<h3>COMMUNITY PARTNERS</h3>
+			 	<div class="col-lg-3 col-md-3 col-sm-3">
+			 		<img src='{%static "img/partners/01.png"%}' class="img-responsive">
+			 	</div>
+			 	<div class="col-lg-3 col-md-3 col-sm-3">
+			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
+			 	</div>
+			 	<div class="col-lg-3 col-md-3 col-sm-3">
+			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
+			 	</div>
+			 	<div class="col-lg-3 col-md-3 col-sm-3">
+			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
+			 	</div>
+		 	</div><! --/row -->
+		 </div><! --/container -->
+	 </div><! --/cwrap -->
 
 {% endblock %}

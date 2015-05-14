@@ -6,14 +6,15 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'home.views.home', name='home'),
-    url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^accounts/', include('organizations.urls')),
     url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'home.views.home', name='home'),
+    url(r'^roll/', 'home.views.roll', name='roll'),
+    url(r'^single/', 'home.views.single', name='single'),
 )
 
-
-urlpatterns += staticfiles_urlpatterns()
 if settings.DEBUG:
 	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
