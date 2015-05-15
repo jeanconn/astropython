@@ -304,7 +304,7 @@ a:focus {
 ################################################################# */
 /* General Tweaks */
 
-#blue {
+#titlewrap {
 	background: #ffe100;
 	margin-top: 60px;
 	margin-bottom: 60px;
@@ -312,7 +312,7 @@ a:focus {
 	padding-bottom: 25px;
 }
 
-#blue h3 {
+#titlewrap h3 {
 	color: white;
 	margin-left: 15px;
 }
