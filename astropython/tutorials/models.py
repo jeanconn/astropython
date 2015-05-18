@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
+from djangoratings.fields import RatingField
 from django_markdown.models import MarkdownField
 from tinymce import models as tinymce_models
 
@@ -18,6 +19,7 @@ class Base(models.Model):
     slug = models.SlugField(unique=True)
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
     tags=TaggableManager()
+    rating=RatingField(range=5)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # when last published
