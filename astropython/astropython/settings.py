@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 from config import *
+from spirit.settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -15,6 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY='cc*u4n__@&=^3x=hoyu-ndg(l^1^_4o72)bs4jt#5a#ewqhq7d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -24,10 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS += (
     'grappelli',
     'organizations',
     'django_markdown',
@@ -46,8 +47,7 @@ INSTALLED_APPS = (
     'tutorials',
     'social.apps.django_app.default',
 )
-
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES += (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'astropython.urls'
 
 WSGI_APPLICATION = 'astropython.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+TEMPLATE_CONTEXT_PROCESSORS += (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -128,4 +128,5 @@ STATE_CHOICES = (
 	('raw', 'raw'),
 	('submitted', 'submitted'),
 	('published', 'published'),
-	)
+    ('closed','closed'),
+ )
