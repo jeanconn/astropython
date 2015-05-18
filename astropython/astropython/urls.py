@@ -7,7 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^accounts/', include('organizations.urls')),
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url('^markdown/', include( 'django_markdown.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'home.views.home', name='home'),

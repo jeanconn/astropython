@@ -29,15 +29,21 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'grappelli',
+    'organizations',
+    'django_markdown',
+    'tinymce',
+    'taggit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django_extensions',
-    'organizations',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'blog',
+    #'packages',
+    'tutorials',
     'social.apps.django_app.default',
 )
 
@@ -116,3 +122,10 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
+
+
+STATE_CHOICES = (
+	('raw', 'raw'),
+	('submitted', 'submitted'),
+	('published', 'published'),
+	)
