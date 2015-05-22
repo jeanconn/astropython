@@ -14,6 +14,7 @@ from astropython.settings import AUTH_USER_MODEL
 
 class Base(models.Model):
     title = models.CharField(max_length=200)
+    #optional logo
     desciption = models.TextField(null=True,blank=True)
     authors = models.ManyToManyField(AUTH_USER_MODEL,blank=True,null=True)
     slug = models.SlugField(unique=True)
@@ -43,6 +44,7 @@ class WYSIWYGTutorial(Base):
 
 class CodeTutorial(Base):
     body = models.TextField(blank=False)
+    notes = MarkdownField()
 
     def __unicode__(self):
 		return self.title

@@ -35,6 +35,7 @@ INSTALLED_APPS += (
     'tinymce',
     'taggit',
     'djangoratings',
+    'django_ace',
     'django.contrib.admin',
     'django.contrib.auth',
     'django_extensions',
