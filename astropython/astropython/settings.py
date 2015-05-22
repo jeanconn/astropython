@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'grappelli',
     'organizations',
-    'django_markdown',
+    'epiced',
     'tinymce',
     'taggit',
     'djangoratings',

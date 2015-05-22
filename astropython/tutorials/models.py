@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 from djangoratings.fields import RatingField
-from django_markdown.models import MarkdownField
+from epiced.models import EpicEditorField
 from tinymce import models as tinymce_models
 
 from astropython.settings import STATE_CHOICES
@@ -31,7 +31,7 @@ class Base(models.Model):
 
 
 class MarkdownTutorial(Base):
-    body = MarkdownField()
+    body = EpicEditorField()
 
     def __unicode__(self):
 		return self.title
@@ -44,7 +44,7 @@ class WYSIWYGTutorial(Base):
 
 class CodeTutorial(Base):
     body = models.TextField(blank=False)
-    notes = MarkdownField()
+    notes = EpicEditorField()
 
     def __unicode__(self):
 		return self.title

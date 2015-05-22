@@ -1,14 +1,18 @@
 from django.contrib import admin
 from django.db import models
+from django import forms
 
 from django_ace import AceWidget
 
 from .models import MarkdownTutorial,CodeTutorial,WYSIWYGTutorial,TutorialSeries
 
+class CodeModelForm(forms.ModelForm):
+    body = forms.CharField(widget=AceWidget(mode='css', theme='twilight'))
+    class Meta:
+        model=CodeTutorial
+
 class CodeAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': AceWidget},
-    }
+    form=CodeModelForm
 
 admin.site.register(CodeTutorial,CodeAdmin)
 admin.site.register(MarkdownTutorial)
