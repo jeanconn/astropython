@@ -8,7 +8,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 from config import *
-from spirit.settings import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -28,7 +27,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS += (
+INSTALLED_APPS = (
     'grappelli',
     'organizations',
     'django_markdown',
@@ -40,29 +39,31 @@ INSTALLED_APPS += (
     'django.contrib.auth',
     'django_extensions',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'category',
     'home',
     'blog',
-    #'packages',
+    'packages',
     'tutorials',
     'social.apps.django_app.default',
 )
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+    )
 
 ROOT_URLCONF = 'astropython.urls'
 
 WSGI_APPLICATION = 'astropython.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS += (
+TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -106,7 +107,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+SITE_ID =1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -124,7 +125,6 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
-
 
 STATE_CHOICES = (
 	('raw', 'raw'),

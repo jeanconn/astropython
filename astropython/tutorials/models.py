@@ -10,13 +10,13 @@ from django_markdown.models import MarkdownField
 from tinymce import models as tinymce_models
 
 from astropython.settings import STATE_CHOICES
-from astropython.settings import AUTH_USER_MODEL
 
 class Base(models.Model):
+    categories = models.ManyToManyField('category.Category')
     title = models.CharField(max_length=200)
     #optional logo
     desciption = models.TextField(null=True,blank=True)
-    authors = models.ManyToManyField(AUTH_USER_MODEL,blank=True,null=True)
+    authors = models.ManyToManyField(User,blank=True,null=True)
     slug = models.SlugField(unique=True)
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
     tags=TaggableManager()
