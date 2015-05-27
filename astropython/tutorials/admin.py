@@ -10,6 +10,7 @@ class CodeModelForm(forms.ModelForm):
     body = forms.CharField(widget=AceWidget(mode='css', theme='twilight'))
     class Meta:
         model=CodeTutorial
+        fields="__all__"
 
 class CodeAdmin(admin.ModelAdmin):
     form=CodeModelForm

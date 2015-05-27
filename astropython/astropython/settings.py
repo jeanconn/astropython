@@ -29,7 +29,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'grappelli',
-    'organizations',
     'epiced',
     'tinymce',
     'taggit',
@@ -43,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'moderation',
     'category',
     'home',
     'blog',

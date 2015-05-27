@@ -3,10 +3,13 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
+
+from moderation.helpers import auto_discover
+auto_discover()
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^accounts/', include('organizations.urls')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
