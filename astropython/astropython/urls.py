@@ -5,9 +5,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 
 from moderation.helpers import auto_discover
-auto_discover()
 
 admin.autodiscover()
+auto_discover()
 
 urlpatterns = patterns('',
     url(r'^grappelli/', include('grappelli.urls')),
