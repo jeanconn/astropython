@@ -14,8 +14,8 @@ from category.models import Category
 from django.contrib.auth.models import User
 
 def initialize():
-    c=Category.objects.get_or_create(title="Uncategorized")
-    return c
+    pass
+    #Use this to create groups and other general stuff in the future
 
 
 def populate_tutorials():
@@ -62,7 +62,7 @@ def populate_tutorials():
                 t.authors.add(u[0])
                 t.categories.add(c[0])
                 t.save()
-                print("Entered element!")
+                print("Entered element!")#TODO:add tags
     except IOError:
         print("IOError encountered!")
 
