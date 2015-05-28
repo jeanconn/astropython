@@ -40,7 +40,7 @@ class MarkdownPost(Base):
 class WYSIWYGPost(Base):
     body = tinymce_models.HTMLField()
 
-class Events(models.Model):
+class Event(models.Model):
     name = models.CharField(max_length=200)
     creator = models.ForeignKey(User,blank=True,null=True)
     body = tinymce_models.HTMLField()

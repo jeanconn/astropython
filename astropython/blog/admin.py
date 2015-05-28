@@ -1,7 +1,7 @@
 from django.contrib import admin
 from moderation.admin import ModerationAdmin
 
-from .models import WYSIWYGPost,MarkdownPost,Events
+from .models import WYSIWYGPost,MarkdownPost,Event
 
 class WYSIWYGPostAdmin(ModerationAdmin):
     pass
@@ -9,9 +9,9 @@ class WYSIWYGPostAdmin(ModerationAdmin):
 class MarkdownPostAdmin(ModerationAdmin):
     pass
 
-class EventsAdmin(ModerationAdmin):
+class EventAdmin(ModerationAdmin):
     pass
 
 admin.site.register(WYSIWYGPost,WYSIWYGPostAdmin)
 admin.site.register(MarkdownPost,MarkdownPostAdmin)
-admin.site.register(Events,EventsAdmin)
+admin.site.register(Event,EventAdmin)
