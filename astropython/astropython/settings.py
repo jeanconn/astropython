@@ -80,6 +80,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.login_redirect',
 )
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    )
+
+
 #Add social auth options here
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
