@@ -1,5 +1,6 @@
 import os
 import json
+import datetime
 from slugify import slugify
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'astropython.settings')
 
@@ -23,35 +24,36 @@ def populate_tutorials():
     author=""
     title=""
     desc=""
-    tags=""
     date=""
+    s=""
     path_localdata=os.path.join(base,'Tutorials')
     try:
         no=len(os.walk(path_localdata).next()[2])
         for i in range(1,no+1):
             with open(path_localdata+"//"+str(i)+".json") as data_file:
                 data=json.load(data_file)
-                s=""
+                t=WYSIWYGTutorial()
+                t.save()
                 for name in data:
-                    print name
                     if (name=='tags'):
-                        s1=""
                         for items in data[name]:
-                            s1=s1+","+str(items)
-                            s=s1[1:]
+                            s1=str(items)
+                            t.tags.add(s1)
                     else:
                         s=data[name]
-                    if(name=='author'):
-                        author=s.encode('ascii','ignore')
-                    elif(name=='title'):
-                        title=s.encode('ascii','ignore')
-                    elif(name=='description'):
-                        desc=s.encode('ascii','ignore')
-                    elif(name=='tags'):
-                        tags=s.encode('ascii','ignore')
-                    elif(name=='date_published'):
-                        date=s.encode('ascii','ignore')
-                t=WYSIWYGTutorial(title=title,body=desc,slug=slugify(title))
+                        if(name=='author'):
+                            author=s
+                        elif(name=='title'):
+                            title=s
+                        elif(name=='description'):
+                            desc=s
+                        elif(name=='date_published'):
+                            date=s
+                #t=WYSIWYGTutorial(title=title,body=desc,slug=slugify(title))
+                t.title=title
+                t.body=desc
+                t.slug=slugify(title)
+                t.published=datetime.datetime.strptime(date,"%Y-%m-%d")
                 u=User.objects.get_or_create(username=author)
                 c=Category.objects.get_or_create(title='Uncategorized')
                 t.save()
@@ -62,7 +64,7 @@ def populate_tutorials():
                 t.authors.add(u[0])
                 t.categories.add(c[0])
                 t.save()
-                print("Entered element!")#TODO:add tags
+                print("Entered element!")
     except IOError:
         print("IOError encountered!")
 
@@ -70,7 +72,7 @@ def populate_tutorials():
 if __name__ == '__main__':
     _temp_orig_path=os.getcwd()
     _orig_path=os.path.dirname(_temp_orig_path)
-    base=os.path.join(_orig_path,'ported_data')
+    base=os.path.join(_orig_path,'ported_data/html')
     print "Starting Astropython population script..."
     opt=raw_input("Do you want to populate the tutorials? (y/n):")
     initialize()

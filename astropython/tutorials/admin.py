@@ -18,7 +18,8 @@ class MarkdownTutorialAdmin(ModerationAdmin):
     pass
 
 class WYSIWYGTutorialAdmin(ModerationAdmin):
-    pass
+    readonly_fields = ['updated', 'published','created']
+    prepopulated_fields = {"slug": ("title",)}
 
 class TutorialSeriesAdmin(ModerationAdmin):
     pass
