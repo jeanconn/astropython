@@ -1,6 +1,6 @@
 About the project : Astropython
->> The entire project has been broken down into apps - with each app name denoting the components it handles :- 
->> ported data
+>> The entire project has been broken down into apps - with each app name denoting the components it handles
+>> The data ported from the old website is present in the ported directory
 >> The project configuration is available in the astropython directory
 >> The template directory holds templates for the entire project
 >> populate.py is a population script for populating our databases initially
