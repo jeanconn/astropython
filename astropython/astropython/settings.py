@@ -2,11 +2,13 @@
 Django settings for astropython project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
+https://docs.djangoproject.com/en/1.8/ref/settings/
+
 """
+
 from config import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -27,28 +29,31 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+#Do not change the order of installed apps
+
 INSTALLED_APPS = (
-    'grappelli',
-    'epiced',
-    'tinymce',
-    'taggit',
-    'djangoratings',
-    'django_ace',
-    'django.contrib.admin',
+    'grappelli', # Cleaner admin panel
+    'epiced', # Epic Markdown Editor
+    'tinymce', # WYSIWYG Editor
+    'taggit', # Easy tagging functionality
+    'djangoratings', #Ratings acrosss models
+    'django_ace', # Cloud9 ACE Editor Plugin
+    'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'moderation',
-    'category',
-    'home',
-    'blog',
-    'packages',
-    'tutorials',
-    'social.apps.django_app.default',
+    'moderation', # Adding moderations
+    'category', #Custom app for categorization
+    'home', # Central app
+    'blog', #Blogs Section
+    'packages', #Packages section
+    'tutorials',# Tutorial section
+    'social.apps.django_app.default', #Social  Authentication
 )
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,6 +80,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.login_redirect',
 )
 
+#Add social auth options here
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
     'social.backends.github.GithubOAuth2',
@@ -83,6 +89,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+#Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -102,8 +109,7 @@ SITE_ID =1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
+# Static and Media files configuration (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -120,6 +126,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
+#States of a post
 STATE_CHOICES = (
 	('raw', 'raw'),
 	('submitted', 'submitted'),

@@ -1,3 +1,8 @@
+"""
+Register models to the admin site from here
+
+All models must inherit fom ModerationAdmin only to enable moderation.
+"""
 from django.contrib import admin
 from moderation.admin import ModerationAdmin
 
@@ -9,5 +14,6 @@ class WYSIWYGInputAdmin(ModerationAdmin):
 class MarkdownInputAdmin(ModerationAdmin):
     pass
 
+#Registering the models
 admin.site.register(WYSIWYGInput,WYSIWYGInputAdmin)
 admin.site.register(MarkdownInput,MarkdownInputAdmin)

@@ -1,20 +1,18 @@
+"""
+Register models to the admin site from here
+
+All models must inherit fom ModerationAdmin only to enable moderation.
+"""
 from django.contrib import admin
 from django.db import models
-from django import forms
 
 from moderation.admin import ModerationAdmin
-from django_ace import AceWidget
 
 from .models import MarkdownTutorial,CodeTutorial,WYSIWYGTutorial,TutorialSeries
-
-class CodeModelForm(forms.ModelForm):
-    body = forms.CharField(widget=AceWidget(mode='css', theme='twilight'))
-    class Meta:
-        model=CodeTutorial
-        fields="__all__"
+from .forms import CodeModelForm
 
 class CodeAdmin(ModerationAdmin):
-    form=CodeModelForm
+    form=CodeModelForm # This adds the ACE Code Editor to our Admin website
 
 class MarkdownTutorialAdmin(ModerationAdmin):
     pass
@@ -25,6 +23,7 @@ class WYSIWYGTutorialAdmin(ModerationAdmin):
 class TutorialSeriesAdmin(ModerationAdmin):
     pass
 
+#Registering the models
 admin.site.register(CodeTutorial,CodeAdmin)
 admin.site.register(MarkdownTutorial,MarkdownTutorialAdmin)
 admin.site.register(WYSIWYGTutorial,WYSIWYGTutorialAdmin)

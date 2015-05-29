@@ -1,3 +1,6 @@
+"""
+API Configuration Keys for our Social Auth.
+"""
 SOCIAL_AUTH_TWITTER_KEY = 'fyPINU7wHPuiCVhX3uTky8eeJ'
 SOCIAL_AUTH_TWITTER_SECRET = 'nnq2D5ok6hIYinypNN0pQlY7uVDx0rAgGJPedwY5YMQhPNj4YB'
 

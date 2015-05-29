@@ -7,18 +7,19 @@ from django.contrib import admin
 from moderation.helpers import auto_discover
 
 admin.autodiscover()
-auto_discover()
+auto_discover()# from moderation app -alway keep below admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
-    url('', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'home.views.home', name='home'),
+    url(r'^grappelli/', include('grappelli.urls')), #for admin urls
+    url(r'^tinymce/', include('tinymce.urls')), #for tinymce urls
+    url('', include('social.apps.django_app.urls', namespace='social')), #for social auth urls
+    url(r'^admin/', include(admin.site.urls)), #additional admin urls
+    url(r'^$', 'home.views.home', name='home'),#home url
     url(r'^roll/', 'home.views.roll', name='roll'),
     url(r'^single/', 'home.views.single', name='single'),
 )
 
+#Access Static Files if in development
 if settings.DEBUG:
 	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
