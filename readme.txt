@@ -20,4 +20,5 @@ Quick set of commands to run the project :-
 3.python manage.py createsuperuser
 4.python manage.py collectstatic
 5.python manage.py runserver
+6.python populate.py (See the old data in WYSIWYGTutorial,WYSIWYGPost(in Blogs) and WYSIWYGInput(in Packages)
 Goto /admin to access admin panel
