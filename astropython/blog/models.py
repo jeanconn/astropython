@@ -26,7 +26,7 @@ class Base(models.Model):
     rating=RatingField(range=5)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # when last revision was created (even if not published)
-    published = models.DateTimeField(null=True, blank=True)  # when last published
+    published = models.DateTimeField(null=True, blank=True,editable=False)  # when last published
 
     def __unicode__(self):
 		return self.title
