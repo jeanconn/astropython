@@ -24,7 +24,7 @@ class Base(models.Model):
     categories = models.ManyToManyField('category.Category') #Categories of tutorial
     title = models.CharField(max_length=200)#Title of the Post
     #optional logo
-    desciption = models.TextField(null=True,blank=True) #Short abstract of the tutorial
+    abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     slug = models.SlugField(unique=True) #Slug to a tutorial
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
@@ -65,4 +65,21 @@ class TutorialSeries(Base): #Add different tutorials to a series
 
     def __unicode__(self):
 		return self.title
+
+class EducationalResource(Base):
+    start_date = models.DateTimeField(null=True, blank=True)#Date the course starts
+    instructor_names = models.CharField(max_length=400)#Names of Instructors
+    website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
+    about= tinymce_models.HTMLField()#About the course
+    contents = tinymce_models.HTMLField() #Syllabus or contents of the course
+    background = models.TextField()#Recommended Backgroud
+    body = tinymce_models.HTMLField()#Additional Notes
+    faq=tinymce_models.HTMLField()#FAQ if any
+    language = models.CharField(max_length=200,blank=True)#Language in which course is to be conducted
+
+    def __unicode__(self):
+		return self.title
+
+
+
 

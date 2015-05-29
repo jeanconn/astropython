@@ -8,7 +8,7 @@ from django.db import models
 
 from moderation.admin import ModerationAdmin
 
-from .models import MarkdownTutorial,CodeTutorial,WYSIWYGTutorial,TutorialSeries
+from .models import MarkdownTutorial,CodeTutorial,WYSIWYGTutorial,TutorialSeries,EducationalResource
 from .forms import CodeModelForm
 
 class CodeAdmin(ModerationAdmin):
@@ -23,8 +23,12 @@ class WYSIWYGTutorialAdmin(ModerationAdmin):
 class TutorialSeriesAdmin(ModerationAdmin):
     pass
 
+class EducationalResourceAdmin(ModerationAdmin):
+    pass
+
 #Registering the models
 admin.site.register(CodeTutorial,CodeAdmin)
 admin.site.register(MarkdownTutorial,MarkdownTutorialAdmin)
 admin.site.register(WYSIWYGTutorial,WYSIWYGTutorialAdmin)
 admin.site.register(TutorialSeries,TutorialSeriesAdmin)
+admin.site.register(EducationalResource,EducationalResourceAdmin)
