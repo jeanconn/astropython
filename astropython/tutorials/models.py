@@ -51,7 +51,7 @@ class WYSIWYGTutorial(Base):
     def __unicode__(self):
 		return self.title
 
-class CodeMarkdownTutorial(Base):
+class CodeTutorial(Base):
     body = models.TextField(blank=False) # Coding Field
     notes = EpicEditorField() #Additional Notes in Mardown
 
