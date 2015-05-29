@@ -71,7 +71,7 @@ def populate(path_localdata,obj):
                 u[0].save()#If the user is not present ,create it
             if(c[1]==True):
                 c[0].save()#If category is not present ,add it
-            if(typeObj==type(WYSIWYGTutorial)):
+            if(typeObj==type(WYSIWYGTutorial())):
                 t.authors.add(u[0])
             else:
                 t.authors=u[0]
