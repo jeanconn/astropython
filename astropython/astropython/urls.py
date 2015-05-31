@@ -15,9 +15,9 @@ urlpatterns = patterns('',
     url('', include('social.apps.django_app.urls', namespace='social')), #for social auth urls
     url(r'^admin/', include(admin.site.urls)), #additional admin urls
     url(r'^$', 'home.views.home', name='home'),#home url
-    url(r'^roll/', 'home.views.roll', name='roll'),
-    url(r'^single/', 'home.views.single', name='single'),
-    #url(r'^tutorials/', include('tutorials.urls')),
+    url(r'^roll/', 'home.views.roll', name='roll'),#Sample Templates
+    url(r'^single/', 'home.views.single', name='single'),#Sample Templates
+    url(r'^tl/', include('tutorials.urls')),#Teach and Learn
     #url(r'^blogs/', include('blog.urls')),
     #url(r'^packages/', include('packages.urls')),
 )
