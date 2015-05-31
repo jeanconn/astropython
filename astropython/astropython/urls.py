@@ -17,6 +17,9 @@ urlpatterns = patterns('',
     url(r'^$', 'home.views.home', name='home'),#home url
     url(r'^roll/', 'home.views.roll', name='roll'),
     url(r'^single/', 'home.views.single', name='single'),
+    url(r'^tutorials/', include('tutorials.urls')),
+    url(r'^blogs/', include('blogs.urls')),
+    url(r'^packages/', include('packages.urls')),
 )
 
 #Access Static Files if in development
