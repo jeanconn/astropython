@@ -9,11 +9,11 @@ def home(request):
 
 
 def single(request):
-	template = 'single.html'
+	template = 'tutorials/single.html'
 	context = locals()
 	return render(request, template, context)
 
 def roll(request):
-	template = 'roll.html'
+	template = 'tutorials/roll.html'
 	context = locals()
 	return render(request, template, context)
