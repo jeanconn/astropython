@@ -7,5 +7,5 @@ urlpatterns = [
     #url(r'^/tutorials/', ),
     #url(r'^/resources/'),
     #url(r'^/snippets/'),
-    url(r'^$','home.views.roll', name='tlroll')
+    url(r'^create/','home.views.roll', name='tlroll')
 ]

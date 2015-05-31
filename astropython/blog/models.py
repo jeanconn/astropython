@@ -9,10 +9,8 @@ from django.utils import timezone
 from taggit.managers import TaggableManager
 
 from djangoratings.fields import RatingField
-from tinymce import models as tinymce_models
-from epiced.models import EpicEditorField
 
-from astropython.settings import STATE_CHOICES
+from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 TYPE_CHOICES = (
     ('ANNOUNCEMENTS', "Announcements"), ('NEWS', "News"),('GENERAL_BLOG', "Blog")
@@ -23,10 +21,12 @@ Base Model is an abstract model i.e. It doesn't physically exist in our DB
 but merely acts as a common wireframe to create child models. It contains common
 properties that we want the child models to have.
 """
-class Base(models.Model):
+class Post(models.Model):
     categories = models.ManyToManyField('category.Category') #Category
     title = models.CharField(max_length=200)#Title of Post
     desciption = models.TextField(null=True,blank=True) #Short abstract
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
+    body =models.TextField(blank=False)
     authors = models.ForeignKey(User,blank=True,null=True) #Author of Blog Post
     slug = models.SlugField(unique=True) #Native Slug
     post_type = models.CharField(max_length=60,choices=TYPE_CHOICES,default='Blog') #Type of Post
@@ -40,22 +40,13 @@ class Base(models.Model):
     def __unicode__(self):
 		return self.title
 
-    class Meta:
-        abstract=True
-
-class MarkdownPost(Base):
-    body = EpicEditorField() #Markdown Post
-
-class WYSIWYGPost(Base):
-    body = tinymce_models.HTMLField() #WYSIWYG Post
-
 """
 Events model are associated with any future events that are planned
 """
 class Event(models.Model):
     name = models.CharField(max_length=200)
     creator = models.ForeignKey(User,blank=True,null=True)
-    body = tinymce_models.HTMLField()
+    body =models.TextField(blank=False)
     slug = models.SlugField(unique=True)
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
     tags=TaggableManager()
