@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'taggit', # Easy tagging functionality
     'djangoratings', #Ratings acrosss models
     'django_ace', # Cloud9 ACE Editor Plugin
+    'formtools',#Django native form-tools
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.formtools',
     'moderation', # Adding moderations
     'category', #Custom app for categorization
     'home', # Central app
