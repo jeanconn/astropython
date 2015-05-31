@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.formtools',
     'moderation', # Adding moderations
     'category', #Custom app for categorization
     'home', # Central app
