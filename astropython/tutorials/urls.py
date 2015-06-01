@@ -1,11 +1,9 @@
-from django.conf.urls import url
+from django.conf.urls import patterns,url
 
-from . import views
+from .views import create_tutorial,body_tutorial
 
-urlpatterns = [
-    #url(r'^/home/', views.index, name='index'),
-    #url(r'^/tutorials/', ),
-    #url(r'^/resources/'),
-    #url(r'^/snippets/'),
-    url(r'^create/','home.views.roll', name='tlroll')
-]
+urlpatterns = patterns('',
+    url(r'^tutorials/create/$',create_tutorial),
+    url(r'^tutorials/create/intermediate/(?P<slug>[\w-]+)/$',body_tutorial,name="body_tutorial"),
+    url(r'^tutorials/create/finish/(?P<slug>[\w-]+)/$',finish_tutorial,name="finish_tutorial"),
+    )
