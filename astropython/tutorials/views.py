@@ -29,6 +29,7 @@ def body_tutorial(request,slug):
         FormType=WYSIWYGBodyForm
     else:
         FormType=MarkdownBodyForm
+    form= FormType(request.POST)
     if request.method == 'POST':
         if form.is_valid():
             obj.body = form.cleaned_data['body']
@@ -39,7 +40,9 @@ def body_tutorial(request,slug):
 
 def finish_tutorial(request,slug):
     obj=Tutorial.unmoderated_objects.get(slug=slug)
-    if request.method == 'POST':
-        if form.is_valid():
-
+    if request.method=='POST':
+        form = TailForm(request.POST,instance=obj)
+        instance=form.save(commit=False)
+        form.save_m2m()
+        return HttpResponseRedirect(reverse('create_tutorial'))
     return render(request,'tutorials/create.html',{'form':TailForm})

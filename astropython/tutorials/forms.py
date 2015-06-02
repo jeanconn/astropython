@@ -20,9 +20,9 @@ class WYSIWYGBodyForm(forms.Form):
 class MarkdownBodyForm(forms.Form):
     body= forms.CharField(widget=EpicEditorWidget())
 
-class TailForm(forms.Form):
+class TailForm(forms.ModelForm):
     class Meta:
-        models=Tutorial
+        model =Tutorial
         fields=['categories','tags']
 
 class CodeModelForm(forms.ModelForm):
