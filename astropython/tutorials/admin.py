@@ -9,10 +9,10 @@ from django.db import models
 from moderation.admin import ModerationAdmin
 
 from .models import Tutorial,TutorialSeries,EducationalResource,CodeSnippet
-from .forms import CodeModelForm
 
 class CodeAdmin(ModerationAdmin):
-    form=CodeModelForm # This adds the ACE Code Editor to our Admin website
+    #form=CodeModelForm # This adds the ACE Code Editor to our Admin website
+    pass
 
 class TutorialAdmin(ModerationAdmin):
     readonly_fields = ['updated', 'published','created']

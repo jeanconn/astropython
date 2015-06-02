@@ -37,7 +37,7 @@ class Tutorial(models.Model):
 		return self.title
 
 class CodeSnippet(Tutorial):
-    notes = models.TextField(blank=True)#Additional Notes in Markdown
+    snippet = models.TextField(blank=False)#Additional Notes in Markdown
 
     def __unicode__(self):
 		return self.title

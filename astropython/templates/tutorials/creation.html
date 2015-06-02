@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head_title %}
-Creation Wizard: 
+{{name}} Creation: 
 {% endblock %}
 {% block styles %}
 {{form.media}}
@@ -15,7 +15,7 @@ TITLE WRAP
 <div id="titlewrap">
 <div class="container">
 	<div class="row">
-		<h3>Create a tutorial!</h3>
+		<h3>Create a {{name}}!</h3>
 	</div><!-- /row -->
 </div> <!-- /container -->
 </div><!-- /titlewrap -->
