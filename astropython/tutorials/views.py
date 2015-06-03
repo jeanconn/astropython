@@ -8,6 +8,18 @@ from django.core.urlresolvers import reverse
 from .forms import HeaderForm,TailForm,WYSIWYGCodeBody,WYSIWYGTutorialBody,MarkdownCodeBody,MarkdownTutorialBody,WYSIWYGResourceBody,MarkdownResourceBody
 from .models import Tutorial,CodeSnippet,EducationalResource,TutorialSeries,SeriesTutorial
 
+def get_model(name):
+    if name=='resources':
+        return EducationalResource
+    elif name=='snippets':
+        return CodeSnippet
+    elif name=='tutorials':
+        return Tutorial
+    elif name=='series':
+        return TutorialSeries
+    else:
+        return SeriesTutorial
+
 """
 Tutorial Creation Wizard comprises of 3 steps :
     The first step (or start_step) create the basic models and provides initial information to create the models , namely the title,abstract and preferred input mode
@@ -15,8 +27,9 @@ Tutorial Creation Wizard comprises of 3 steps :
     The final step (or finish_step) adds the tags and categories to the model and will in the future include sharing on social network abilities
 """
 name=""
-def start_step(request,model,**kwargs):
+def start_step(request,section,**kwargs):
     global name
+    model=get_model(section)
     if(model==Tutorial):
         name="Tutorial"
     elif(model==CodeSnippet):
@@ -25,7 +38,8 @@ def start_step(request,model,**kwargs):
         name="Educational Resource"
     elif(model==SeriesTutorial):
         name="Tutorial for Series"
-        obj=TutorialSeries.objects.get(slug=kwargs['slug'])
+        print kwargs['slug']
+        obj=TutorialSeries.objects.get(slug=slugify(kwargs['slug']))
     elif(model==TutorialSeries):
         name="Tutorial Series"
     if request.method == 'POST':
@@ -37,22 +51,21 @@ def start_step(request,model,**kwargs):
             model_instance.input_type=form.cleaned_data['input_type']
             model_instance.slug=slugify(form.cleaned_data['title'])#Add a check to see if slug is always unique
             if(model==SeriesTutorial):
-                print TutorialSeries.objects.get(slug=kwargs['slug'])
                 model_instance.tut_series=obj
             model_instance.save()
             model_instance.authors.add(request.user) #Add anonymous user config
             model_instance.save()
-            url='creation_intermediate_'+(str(model.__name__)).lower()
             if(model==TutorialSeries):
                 return HttpResponseRedirect(reverse('home'))
             elif(model==SeriesTutorial):
-                return HttpResponseRedirect(reverse(url,kwargs={'slug':model_instance.slug,'slug_series':obj.slug}))
+                return HttpResponseRedirect(reverse('creation_intermediate_seriestutorial',kwargs={'slug':model_instance.slug,'slug_series':obj.slug}))
             else:
-                return HttpResponseRedirect(reverse(url,kwargs={'slug':model_instance.slug}))
+                return HttpResponseRedirect(reverse('creation_intermediate',kwargs={'slug':model_instance.slug,'section':section}))
 
     return render(request,'tutorials/creation.html',{'form':HeaderForm,'name':name})
 
-def intermediate_step(request,slug,model,**kwargs):
+def intermediate_step(request,slug,section,**kwargs):
+    model=get_model(section)
     obj=model.unmoderated_objects.get(slug=slug)
     if (model==Tutorial or model==SeriesTutorial):
         if (obj.input_type=="WYSIWYG"):
@@ -82,14 +95,15 @@ def intermediate_step(request,slug,model,**kwargs):
                 obj.background=form.cleaned_data['background']
                 obj.language=form.cleaned_data['language']
             obj.save()
-            url='creation_finish_'+(str(model.__name__)).lower()
+            url='creation_finish'
             if(model==SeriesTutorial):
                 return HttpResponseRedirect(reverse('home'))
-            return HttpResponseRedirect(reverse(url,kwargs={'slug':obj.slug}))
+            return HttpResponseRedirect(reverse(url,kwargs={'slug':obj.slug,'section':section}))
 
     return render(request,'tutorials/creation.html',{'form':FormType,'name':name})
 
-def finish_step(request,slug,model):
+def finish_step(request,slug,section):
+    model=get_model(section)
     obj=model.unmoderated_objects.get(slug=slug)
     if request.method=='POST':
         form = TailForm(request.POST,instance=obj)
@@ -101,7 +115,8 @@ def finish_step(request,slug,model):
 """
 To view a single model instance
 """
-def single(request,model,slug,**kwargs):
+def single(request,section,slug,**kwargs):
+    model=get_model(section)
     try:
         obj=model.objects.get(slug=slug)
         context = {'obj':obj}
@@ -109,22 +124,17 @@ def single(request,model,slug,**kwargs):
     except:
         raise Http404
 
-def upvote(request,model,slug):
+def vote(request,section,choice,slug):
+    model=get_model(section)
     obj=model.objects.get(slug=slug)
     v=model.objects.from_request(request).get(pk=obj.pk)
     token=request.secretballot_token
-    print v.user_vote
-    if v.user_vote==1:
+    if(choice=='upvote'):
+        t=1
+    else:
+        t=-1
+    if v.user_vote==t:
         obj.remove_vote(token)
     else:
-        obj.add_vote(token,+1)
-    return HttpResponseRedirect(reverse('single_tutorial',kwargs={'slug':slug}))
-
-def downvote(request,model,slug):
-    obj=model.objects.get(slug=slug)
-    v=model.objects.from_request(request).get(pk=obj.pk)
-    token=request.secretballot_token
-    obj.add_vote(token,-1)
-    #if(obj.total_downvotes==initial_votes):
-        #obj.remove_vote(token)
-    return HttpResponseRedirect(reverse('single_tutorial',kwargs={'slug':slug}))
+        obj.add_vote(token,t)
+    return HttpResponseRedirect(reverse('single',kwargs={'slug':slug,'section':section}))
