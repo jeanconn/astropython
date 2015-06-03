@@ -9,8 +9,6 @@ from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
-from djangoratings.fields import RatingField
-
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
@@ -29,7 +27,6 @@ class Package(models.Model):
     slug = models.SlugField(unique=True) #Slug to navigate the webpage
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of post
     tags=TaggableManager() #tags
-    rating=RatingField(range=5) #Ratings
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # when last published

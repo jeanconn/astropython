@@ -9,8 +9,6 @@ from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
-from djangoratings.fields import RatingField
-
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
@@ -29,7 +27,6 @@ class Tutorial(models.Model):
     slug = models.SlugField(unique=True) #Slug to a tutorial
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
     tags=TaggableManager() #Tags
-    rating=RatingField(range=5) #Ratings
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
@@ -67,7 +64,6 @@ class TutorialSeries(models.Model): #Add different tutorials to a series
     slug = models.SlugField(unique=True) #Slug to a tutorial series
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial series
     tags=TaggableManager() #Tags
-    rating=RatingField(range=5) #Ratings
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published

@@ -8,8 +8,6 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
 
-from djangoratings.fields import RatingField
-
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 TYPE_CHOICES = (
@@ -32,7 +30,6 @@ class Post(models.Model):
     post_type = models.CharField(max_length=60,choices=TYPE_CHOICES,default='Blog') #Type of Post
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')#State of post
     tags=TaggableManager()#Tags
-    rating=RatingField(range=5)#Ratings
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # when last published
@@ -50,7 +47,6 @@ class Event(models.Model):
     slug = models.SlugField(unique=True)
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
     tags=TaggableManager()
-    rating=RatingField(range=5)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # when first revision was created
     published = models.DateTimeField(null=True, blank=True,editable=False)  # when last published
     start_date_time = models.DateTimeField()#start time

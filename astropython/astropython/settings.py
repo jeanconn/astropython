@@ -36,9 +36,8 @@ INSTALLED_APPS = (
     'epiced', # Epic Markdown Editor
     'tinymce', # WYSIWYG Editor
     'taggit', # Easy tagging functionality
-    'djangoratings', #Ratings acrosss models
+    'secretballot',
     'django_ace', # Cloud9 ACE Editor Plugin
-    'formtools',#Django native form-tools
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'SecretBallotIpUseragentMiddleware',
     )
 
 ROOT_URLCONF = 'astropython.urls'
