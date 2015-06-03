@@ -6,14 +6,10 @@ All models must inherit fom ModerationAdmin only to enable moderation.
 from django.contrib import admin
 from moderation.admin import ModerationAdmin
 
-from .models import WYSIWYGInput,MarkdownInput
+from .models import Package
 
-class WYSIWYGInputAdmin(ModerationAdmin):
-    pass
-
-class MarkdownInputAdmin(ModerationAdmin):
+class PackageAdmin(ModerationAdmin):
     pass
 
 #Registering the models
-admin.site.register(WYSIWYGInput,WYSIWYGInputAdmin)
-admin.site.register(MarkdownInput,MarkdownInputAdmin)
+admin.site.register(Package,PackageAdmin)

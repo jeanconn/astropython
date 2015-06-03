@@ -10,10 +10,8 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 from djangoratings.fields import RatingField
-from epiced.models import EpicEditorField
-from tinymce import models as tinymce_models
 
-from astropython.settings import STATE_CHOICES
+from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
 Base Model is an abstract model i.e. It doesn't physically exist in our DB
@@ -21,9 +19,11 @@ but merely acts as a common wireframe to create child models. It contains common
 properties that we want the child models to have.
 """
 
-class Base(models.Model):
+class Package(models.Model):
     categories = models.ManyToManyField('category.Category')#Category of packages
     title = models.CharField(max_length=200)#Title of packages
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
+    body =models.TextField(blank=False)
     authors = models.ForeignKey(User,blank=True,null=True)#Author
     url=models.URLField(blank=True)#URL : homepage of the packages
     slug = models.SlugField(unique=True) #Slug to navigate the webpage
@@ -36,14 +36,5 @@ class Base(models.Model):
 
     def __unicode__(self):
 		return self.title
-
-    class Meta:
-        abstract=True
-
-class MarkdownInput(Base):
-    body = EpicEditorField() #Markdown Input
-
-class WYSIWYGInput(Base):
-    body = tinymce_models.HTMLField() #TinyMCE input
 
 

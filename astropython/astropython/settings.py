@@ -140,3 +140,8 @@ STATE_CHOICES = (
 	('published', 'published'),
     ('closed','closed'),
  )
+
+INPUT_CHOICES = (
+	('WYSIWYG', 'WYSIWYG'),
+	('Markdown', 'Markdown'),
+ )

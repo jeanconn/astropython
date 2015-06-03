@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}
+{{name}} Creation: 
+{% endblock %}
+{% block styles %}
+{{form.media}}
+{% endblock %}
+
+{% block content %}
+{% include 'tutorials/navbar.html' %}
+<!-- *****************************************************************************************************************
+TITLE WRAP
+***************************************************************************************************************** -->
+<div id="titlewrap">
+<div class="container">
+	<div class="row">
+		<h3>Create a {{name}}!</h3>
+	</div><!-- /row -->
+</div> <!-- /container -->
+</div><!-- /titlewrap -->
+<!-- *****************************************************************************************************************
+BLOG CONTENT
+***************************************************************************************************************** -->
+
+<div class="container mtb">
+<div class="row">
+	<div class="col-lg-8">
+	<form method="POST">{% csrf_token %} 
+	{{form.as_p}}
+	<input type="submit" value="OK">>
+	</form>
+	</div><! --/col-lg-8 -->
+</div>
+</div>
+{% endblock %}
