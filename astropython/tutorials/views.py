@@ -8,6 +8,12 @@ from django.core.urlresolvers import reverse
 from .forms import HeaderForm,TailForm,WYSIWYGCodeBody,WYSIWYGTutorialBody,MarkdownCodeBody,MarkdownTutorialBody,WYSIWYGResourceBody,MarkdownResourceBody
 from .models import Tutorial,CodeSnippet,EducationalResource,TutorialSeries,SeriesTutorial
 
+"""
+Tutorial Creation Wizard comprises of 3 steps :
+    The first step (or start_step) create the basic models and provides initial information to create the models , namely the title,abstract and preferred input mode
+    The second step (or intermediate_step) fills up the rest of the information - body,extra info, etc
+    The final step (or finish_step) adds the tags and categories to the model and will in the future include sharing on social network abilities
+"""
 name=""
 def start_step(request,model,**kwargs):
     global name
@@ -29,7 +35,7 @@ def start_step(request,model,**kwargs):
             model_instance.title=form.cleaned_data['title']
             model_instance.abstract=form.cleaned_data['abstract']
             model_instance.input_type=form.cleaned_data['input_type']
-            model_instance.slug=slugify(form.cleaned_data['title'])#Add acheck to see if slug is always unique
+            model_instance.slug=slugify(form.cleaned_data['title'])#Add a check to see if slug is always unique
             if(model==SeriesTutorial):
                 print TutorialSeries.objects.get(slug=kwargs['slug'])
                 model_instance.tut_series=obj
@@ -91,3 +97,8 @@ def finish_step(request,slug,model):
         form.save_m2m()
         return HttpResponseRedirect(reverse('home'))
     return render(request,'tutorials/creation.html',{'form':TailForm,'name':name})
+
+"""
+To view a single model instance
+"""
+
