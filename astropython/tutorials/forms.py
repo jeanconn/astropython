@@ -9,7 +9,6 @@ from astropython.settings import INPUT_CHOICES
 from django_ace import AceWidget # To add ACE code editor
 from tinymce.widgets import TinyMCE
 from epiced.widgets import EpicEditorWidget
-from datetimewidget.widgets import DateTimeWidget
 
 class HeaderForm(forms.Form):
     title = forms.CharField(max_length=200)#Title of the Post

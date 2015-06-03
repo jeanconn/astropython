@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponseRedirect,Http404
 import random
 from slugify import slugify
 import datetime
-
+import secretballot
 from django.core.urlresolvers import reverse
 from .forms import HeaderForm,TailForm,WYSIWYGCodeBody,WYSIWYGTutorialBody,MarkdownCodeBody,MarkdownTutorialBody,WYSIWYGResourceBody,MarkdownResourceBody
 from .models import Tutorial,CodeSnippet,EducationalResource,TutorialSeries,SeriesTutorial
@@ -108,3 +108,23 @@ def single(request,model,slug,**kwargs):
         return render(request,'tutorials/single.html',context)
     except:
         raise Http404
+
+def upvote(request,model,slug):
+    obj=model.objects.get(slug=slug)
+    v=model.objects.from_request(request).get(pk=obj.pk)
+    token=request.secretballot_token
+    print v.user_vote
+    if v.user_vote==1:
+        obj.remove_vote(token)
+    else:
+        obj.add_vote(token,+1)
+    return HttpResponseRedirect(reverse('single_tutorial',kwargs={'slug':slug}))
+
+def downvote(request,model,slug):
+    obj=model.objects.get(slug=slug)
+    v=model.objects.from_request(request).get(pk=obj.pk)
+    token=request.secretballot_token
+    obj.add_vote(token,-1)
+    #if(obj.total_downvotes==initial_votes):
+        #obj.remove_vote(token)
+    return HttpResponseRedirect(reverse('single_tutorial',kwargs={'slug':slug}))

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head_title %}
-{{obj.title}}
+{{obj.title}} Tutorial :
 {% endblock %}
 {% block styles %}
 {% endblock %}
@@ -28,7 +28,7 @@ BLOG CONTENT
 	<! -- SINGLE Tutorial -->
 	<div class="col-lg-8">
 		{% autoescape off %}{{obj.body|safe}}{% endautoescape %}
-		<p><csmall>Posted: April 25, 2014.</csmall> | <csmall2>By: Admin - 3 Comments</csmall2></p>
+		<p><csmall>Posted: {{obj.created}}</csmall> | <csmall2>By: {{obj.authors.all}}</csmall2></p>
 		<div class="spacing"></div>
 		<h6>SHARE:</h6>
 		<p class="share">
@@ -37,7 +37,8 @@ BLOG CONTENT
 			<a href="#"><i class="fa fa-tumblr"></i></a>
 			<a href="#"><i class="fa fa-google-plus"></i></a>		 		
 		</p>
-		
+		<a href="./upvote">Upvote  <span class="badge">{{obj.total_upvotes}}</span></a>
+		<a href="./downvote">Downvote  <span class="badge">{{obj.total_downvotes}}</span></a>
 	</div><! --/col-lg-8 -->
 	{% include 'tutorials/sidebar.html' %}
 </div>

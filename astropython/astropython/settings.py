@@ -61,7 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'SecretBallotIpUseragentMiddleware',
+    'secretballot.middleware.SecretBallotIpUseragentMiddleware',
     )
 
 ROOT_URLCONF = 'astropython.urls'

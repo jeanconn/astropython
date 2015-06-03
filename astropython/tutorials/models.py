@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 
 from taggit.managers import TaggableManager
 
+import secretballot
+
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
@@ -83,3 +85,8 @@ class EducationalResource(Tutorial):
 
     def __unicode__(self):
 		return self.title
+
+secretballot.enable_voting_on(Tutorial)
+secretballot.enable_voting_on(TutorialSeries)
+secretballot.enable_voting_on(EducationalResource)
+secretballot.enable_voting_on(CodeSnippet)
