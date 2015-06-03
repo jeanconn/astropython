@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponseRedirect
+from django.shortcuts import render,HttpResponseRedirect,Http404
 
 import random
 from slugify import slugify
@@ -101,4 +101,10 @@ def finish_step(request,slug,model):
 """
 To view a single model instance
 """
-
+def single(request,model,slug,**kwargs):
+    try:
+        obj=model.objects.get(slug=slug)
+        context = {'obj':obj}
+        return render(request,'tutorials/single.html',context)
+    except:
+        raise Http404
