@@ -28,17 +28,32 @@ BLOG CONTENT
 	<! -- SINGLE Tutorial -->
 	<div class="col-lg-8">
 		{% autoescape off %}{{obj.body|safe}}{% endautoescape %}
-		<p><csmall>Posted: {{obj.created}}</csmall> | <csmall2>By: {{obj.authors.all}}</csmall2></p>
-		<div class="spacing"></div>
-		<h6>SHARE:</h6>
-		<p class="share">
-			<a href="#"><i class="fa fa-twitter"></i></a>
-			<a href="#"><i class="fa fa-facebook"></i></a>
-			<a href="#"><i class="fa fa-tumblr"></i></a>
-			<a href="#"><i class="fa fa-google-plus"></i></a>		 		
+		<hr/>
+		<p><b>Tags</b></p>
+		<p>
+		{% for tag in obj.tags.all %}
+			<a class="btn btn-theme" href="#" role="button">{{tag.name}}</a>
+		{% endfor %}
 		</p>
-		<a href="./upvote">Upvote  <span class="badge">{{obj.total_upvotes}}</span></a>
-		<a href="./downvote">Downvote  <span class="badge">{{obj.total_downvotes}}</span></a>
+		<p><csmall>Posted: {{obj.created}}</csmall> <br/><csmall2>
+		By: 
+		{% for users in obj.authors.all %}
+			{{users.username}}
+		{% endfor %}
+		</csmall2></p>
+		<div class="spacing"></div>
+		<div style="text-align:center">  
+			<a href="./upvote"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_upvotes}}</span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<a href="./downvote"><i class="glyphicon glyphicon-thumbs-down"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_downvotes}}</span></a>
+			<div class="spacing"></div>
+			<h6>SHARE</h6>
+			<p class="share">
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-tumblr"></i></a>
+				<a href="#"><i class="fa fa-google-plus"></i></a>		 		
+			</p>
+		</div>
 	</div><! --/col-lg-8 -->
 	{% include 'tutorials/sidebar.html' %}
 </div>

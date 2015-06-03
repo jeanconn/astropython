@@ -117,12 +117,12 @@ To view a single model instance
 """
 def single(request,section,slug,**kwargs):
     model=get_model(section)
-    try:
-        obj=model.objects.get(slug=slug)
-        context = {'obj':obj}
-        return render(request,'tutorials/single.html',context)
-    except:
-        raise Http404
+    #try:
+    obj=model.objects.get(slug=slug)
+    context = {'obj':obj}
+    return render(request,'tutorials/single.html',context)
+    #except:
+        #raise Http404
 
 def vote(request,section,choice,slug):
     model=get_model(section)
