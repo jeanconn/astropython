@@ -8,7 +8,7 @@ from django.db import models
 
 from moderation.admin import ModerationAdmin
 
-from .models import Tutorial,TutorialSeries,EducationalResource,CodeSnippet
+from .models import Tutorial,TutorialSeries,EducationalResource,CodeSnippet,SeriesTutorial
 
 class CodeAdmin(ModerationAdmin):
     #form=CodeModelForm # This adds the ACE Code Editor to our Admin website
@@ -24,8 +24,12 @@ class EducationalResourceAdmin(ModerationAdmin):
 class TutorialSeriesAdmin(ModerationAdmin):
     pass
 
+class SeriesTutorialAdmin(ModerationAdmin):
+    pass
+
 #Registering the models
 admin.site.register(CodeSnippet,CodeAdmin)
 admin.site.register(Tutorial,TutorialAdmin)
 admin.site.register(TutorialSeries,TutorialSeriesAdmin)
+admin.site.register(SeriesTutorial,SeriesTutorialAdmin)
 admin.site.register(EducationalResource,EducationalResourceAdmin)

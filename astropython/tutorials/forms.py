@@ -43,7 +43,6 @@ class MarkdownResourceBody(MarkdownTutorialBody,ResourceBody):
     syllabus = forms.CharField(widget=EpicEditorWidget()) #Syllabus or contents of the course
     faq=forms.CharField(widget=EpicEditorWidget())#FAQ if any
 
-
 class TailForm(forms.ModelForm):
     class Meta:
         model =Tutorial
