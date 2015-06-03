@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^(?P<section>resources|snippets|tutorials|series)/(?P<slug>[\w-]+)/(?P<choice>upvote|downvote)/$',vote,name="vote"),
     url(r'^series/(?P<slug>[\w-]+)/add/$',start_step,{'section':'seriestutorial'},name="creation_start_seriestutorial"),
     url(r'^series/(?P<slug_series>[\w-]+)/add/(?P<slug>[\w-]+)/complete$',intermediate_step,{'section':'seriestutorial'},name="creation_intermediate_seriestutorial"),
-    url(r'^tutorials/series/(?P<slug_series>[\w-]+)/(?P<slug>[\w-]+)$',single,{'section':'seriestutorial'},name="single_seriestutorial"),
+    url(r'^series/(?P<slug_series>[\w-]+)/(?P<slug>[\w-]+)$',single,{'section':'seriestutorial'},name="single_seriestutorial"),
     )

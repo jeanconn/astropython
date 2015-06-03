@@ -119,7 +119,7 @@ def single(request,section,slug,**kwargs):
     model=get_model(section)
     #try:
     obj=model.objects.get(slug=slug)
-    context = {'obj':obj}
+    context = {'obj':obj,'section':section}
     return render(request,'tutorials/single.html',context)
     #except:
         #raise Http404

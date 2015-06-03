@@ -77,7 +77,6 @@ class EducationalResource(Tutorial):
     start_date = models.DateTimeField(null=True, blank=True)#Date the course starts
     instructor_names = models.CharField(max_length=400)#Names of Instructors
     website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
-    about= models.TextField(blank=True)#About the course
     contents = models.TextField(blank=True) #Syllabus or contents of the course
     background = models.TextField()#Recommended Backgroud
     faq=models.TextField(blank=True)#FAQ if any

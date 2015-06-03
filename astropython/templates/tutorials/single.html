@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head_title %}
-{{obj.title}} Tutorial :
+{{obj.title}} :
 {% endblock %}
 {% block styles %}
 {% endblock %}
@@ -24,12 +24,43 @@ BLOG CONTENT
 
 <div class="container mtb">
 <div class="row">
-
 	<! -- SINGLE Tutorial -->
-	<div class="col-lg-8">
-		{% autoescape off %}{{obj.body|safe}}{% endautoescape %}
+	<div class="col-lg-8" style="word-wrap: break-word">
+		{% if section == "seriestutorial" %}
+			<p><b>From Tutorial Series :</b> <a href="#">{{obj.tut_series}}</a></p>
+		{% endif %}
+		{% if obj.abstract %}
+			<p><b>Abstract :</b> {{obj.abstract}}</p>
+		{% endif %}
+		{% if section == "snippets" %}
+			{% autoescape off %}{{obj.snippet{% endautoescape %}
+		{% endif %}
+		<p>{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+		<br/>
+		{% if section == "resources" %}
+			<p><b>Start Date : </b>{{obj.start_date}}</p>
+			<p><b>Instructors : </b>{{obj.instructor_names}}</p>
+			<p><b>Website : </b><a href="{{obj.website}}">{{obj.website}}</a></p>
+			<p><b>Language : </b>{{obj.language}}</p>
+			<h4>Course Structure & Contents </h4>
+			{% autoescape off %}{{obj.contents}}{% endautoescape %}
+			<br/>
+			<h4>Recommended Background </h4>
+			{% autoescape off %}{{obj.background}}{% endautoescape %}
+			<br/>
+			<h4>Frequently Asked Questions </h4>
+			{% autoescape off %}{{obj.faq}}{% endautoescape %}
+			<br/>
+		{% endif %}
 		<hr/>
-		<p><b>Tags</b></p>
+		{% if section != "seriestutorial"%}
+		<p><b>Categories:</b>
+		{% for cat in obj.categories.all %}
+			{{cat.title}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		{% endfor %}
+		</p>
+		<hr/>
+		<h4>Tags</h4>
 		<p>
 		{% for tag in obj.tags.all %}
 			<a class="btn btn-theme" href="#" role="button">{{tag.name}}</a>
@@ -54,6 +85,7 @@ BLOG CONTENT
 				<a href="#"><i class="fa fa-google-plus"></i></a>		 		
 			</p>
 		</div>
+		{% endif %}
 	</div><! --/col-lg-8 -->
 	{% include 'tutorials/sidebar.html' %}
 </div>
