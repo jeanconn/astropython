@@ -16,7 +16,7 @@ class HeaderForm(forms.Form):
     abstract = forms.CharField(widget=forms.Textarea) #Short abstract of the tutorial
 
 class WYSIWYGTutorialBody(forms.Form):
-    body = forms.CharField(widget=TinyMCE(attrs={'cols': 50, 'rows': 50}))
+    body = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 50}))
 
 class MarkdownTutorialBody(forms.Form):
     body= forms.CharField(widget=EpicEditorWidget())
@@ -46,3 +46,6 @@ class TailForm(forms.ModelForm):
     class Meta:
         model =Tutorial
         fields=['categories','tags']
+        widgets ={
+            'categories':forms.CheckboxSelectMultiple()
+        }

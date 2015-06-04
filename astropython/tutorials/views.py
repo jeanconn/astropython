@@ -33,6 +33,13 @@ def get_name(model):
     else:
         return "Tutorial for Series"
 
+def user_check(user,obj_check):
+    try:
+        obj_check.authors.get(username=user.username)
+    except:
+        return False
+    return True
+
 """
 Tutorial Creation Wizard comprises of 3 steps :
     The first step (or start_step) create the basic models and provides initial information to create the models , namely the title,abstract and preferred input mode
@@ -57,6 +64,7 @@ def start_step(request,section,**kwargs):
                 model_instance.tut_series=obj
             model_instance.save()
             model_instance.authors.add(request.user) #Add anonymous user config
+            model_instance.state="raw"
             model_instance.save()
             if(model==TutorialSeries):
                 return HttpResponseRedirect(reverse('home'))
@@ -65,12 +73,14 @@ def start_step(request,section,**kwargs):
             else:
                 return HttpResponseRedirect(reverse('creation_intermediate',kwargs={'slug':model_instance.slug,'section':section}))
 
-    return render(request,'tutorials/creation.html',{'form':HeaderForm,'name':name})
+    return render(request,'tutorials/creation.html',{'form':HeaderForm,'name':name,'btn':"Save & Proceed"})
 
 def intermediate_step(request,slug,section,**kwargs):
     model=get_model(section)
     name=get_name(model)
     obj=model.unmoderated_objects.get(slug=slug)
+    if not user_check(user=request.user,obj_check=obj):
+        raise Http404
     if (model==Tutorial or model==SeriesTutorial):
         if (obj.input_type=="WYSIWYG"):
             FormType=WYSIWYGTutorialBody
@@ -101,21 +111,31 @@ def intermediate_step(request,slug,section,**kwargs):
             obj.save()
             url='creation_finish'
             if(model==SeriesTutorial):
+                obj.state="submitted"
+                obj.save()
                 return HttpResponseRedirect(reverse('home'))
+            obj.state="body_complete"
+            obj.save()
             return HttpResponseRedirect(reverse(url,kwargs={'slug':obj.slug,'section':section}))
 
-    return render(request,'tutorials/creation.html',{'form':FormType,'name':name})
+    return render(request,'tutorials/creation.html',{'form':FormType,'name':name, 'btn':"Save & Proceed"})
 
 def finish_step(request,slug,section):
     model=get_model(section)
     name =get_name(model)
     obj=model.unmoderated_objects.get(slug=slug)
+    if not user_check(user=request.user,obj_check=obj):
+        raise Http404
+    if obj.moderated_object.changed_object.state != "body_complete":
+        raise Http404
     if request.method=='POST':
         form = TailForm(request.POST,instance=obj)
         instance=form.save(commit=False)
         form.save_m2m()
-        return HttpResponseRedirect(reverse('home'))
-    return render(request,'tutorials/creation.html',{'form':TailForm,'name':name})
+        obj.state="submitted"
+        obj.save()
+        return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+    return render(request,'tutorials/creation.html',{'form':TailForm,'name':name,'btn':"Publish"})
 
 """
 To view a single model instance
@@ -125,6 +145,7 @@ def single(request,section,slug,**kwargs):
     #try:
     obj=model.objects.get(slug=slug)
     obj.hits = obj.hits +1
+    obj.save()
     context = {'obj':obj,'section':section}
     return render(request,'tutorials/single.html',context)
     #except:

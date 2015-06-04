@@ -7,6 +7,8 @@
 {{form.media}}
 {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 {% include 'tutorials/navbar.html' %}
 <!-- *****************************************************************************************************************
@@ -15,7 +17,7 @@ TITLE WRAP
 <div id="titlewrap">
 <div class="container">
 	<div class="row">
-		<h3>Create a {{name}}!</h3>
+		<h3>Create {{name}}!</h3>
 	</div><!-- /row -->
 </div> <!-- /container -->
 </div><!-- /titlewrap -->
@@ -27,8 +29,8 @@ BLOG CONTENT
 <div class="row">
 	<div class="col-lg-8">
 	<form method="POST">{% csrf_token %} 
-	{{form.as_p}}
-	<input type="submit" value="OK">>
+	{{form|crispy}}
+	<button type="submit" class="btn btn-warning">{{btn}}</button>
 	</form>
 	</div><! --/col-lg-8 -->
 </div>
