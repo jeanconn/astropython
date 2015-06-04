@@ -27,7 +27,8 @@ BLOG CONTENT
 	<! -- SINGLE Tutorial -->
 	<div class="col-lg-8" style="word-wrap: break-word">
 		{% if section == "seriestutorial" %}
-			<p><b>From Tutorial Series :</b> <a href="#">{{obj.tut_series}}</a></p>
+			<p><b>From Tutorial Series :</b> <a href=".">{{obj.tut_series}}</a></p>
+			<p><b>Tutorial number in series :</b>{{obj.order_id}}</p>
 		{% endif %}
 		{% if obj.abstract %}
 			<p><b>Abstract :</b> {{obj.abstract}}</p>
@@ -66,6 +67,7 @@ BLOG CONTENT
 			<a class="btn btn-theme" href="#" role="button">{{tag.name}}</a>
 		{% endfor %}
 		</p>
+		{% endif %}
 		<p><csmall>Posted: {{obj.created}}</csmall> <br/><csmall2>
 		By: 
 		{% for users in obj.authors.all %}
@@ -73,6 +75,7 @@ BLOG CONTENT
 		{% endfor %}
 		</csmall2></p>
 		<div class="spacing"></div>
+		{% if section != "seriestutorial" %}
 		<div style="text-align:center">  
 			<a href="./upvote"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_upvotes}}</span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<a href="./downvote"><i class="glyphicon glyphicon-thumbs-down"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_downvotes}}</span></a>

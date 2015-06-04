@@ -50,6 +50,7 @@ class SeriesTutorial(models.Model):
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     tut_series=models.ForeignKey('TutorialSeries',blank=False,null=False)
+    order_id=models.IntegerField(default=0)
     body = models.TextField(blank=False)
     slug = models.SlugField(unique=True) #Slug to a tutorial
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created

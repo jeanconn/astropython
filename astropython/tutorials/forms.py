@@ -27,6 +27,12 @@ class WYSIWYGCodeBody(WYSIWYGTutorialBody):
 class MarkdownCodeBody(MarkdownTutorialBody):
     snippet = forms.CharField(widget=AceWidget(mode='css', theme='twilight')) #adding the ACE code editor
 
+class WYSIWYGSeriesTutorialBody(WYSIWYGTutorialBody):
+    order_no= forms.IntegerField(min_value=1)
+
+class MarkdownSeriesTutorialBody(MarkdownTutorialBody):
+    order_no= forms.IntegerField(min_value=1)
+
 class ResourceBody(forms.Form):
     start_date = forms.CharField(widget=AdminDateWidget)#Date the course starts#FIX THIS
     instructor_names = forms.CharField(max_length=400)#Names of Instructors
@@ -49,3 +55,7 @@ class TailForm(forms.ModelForm):
         widgets ={
             'categories':forms.CheckboxSelectMultiple()
         }
+
+class SeriesForm(forms.Form):
+    title = forms.CharField(max_length=200)#Title of the Post
+    abstract = forms.CharField(widget=forms.Textarea) #Short abstract of the tutorial

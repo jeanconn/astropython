@@ -24,12 +24,10 @@ class EducationalResourceAdmin(ModerationAdmin):
 class TutorialSeriesAdmin(ModerationAdmin):
     pass
 
-class SeriesTutorialAdmin(ModerationAdmin):
-    pass
 
 #Registering the models
 admin.site.register(CodeSnippet,CodeAdmin)
 admin.site.register(Tutorial,TutorialAdmin)
 admin.site.register(TutorialSeries,TutorialSeriesAdmin)
-admin.site.register(SeriesTutorial,SeriesTutorialAdmin)
+admin.site.register(SeriesTutorial)
 admin.site.register(EducationalResource,EducationalResourceAdmin)
