@@ -12,9 +12,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'astropython.settings')
 import django
 django.setup()
 
-from tutorials.models import WYSIWYGTutorial
-from blog.models import WYSIWYGPost
-from packages.models import WYSIWYGInput
+from tutorials.models import Tutorial
+from blog.models import Post
+from packages.models import Package
 from category.models import Category
 
 from django.contrib.auth.models import User
@@ -71,7 +71,7 @@ def populate(path_localdata,obj):
                 u[0].save()#If the user is not present ,create it
             if(c[1]==True):
                 c[0].save()#If category is not present ,add it
-            if(typeObj==type(WYSIWYGTutorial())):
+            if(typeObj==type(Tutorial())):
                 t.authors.add(u[0])
             else:
                 t.authors=u[0]
@@ -89,13 +89,13 @@ if __name__ == '__main__':
     print "Starting Astropython population script..."
     opt=raw_input("Do you want to populate the tutorials? (y/n):")
     if opt=='y':
-        obj=WYSIWYGTutorial()
+        obj=Tutorial()
         populate(path_localdata=os.path.join(base,'Tutorials'),obj=obj)
     opt=raw_input("Do you want to populate the blogs? (y/n):")
     if opt=='y':
-        obj=WYSIWYGPost()
+        obj=Post()
         populate(path_localdata=os.path.join(base,'Blogs'),obj=obj)
     opt=raw_input("Do you want to populate the packages? (y/n):")
     if opt=='y':
-        obj=WYSIWYGInput()
+        obj=Package()
         populate(path_localdata=os.path.join(base,'Resources and Tools'),obj=obj)

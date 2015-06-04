@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+{{name}}:
+{% endblock %}
+{% block styles %}
+{% endblock %}
+{% block content %}
+{% include 'tutorials/navbar.html' %}
+<!-- *****************************************************************************************************************
+TITLE WRAP
+***************************************************************************************************************** -->
+<div id="titlewrap">
+<div class="container">
+	<div class="row">
+		<h3>{{name}}</h3>
+	</div><!-- /row -->
+</div> <!-- /container -->
+</div><!-- /titlewrap -->
+<!-- *****************************************************************************************************************
+BLOG CONTENT
+***************************************************************************************************************** -->
+
+<div class="container mtb">
+<div class="row">
+
+	<! --LIST-->
+	<div class="col-lg-8">
+		{%if length == 0 %}
+			<h2>No {{name}} created yet !</h2>
+			<p><a href="create">Create one here !</a></p>
+		{% endif %}
+		{% for single_obj in obj %}
+			<a href="{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
+			<p><csmall>Posted:{{single_obj.created}}</csmall> |<csmall2>By: 
+				{% for users in single_obj.authors.all %}
+					{{users.username}}
+				{% endfor %}
+				</csmall2></p>
+			<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+			<p><a href="{{single_obj.slug}}">[Read More]</a></p>
+			<div class="hline"></div>
+			<div class="spacing"></div>
+		{% endfor %}
+		<div style="text-align:center">
+		{% if  obj.paginator.num_pages > 1 %}
+			<nav>
+				<ul class="pagination">
+					{% if obj.has_previous %}
+						<li><a href="?page={{ obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+					{% else %}
+						<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+					{% endif %}
+					{% for num in range %}
+						{% if num == obj.number %}
+							<li class="active"><a href="#">{{num}} <span class="sr-only">(current)</span></a></li>
+						{% else %}
+							<li><a href="?page={{num}}">{{num}}</a></li>
+						{% endif %}
+					{% endfor %}
+					{% if obj.has_next %}
+						<li><a href="?page={{ obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+					{% else %}
+						<li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		{% endif %}
+		</div>
+	</div><! --/col-lg-8 -->
+	{% include 'tutorials/sidebar.html' %}
+</div><! --/row -->
+</div><! --/container -->
+
+
+{% endblock %}

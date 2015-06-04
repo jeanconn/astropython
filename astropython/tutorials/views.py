@@ -1,4 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect,Http404
+from django.core.paginator import Paginator
 
 import random
 from slugify import slugify
@@ -20,28 +21,30 @@ def get_model(name):
     else:
         return SeriesTutorial
 
+def get_name(model):
+    if model==Tutorial:
+        return "Tutorials"
+    elif model == CodeSnippet:
+        return "Code Snippets"
+    elif model== EducationalResource:
+        return "Educational Resources"
+    elif model== TutorialSeries:
+        return "Tutorial Series"
+    else:
+        return "Tutorial for Series"
+
 """
 Tutorial Creation Wizard comprises of 3 steps :
     The first step (or start_step) create the basic models and provides initial information to create the models , namely the title,abstract and preferred input mode
     The second step (or intermediate_step) fills up the rest of the information - body,extra info, etc
     The final step (or finish_step) adds the tags and categories to the model and will in the future include sharing on social network abilities
 """
-name=""
+
 def start_step(request,section,**kwargs):
-    global name
     model=get_model(section)
-    if(model==Tutorial):
-        name="Tutorial"
-    elif(model==CodeSnippet):
-        name="Code Snippet"
-    elif(model==EducationalResource):
-        name="Educational Resource"
-    elif(model==SeriesTutorial):
-        name="Tutorial for Series"
-        print kwargs['slug']
+    name=get_name(model)
+    if (model==SeriesTutorial):
         obj=TutorialSeries.objects.get(slug=slugify(kwargs['slug']))
-    elif(model==TutorialSeries):
-        name="Tutorial Series"
     if request.method == 'POST':
         form = HeaderForm(request.POST)
         if form.is_valid():
@@ -66,6 +69,7 @@ def start_step(request,section,**kwargs):
 
 def intermediate_step(request,slug,section,**kwargs):
     model=get_model(section)
+    name=get_name(model)
     obj=model.unmoderated_objects.get(slug=slug)
     if (model==Tutorial or model==SeriesTutorial):
         if (obj.input_type=="WYSIWYG"):
@@ -104,6 +108,7 @@ def intermediate_step(request,slug,section,**kwargs):
 
 def finish_step(request,slug,section):
     model=get_model(section)
+    name =get_name(model)
     obj=model.unmoderated_objects.get(slug=slug)
     if request.method=='POST':
         form = TailForm(request.POST,instance=obj)
@@ -119,6 +124,7 @@ def single(request,section,slug,**kwargs):
     model=get_model(section)
     #try:
     obj=model.objects.get(slug=slug)
+    obj.hits = obj.hits +1
     context = {'obj':obj,'section':section}
     return render(request,'tutorials/single.html',context)
     #except:
@@ -138,3 +144,49 @@ def vote(request,section,choice,slug):
     else:
         obj.add_vote(token,t)
     return HttpResponseRedirect(reverse('single',kwargs={'slug':slug,'section':section}))
+
+"""
+General listing of all sections
+"""
+
+def all(request,section,**kwargs):
+    model=get_model(section)
+    name=get_name(model)
+    obj_list=model.objects.all()
+    length=len(obj_list)
+    paginator = Paginator(obj_list,15)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+    return render(request,'tutorials/all.html',context)
+
+def latest(request,section,**kwargs):
+    model=get_model(section)
+    name=get_name(model)
+    obj_list=model.objects.all()
+    length=len(obj_list)
+    paginator = Paginator(obj_list,15)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+    return render(request,'tutorials/all.html',context)
+
+def popular(request,section,**kwargs):
+    model=get_model(section)
+    name=get_name(model)
+    obj_list=model.objects.all()
+    length=len(obj_list)
+    paginator = Paginator(obj_list,15)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+    return render(request,'tutorials/all.html',context)
