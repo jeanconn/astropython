@@ -149,38 +149,15 @@ def vote(request,section,choice,slug):
 General listing of all sections
 """
 
-def all(request,section,**kwargs):
+def all(request,section,display_type,**kwargs):
     model=get_model(section)
     name=get_name(model)
-    obj_list=model.objects.all()
-    length=len(obj_list)
-    paginator = Paginator(obj_list,15)
-    page = request.GET.get('page')
-    try:
-        obj=paginator.page(page)
-    except:
-        obj=paginator.page(1)
-    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
-    return render(request,'tutorials/all.html',context)
-
-def latest(request,section,**kwargs):
-    model=get_model(section)
-    name=get_name(model)
-    obj_list=model.objects.all()
-    length=len(obj_list)
-    paginator = Paginator(obj_list,15)
-    page = request.GET.get('page')
-    try:
-        obj=paginator.page(page)
-    except:
-        obj=paginator.page(1)
-    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
-    return render(request,'tutorials/all.html',context)
-
-def popular(request,section,**kwargs):
-    model=get_model(section)
-    name=get_name(model)
-    obj_list=model.objects.all()
+    if display_type=="all":
+        obj_list=model.objects.all()
+    elif display_type=="latest":
+        obj_list=model.objects.order_by('-created')
+    elif display_type=="popular":
+        obj_list=model.objects.order_by('-hits')
     length=len(obj_list)
     paginator = Paginator(obj_list,15)
     page = request.GET.get('page')

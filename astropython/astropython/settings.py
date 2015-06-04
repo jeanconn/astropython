@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'tinymce', # WYSIWYG Editor
     'taggit', # Easy tagging functionality
     'secretballot',
+    'crispy_forms',
     'django_ace', # Cloud9 ACE Editor Plugin
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
@@ -145,3 +146,5 @@ INPUT_CHOICES = (
 	('WYSIWYG', 'WYSIWYG'),
 	('Markdown', 'Markdown'),
  )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
