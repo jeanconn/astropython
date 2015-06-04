@@ -11,6 +11,11 @@ Welcome to
 	 HEADERWRAP
 	 ***************************************************************************************************************** -->
 	<div id="headerwrap" style='background-image: url("{%static "img/wallpaper1.jpg"%}");background-size: 100%;'>
+		{% if user.is_authenticated %}
+			<div class="container">
+			<a href="{% url 'logout'%}">Logout</a>
+			</div>
+		{% endif %}
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
@@ -39,7 +44,7 @@ Welcome to
 			</div>
 		</div>
 		<div style="margin-top:200px">
-		  <a class="ghost-button-border-color" href="#">Tutorials</a>
+		  <a class="ghost-button-border-color" href="tutorials">Tutorials</a>
 		  <a class="ghost-button-border-color" href="#">Forum</a>
 		  <a class="ghost-button-border-color" href="#">Blog</a>
 		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
@@ -73,10 +78,10 @@ Welcome to
 						<hr/>
 						
 						<div style="margin-top:20px">
-						  <a class="ghost-button-border-color" href="#">Facebook</a>
-						  <a class="ghost-button-border-color" href="#">Github</a>
-						  <a class="ghost-button-border-color" href="#">Google+</a>
-						  <a class="ghost-button-border-color" href="#">Twitter</a>
+						  <a class="ghost-button-border-color" href="login/facebook">Facebook</a>
+						  <a class="ghost-button-border-color" href="login/github">Github</a>
+						  <a class="ghost-button-border-color" href="login/google-oauth2">Google+</a>
+						  <a class="ghost-button-border-color" href="login/twitter">Twitter</a>
 						</div>
 				</div>
 		
@@ -91,7 +96,7 @@ Welcome to
 							</span>
 						</div>
 				</div>
-		  <a class="ghost-button-border-color" href="#">Tutorials</a>
+		  <a class="ghost-button-border-color" href="tutorials">Tutorials</a>
 		  <a class="ghost-button-border-color" href="#">Forum</a>
 		  <a class="ghost-button-border-color" href="#">Blog</a>
 		  <a class="ghost-button-border-color" href="#">Code Snippets</a>

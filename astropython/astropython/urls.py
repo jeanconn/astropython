@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^$', 'home.views.home', name='home'),#home url
     url(r'^roll/', 'home.views.roll', name='roll'),#Sample Templates
     url(r'^single/', 'home.views.single', name='single'),#Sample Templates
+    url(r'^logout/', 'home.views.logout_view', name='logout'),#Sample Templates
     url(r'',include('tutorials.urls')),#Teach and Learn
     #url(r'^blogs/', include('blog.urls')),
     #url(r'^packages/', include('packages.urls')),
