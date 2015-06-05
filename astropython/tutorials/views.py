@@ -58,8 +58,6 @@ def start_step(request,section,**kwargs):
             obj=TutorialSeries.objects.get(slug=slugify(kwargs['slug']))
     if(model==TutorialSeries):
         FormType=SeriesForm
-    else:
-        FormType=HeaderForm
     if request.method == 'POST':
         form = FormType(request.POST)
         if form.is_valid():
@@ -219,3 +217,12 @@ def all(request,section,display_type,**kwargs):
         obj=paginator.page(1)
     context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
     return render(request,'tutorials/all.html',context)
+
+"""
+Editing of articles
+"""
+
+def edit(request,section,slug):
+    model=get_model(section)
+    name = get_name(model)
+    pass
