@@ -32,8 +32,8 @@ BLOG CONTENT
 			<p><a href="create">Create one here !</a></p>
 		{% endif %}
 		{% for single_obj in obj %}
-			<a href="{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
-			<p><csmall>Posted:{{single_obj.created}}</csmall> |<csmall2>By: 
+			<a href="http://amanjhunjhunwala.pythonanywhere.com/{{section}}/{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
+			<p><csmall>Posted:{{single_obj.created}}</csmall> |<csmall2>By:
 				{% for users in single_obj.authors.all %}
 					{{users.username}}
 				{% endfor %}

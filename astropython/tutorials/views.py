@@ -207,9 +207,9 @@ def all(request,section,display_type,**kwargs):
     if display_type=="all":
         obj_list=model.objects.all()
     elif display_type=="latest":
-        obj_list=model.objects.order_by('-created')
+        obj_list=model.objects.all().order_by('-created')
     elif display_type=="popular":
-        obj_list=model.objects.order_by('-hits')
+        obj_list=model.objects.all().order_by('-hits')
     length=len(obj_list)
     paginator = Paginator(obj_list,15)
     page = request.GET.get('page')
@@ -217,5 +217,5 @@ def all(request,section,display_type,**kwargs):
         obj=paginator.page(page)
     except:
         obj=paginator.page(1)
-    context = {'name':name,'obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+    context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
     return render(request,'tutorials/all.html',context)
