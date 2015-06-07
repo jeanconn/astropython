@@ -1,13 +1,13 @@
 from django.shortcuts import render,HttpResponseRedirect,Http404
 from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
 
 import random
 from slugify import slugify
-import datetime
 import secretballot
-from django.core.urlresolvers import reverse
+
 from .forms import *
-from .models import Tutorial,CodeSnippet,EducationalResource,TutorialSeries,SeriesTutorial
+from .models import *
 
 def get_model(name):
     if name=='resources':
@@ -45,9 +45,15 @@ def create(request,section):
     name =get_name(model)
     exclude_fields=['slug','authors','state','hits']
     if request.method=='POST':
-        form = PostForm(model,request.POST)
+        form = PostForm(model,exclude_fields,request.POST)
         instance=form.save(commit=False)
+        slug=slugify(instance.title)
+        if (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+            slug=slug+str(random.randrange(1,1000+1))
+        print slug
+        instance.slug=slug
         instance.save()
+        instance.authors.add(request.user)
         form.save_m2m()
         return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields),'name':name,'btn':"Publish"})
