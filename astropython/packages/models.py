@@ -18,7 +18,6 @@ properties that we want the child models to have.
 """
 
 class Package(models.Model):
-    categories = models.ManyToManyField('category.Category')#Category of packages
     title = models.CharField(max_length=200)#Title of packages
     input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
     body =models.TextField(blank=False)

@@ -47,7 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'moderation', # Adding moderations
-    'category', #Custom app for categorization
     'home', # Central app
     'blog', #Blogs Section
     'packages', #Packages section
