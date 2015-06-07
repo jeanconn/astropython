@@ -43,14 +43,14 @@ def user_check(user,obj_check):
 def create(request,section):
     model=get_model(section)
     name =get_name(model)
+    exclude_fields=['slug','authors','state','hits']
     if request.method=='POST':
-        kwargs ={'model':model}
-        form = CustomForm(request.POST,**kwargs)
+        form = PostForm(model,request.POST)
         instance=form.save(commit=False)
         instance.save()
         form.save_m2m()
         return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/creation.html',{'form':CustomForm,'name':name,'btn':"Publish"})
+    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields),'name':name,'btn':"Publish"})
 
 """
 To view a single model instance

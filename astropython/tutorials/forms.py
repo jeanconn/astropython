@@ -6,16 +6,13 @@ from .models import CodeSnippet, Tutorial
 from django.contrib.admin.widgets import AdminDateWidget
 from astropython.settings import INPUT_CHOICES
 
-M = CodeSnippet
-class CustomForm(forms.ModelForm):
-    class Meta:
-        global M
-        model = M
-        fields = '__all__'
-        widgets ={
-            'categories':forms.CheckboxSelectMultiple()
-        }
-    def __init__(self,**kwargs):
-        M = kwargs.pop('model')
-        print M
-        super(CustomForm, self).__init__(**kwargs)
+def PostForm(model_type,exclude_fields,*args,**kwargs):
+    class PostForm(forms.ModelForm):
+        class Meta:
+            model=model_type
+            exclude=exclude_fields
+
+        def __init__(self):
+            super(PostForm, self).__init__(*args, **kwargs)
+
+    return PostForm()
