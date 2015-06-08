@@ -38,7 +38,6 @@ class Tutorial(models.Model):
 
 
 class CodeSnippet(Tutorial):
-    snippet = models.TextField(blank=False)#Additional Notes in Markdown
 
     def __unicode__(self):
 		return self.title
