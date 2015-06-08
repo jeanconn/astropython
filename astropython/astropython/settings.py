@@ -134,10 +134,7 @@ TEMPLATE_DIRS = (
 #States of a post
 STATE_CHOICES = (
 	('raw', 'raw'),
-    ('body_complete','body_complete'),
 	('submitted', 'submitted'),
-	('published', 'published'),
-    ('closed','closed'),
  )
 
 INPUT_CHOICES = (

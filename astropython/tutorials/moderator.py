@@ -5,19 +5,15 @@ from moderation import moderation
 from moderation.moderator import GenericModerator
 from .models import Tutorial,TutorialSeries,EducationalResource,CodeSnippet
 
-class TutorialModerator(GenericModerator):
+class Moderator(GenericModerator):
     fields_exclude=['updated','hits']
 
-class SnippetModerator(GenericModerator):
-    fields_exclude=['updated','hits']
+    def is_auto_approve(self, obj, user):
+        if obj.state == "raw":
+            return self.reason('Not Submitted Yet !')
+        super(MyModelModerator, self).is_auto_approve(obj, user)
 
-class ResourceModerator(GenericModerator):
-    fields_exclude=['updated','hits']
-
-class SeriesModerator(GenericModerator):
-    fields_exclude=['updated','hits']
-
-moderation.register(Tutorial,TutorialModerator)
-moderation.register(CodeSnippet,SnippetModerator)
-moderation.register(TutorialSeries,SeriesModerator)
-moderation.register(EducationalResource,ResourceModerator)
+moderation.register(Tutorial,Moderator)
+moderation.register(CodeSnippet,Moderator)
+moderation.register(TutorialSeries,Moderator)
+moderation.register(EducationalResource,Moderator)
