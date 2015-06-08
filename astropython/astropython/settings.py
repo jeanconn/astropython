@@ -36,7 +36,6 @@ INSTALLED_APPS = (
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
-    'django_ace', # Cloud9 ACE Editor Plugin
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',

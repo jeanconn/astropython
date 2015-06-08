@@ -68,7 +68,7 @@ def single(request,section,slug,**kwargs):
     if(model != SeriesTutorial):
         obj.hits = obj.hits +1
     obj.save()
-    context = {'obj':obj,'section':section}
+    context = {'obj':obj,'section':section,'full_url':request.build_absolute_uri()}
     return render(request,'tutorials/single.html',context)
    # except:
         # Http404
