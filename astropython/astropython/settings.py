@@ -33,12 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'grappelli', # Cleaner admin panel
-    'epiced', # Epic Markdown Editor
-    'tinymce', # WYSIWYG Editor
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
-    'django_ace', # Cloud9 ACE Editor Plugin
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +44,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'moderation', # Adding moderations
-    'category', #Custom app for categorization
     'home', # Central app
     'blog', #Blogs Section
     'packages', #Packages section

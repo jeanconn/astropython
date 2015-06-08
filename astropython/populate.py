@@ -15,7 +15,6 @@ django.setup()
 from tutorials.models import Tutorial
 from blog.models import Post
 from packages.models import Package
-from category.models import Category
 
 from django.contrib.auth.models import User
 
@@ -65,17 +64,13 @@ def populate(path_localdata,obj):
                 t.slug=slugify(title)+str(random.randrange(1,10000000+1))#If 2 objects have same title,this prevents the same slug from being generated
             t.published=datetime.datetime.strptime(date,"%Y-%m-%d") #Add publishing date
             u=User.objects.get_or_create(username=author)#If user is absent, create user
-            c=Category.objects.get_or_create(title='Uncategorized')#If category is absent ,create category
             t.save()
             if(u[1]==True):
                 u[0].save()#If the user is not present ,create it
-            if(c[1]==True):
-                c[0].save()#If category is not present ,add it
             if(typeObj==type(Tutorial())):
                 t.authors.add(u[0])
             else:
                 t.authors=u[0]
-            t.categories.add(c[0])#Add categories
             t.save()#save all elements
             print("Entered an element successfully!")
 

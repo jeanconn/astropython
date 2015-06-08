@@ -20,7 +20,6 @@ properties that we want the child models to have.
 """
 
 class Tutorial(models.Model):
-    categories = models.ManyToManyField('category.Category') #Categories of tutorial
     title = models.CharField(max_length=200)#Title of the Post
     input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
@@ -39,7 +38,6 @@ class Tutorial(models.Model):
 
 
 class CodeSnippet(Tutorial):
-    snippet = models.TextField(blank=False)#Additional Notes in Markdown
 
     def __unicode__(self):
 		return self.title
@@ -60,7 +58,6 @@ class SeriesTutorial(models.Model):
 		return self.title
 
 class TutorialSeries(models.Model): #Add different tutorials to a series
-    categories = models.ManyToManyField('category.Category') #Categories of tutorial series
     title = models.CharField(max_length=200)#Title of the Series
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial series
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial series

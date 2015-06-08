@@ -20,7 +20,6 @@ but merely acts as a common wireframe to create child models. It contains common
 properties that we want the child models to have.
 """
 class Post(models.Model):
-    categories = models.ManyToManyField('category.Category') #Category
     title = models.CharField(max_length=200)#Title of Post
     desciption = models.TextField(null=True,blank=True) #Short abstract
     input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)

@@ -4,11 +4,34 @@
 {{name}} Creation: 
 {% endblock %}
 {% block styles %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/sets/default/style.css" />
 {{form.media}}
 {% endblock %}
 
 {% load crispy_forms_tags %}
+{% block jquery %}
+	$("#id_input_type").change(function(){
+		ch=$("#id_input_type option:selected").val()
+		if (ch=="WYSIWYG")
+		{
+			$('#id_body').markItUpRemove();  
+			CKEDITOR.replace( 'body' );
+		}else{
+			for(name in CKEDITOR.instances)
+			{
+				CKEDITOR.instances[name].destroy()
+			}
+			$("#id_body").markItUp(mySettings);
+		}
+		})
+{% endblock %}
 
+{% block js %}
+<script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="{{STATIC_URL}}markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
+{% endblock %}
 {% block content %}
 {% include 'tutorials/navbar.html' %}
 <!-- *****************************************************************************************************************
@@ -28,6 +51,7 @@ BLOG CONTENT
 <div class="container mtb">
 <div class="row">
 	<div class="col-lg-8">
+	<div id="epiceditor" style="none"></div>
 	<form method="POST">{% csrf_token %} 
 	{{form|crispy}}
 	<button type="submit" class="btn btn-warning">{{btn}}</button>
