@@ -2,6 +2,8 @@ from django.shortcuts import render,HttpResponseRedirect,Http404
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 
+from moderation.helpers import automoderate
+
 import random
 from slugify import slugify
 import secretballot
@@ -44,18 +46,39 @@ def create(request,section):
     model=get_model(section)
     name =get_name(model)
     exclude_fields=['slug','authors','state','hits']
-    if request.method=='POST':
-        form = PostForm(model,exclude_fields,request.POST)
+    if request.method=="POST":
+        form = PostForm(model,exclude_fields,'create',request.POST)
         instance=form.save(commit=False)
-        slug=slugify(instance.title)
-        if (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
-            slug=slug+str(random.randrange(1,1000+1))
-        instance.slug=slug
+        if 'submit' in request.POST:
+            slug=slugify(instance.title)
+            while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+                slug=slug+str(random.randrange(1,1000+1))
+            instance.slug=slug
+            instance.state="submitted"
+        elif 'save' in request.POST:
+            slug="%0.12d" % random.randint(0,999999999999)
+            while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+                slug="%0.12d" % random.randint(0,999999999999)
+            instance.slug=slug
         instance.save()
         instance.authors.add(request.user)
         form.save_m2m()
+        automoderate(instance,request.user)
         return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields),'name':name,'btn':"Publish"})
+    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields,'create'),'name':name})
+
+def edit(request,section,slug,field):
+    model =get_model(section)
+    name =get_name(model)
+    edit_field=[]
+    edit_field.append(field)
+    if request.method=="POST":
+        form = PostForm(model,edit_field,'edit',request.POST)
+        instance=form.save(commit=False)
+        instance.save()
+        form.save_m2m()
+        return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields,'edit'),'name':name,'btn':"Conform Edit"})
 
 
 """
@@ -117,12 +140,3 @@ def all(request,section,display_type,**kwargs):
         obj=paginator.page(1)
     context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
     return render(request,'tutorials/all.html',context)
-
-"""
-Editing of articles
-"""
-
-def edit(request,section,slug):
-    model=get_model(section)
-    name = get_name(model)
-    pass

@@ -6,11 +6,14 @@ from .models import CodeSnippet, Tutorial
 from django.contrib.admin.widgets import AdminDateWidget
 from astropython.settings import INPUT_CHOICES
 
-def PostForm(model_type,exclude_fields,*args,**kwargs):
+def PostForm(model_type,form_fields,action,*args,**kwargs):
     class PostForm(forms.ModelForm):
         class Meta:
             model=model_type
-            exclude=exclude_fields
+            if action=="create":
+                exclude=form_fields
+            elif action=="edit":
+                fields=form_fields
 
         def __init__(self):
             super(PostForm, self).__init__(*args, **kwargs)
