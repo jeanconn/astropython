@@ -50,7 +50,6 @@ def create(request,section):
         slug=slugify(instance.title)
         if (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
             slug=slug+str(random.randrange(1,1000+1))
-        print slug
         instance.slug=slug
         instance.save()
         instance.authors.add(request.user)
@@ -58,20 +57,18 @@ def create(request,section):
         return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields),'name':name,'btn':"Publish"})
 
+
 """
 To view a single model instance
 """
 def single(request,section,slug,**kwargs):
     model=get_model(section)
-    #try:
     obj=model.objects.get(slug=slug)
     if(model != SeriesTutorial):
         obj.hits = obj.hits +1
     obj.save()
     context = {'obj':obj,'section':section,'full_url':request.build_absolute_uri()}
     return render(request,'tutorials/single.html',context)
-   # except:
-        # Http404
 
 
 def single_series(request,slug):
