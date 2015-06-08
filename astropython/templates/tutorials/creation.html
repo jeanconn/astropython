@@ -8,7 +8,23 @@
 {% endblock %}
 
 {% load crispy_forms_tags %}
+{% block jquery %}
+	$("#id_input_type").change(function(){
+		ch=$("#id_input_type option:selected").val()
+		if (ch=="WYSIWYG")
+		{
+			CKEDITOR.replace( 'body' );
+		}
+		else
+		{
+			
+		}
+		})
+{% endblock %}
 
+{% block js %}
+ <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
+{% endblock %}
 {% block content %}
 {% include 'tutorials/navbar.html' %}
 <!-- *****************************************************************************************************************

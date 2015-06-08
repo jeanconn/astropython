@@ -33,8 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'grappelli', # Cleaner admin panel
-    'epiced', # Epic Markdown Editor
-    'tinymce', # WYSIWYG Editor
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
