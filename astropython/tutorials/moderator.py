@@ -11,7 +11,7 @@ class Moderator(GenericModerator):
     def is_auto_approve(self, obj, user):
         if obj.state == "raw":
             return self.reason('Not Submitted Yet !')
-        super(MyModelModerator, self).is_auto_approve(obj, user)
+        super(Moderator, self).is_auto_approve(obj, user)
 
 moderation.register(Tutorial,Moderator)
 moderation.register(CodeSnippet,Moderator)

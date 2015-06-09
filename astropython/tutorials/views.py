@@ -48,37 +48,43 @@ def create(request,section):
     exclude_fields=['slug','authors','state','hits']
     if request.method=="POST":
         form = PostForm(model,exclude_fields,'create',request.POST)
-        instance=form.save(commit=False)
-        if 'submit' in request.POST:
-            slug=slugify(instance.title)
-            while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
-                slug=slug+str(random.randrange(1,1000+1))
-            instance.slug=slug
-            instance.state="submitted"
-        elif 'save' in request.POST:
+        if 'save' in request.POST:
+            for field in form.fields:
+                form.fields[field].required = False
             slug="%0.12d" % random.randint(0,999999999999)
             while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
                 slug="%0.12d" % random.randint(0,999999999999)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            if 'submit' in request.POST:
+                slug=slugify(instance.title)
+                while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+                    slug=slug+str(random.randrange(1,1000+1))
+                instance.state="submitted"
             instance.slug=slug
-        instance.save()
-        instance.authors.add(request.user)
-        form.save_m2m()
-        automoderate(instance,request.user)
-        return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+            instance.save()
+            instance.authors.add(request.user)
+            form.save_m2m()
+            automoderate(instance,request.user)
+            return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields,'create'),'name':name})
 
 def edit(request,section,slug,field):
     model =get_model(section)
     name =get_name(model)
-    edit_field=[]
-    edit_field.append(field)
+    obj=model.objects.get(slug=slug)
+    if field=="all":
+        edit_field="__all__"
+    else:
+        edit_field=[]
+        edit_field.append(field)
     if request.method=="POST":
-        form = PostForm(model,edit_field,'edit',request.POST)
+        form = PostForm(model,edit_field,'edit',request.POST,instance=obj)
         instance=form.save(commit=False)
         instance.save()
         form.save_m2m()
         return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields,'edit'),'name':name,'btn':"Conform Edit"})
+    return render(request,'tutorials/creation.html',{'form':PostForm(model,edit_field,'edit',instance=obj),'name':name,'btn':"Conform Edit"})
 
 
 """
