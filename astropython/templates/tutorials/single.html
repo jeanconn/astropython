@@ -9,6 +9,16 @@
 {% endif %}
 {% endblock %}
 {% load crispy_forms_tags %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/sets/default/style.css" />
+{{form.media}}
+{% endblock %}
+{% block js %}
+<script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="{{STATIC_URL}}markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
+{% endblock %}
 {% block content %}
 {% include 'tutorials/navbar.html' %}
 <div id="fb-root"></div>
@@ -25,7 +35,7 @@ TITLE WRAP
 <div id="titlewrap">
 <div class="container">
 	<div class="row">
-		<h3>{{obj.title}}</h3>
+		<h3 id ="title">{{obj.title}}</h3>
 	</div><!-- /row -->
 </div> <!-- /container -->
 </div><!-- /titlewrap -->
@@ -42,14 +52,9 @@ BLOG CONTENT
 			<p><b>Tutorial number in series :</b>{{obj.order_id}}</p>
 		{% endif %}
 		{% if obj.abstract %}
-			<div id="abstract">
-			<p><b>Abstract :</b> {{obj.abstract}}</p>
-			</div>
+			<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
 		{% endif %}
-		{% if section == "snippets" %}
-			{% autoescape off %}{{obj.snippet{% endautoescape %}
-		{% endif %}
-		<p>{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+		<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
 		<br/>
 		{% if section == "resources" %}
 			<p><b>Start Date : </b>{{obj.start_date}}</p>
@@ -69,7 +74,7 @@ BLOG CONTENT
 		<hr/>
 		{% if section != "seriestutorial"%}
 		<h4>Tags</h4>
-		<p>
+		<p id="tags">
 		{% for tag in obj.tags.all %}
 			<a class="btn btn-theme" href="#" role="button">{{tag.name}}</a>
 		{% endfor %}
@@ -89,17 +94,32 @@ BLOG CONTENT
 			<div class="spacing"></div>
 			<h6>SHARE</h6>
 			<p class="share">
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<div class="fb-share-button" data-href="{{full_url}}" data-layout="button_count"></div>
-				<a href="#"><i class="fa fa-tumblr"></i></a>
-				<a href="#"><i class="fa fa-google-plus"></i></a>		 		
+				<div class="fb-share-button" data-href="{{full_url}}" data-layout="button_count"></div>	 		
 			</p>
 		</div>
 		{% endif %}
 		 <!--Disqus Comment Section -->
 	
 	<div id="disqus_thread" style='margin-top:50px;'></div>
+	<script type="text/javascript">
+		$( "#title,#abstract,#body_display,#tags").hover(
+		  function() {
+			attribute=$(this).attr('id');
+			if(attribute=="body_display")
+			{
+				attribute="body";
+			}
+			$( this ).append( $( "<span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='?edit="+attribute+"'><img src='{% static 'img/edit_logo.png' %}' height='15px' width='15px'></a></span>" ) );
+		  }, function() {
+			$( this ).find( "span:last" ).remove();
+		  }
+		);
+		{% if obj.input_type == "WYSIWYG" %}
+			CKEDITOR.replace( '#body' );
+		{% else %}
+			$("#id_body").markItUp(mySettings);
+		{% endif %}
+	</script>
 	<script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES * * */
 		var disqus_shortname = 'astropython'; //registered short name of astropy tutorials 

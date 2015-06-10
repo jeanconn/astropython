@@ -11,6 +11,7 @@ from taggit.managers import TaggableManager
 
 import secretballot
 
+from .managers import PublishedManager
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
@@ -29,6 +30,7 @@ class Tutorial(models.Model):
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
     tags=TaggableManager() #Tags
     hits = models.IntegerField(default=0)
+    objects = PublishedManager()
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
@@ -67,6 +69,7 @@ class TutorialSeries(models.Model): #Add different tutorials to a series
     slug = models.SlugField(unique=True) #Slug to a tutorial series
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial series
     tags=TaggableManager() #Tags
+    objects = PublishedManager()
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
