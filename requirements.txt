@@ -1,13 +1,11 @@
 Django==1.8.2
-django-ace==1.0.2
 django-crispy-forms==1.4.0
-django-epiced==0.4.1
 django-grappelli==2.6.4
+django-haystack==2.3.1
 django-secretballot==0.4.0
 django-taggit==0.14.0
 haystack==0.15
 httplib2==0.9.1
-Markdown==2.6.2
 oauth2==1.5.211
 oauthlib==0.7.2
 Pillow==2.6.2
