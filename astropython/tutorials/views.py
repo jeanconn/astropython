@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponseRedirect,Http404
+from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 
@@ -46,8 +46,9 @@ def create(request,section):
     model=get_model(section)
     name =get_name(model)
     exclude_fields=['slug','authors','state','hits']
+    form = PostForm(model,exclude_fields,'create',request.POST or None)
+    context = RequestContext(request)
     if request.method=="POST":
-        form = PostForm(model,exclude_fields,'create',request.POST)
         if 'save' in request.POST:
             for field in form.fields:
                 form.fields[field].required = False
@@ -67,7 +68,7 @@ def create(request,section):
             form.save_m2m()
             automoderate(instance,request.user)
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/creation.html',{'form':PostForm(model,exclude_fields,'create'),'name':name})
+    return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
 def edit(request,section,slug,field):
     model =get_model(section)

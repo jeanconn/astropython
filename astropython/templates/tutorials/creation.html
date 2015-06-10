@@ -51,22 +51,7 @@ BLOG CONTENT
 <div class="container mtb">
 <div class="row">
 	<div class="col-lg-8">
-	<div id="epiceditor" style="none"></div>
 	<form method="POST">{% csrf_token %}
-	{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-error">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-error">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-	{% endif %}
 	{{form|crispy}}
 	<button type="submit" name="submit" class="btn btn-warning">Publish</button>
 	<button type="submit" name="save" class="btn btn-warning">Save</button>
