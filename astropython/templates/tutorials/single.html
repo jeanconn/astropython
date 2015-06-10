@@ -3,8 +3,12 @@
 {% block head_title %}
 {{obj.title}} :
 {% endblock %}
-{% block styles %}
+{% block jquery %}
+{% if mode == "edit" %}
+	$("#edit_modal").modal("show");
+{% endif %}
 {% endblock %}
+{% load crispy_forms_tags %}
 {% block content %}
 {% include 'tutorials/navbar.html' %}
 <div id="fb-root"></div>
@@ -28,7 +32,7 @@ TITLE WRAP
 <!-- *****************************************************************************************************************
 BLOG CONTENT
 ***************************************************************************************************************** -->
-
+{% include 'tutorials/edit_modal.html' %}
 <div class="container mtb">
 <div class="row">
 	<! -- SINGLE Tutorial -->
@@ -38,7 +42,9 @@ BLOG CONTENT
 			<p><b>Tutorial number in series :</b>{{obj.order_id}}</p>
 		{% endif %}
 		{% if obj.abstract %}
+			<div id="abstract">
 			<p><b>Abstract :</b> {{obj.abstract}}</p>
+			</div>
 		{% endif %}
 		{% if section == "snippets" %}
 			{% autoescape off %}{{obj.snippet{% endautoescape %}
@@ -62,12 +68,6 @@ BLOG CONTENT
 		{% endif %}
 		<hr/>
 		{% if section != "seriestutorial"%}
-		<p><b>Categories:</b>
-		{% for cat in obj.categories.all %}
-			{{cat.title}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		{% endfor %}
-		</p>
-		<hr/>
 		<h4>Tags</h4>
 		<p>
 		{% for tag in obj.tags.all %}

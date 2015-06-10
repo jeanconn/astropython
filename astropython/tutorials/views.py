@@ -70,23 +70,6 @@ def create(request,section):
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
-def edit(request,section,slug,field):
-    model =get_model(section)
-    name =get_name(model)
-    obj=model.objects.get(slug=slug)
-    if field=="all":
-        edit_field="__all__"
-    else:
-        edit_field=[]
-        edit_field.append(field)
-    if request.method=="POST":
-        form = PostForm(model,edit_field,'edit',request.POST,instance=obj)
-        instance=form.save(commit=False)
-        instance.save()
-        form.save_m2m()
-        return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/creation.html',{'form':PostForm(model,edit_field,'edit',instance=obj),'name':name,'btn':"Conform Edit"})
-
 
 """
 To view a single model instance
@@ -94,11 +77,26 @@ To view a single model instance
 def single(request,section,slug,**kwargs):
     model=get_model(section)
     obj=model.objects.get(slug=slug)
+    edit_field=[]
+    context = RequestContext(request)
     if(model != SeriesTutorial):
         obj.hits = obj.hits +1
     obj.save()
-    context = {'obj':obj,'section':section,'full_url':request.build_absolute_uri()}
-    return render(request,'tutorials/single.html',context)
+    if request.method=="GET" and 'edit' in request.GET:
+            edit=request.GET['edit']
+            if edit=="all":
+                edit_field="__all__"
+            else:
+                edit_field=edit.split(',')
+            return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':PostForm(model,edit_field,'edit',instance=obj),"mode":"edit"},context)
+    elif request.method=="POST":
+        form= PostForm(model,edit_field,'edit',request.POST,instance=obj)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.save()
+            form.save_m2m()
+            return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+    return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':PostForm(model,edit_field,'edit',instance=obj),"mode":"display"},context)
 
 
 def single_series(request,slug):
