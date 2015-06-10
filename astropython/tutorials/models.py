@@ -11,7 +11,6 @@ from taggit.managers import TaggableManager
 
 import secretballot
 
-from .managers import PublishedManager
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
 """
@@ -30,7 +29,6 @@ class Tutorial(models.Model):
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
     tags=TaggableManager() #Tags
     hits = models.IntegerField(default=0)
-    objects = PublishedManager()
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
@@ -61,15 +59,13 @@ class SeriesTutorial(models.Model):
     def __unicode__(self):
 		return self.title
 
-class TutorialSeries(models.Model): #Add different tutorials to a series
+class TutorialSeries(models.Model):
     title = models.CharField(max_length=200)#Title of the Series
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial series
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial series
-    included_tutorial = models.ManyToManyField(SeriesTutorial,blank=True,related_name="inc_tut")
     slug = models.SlugField(unique=True) #Slug to a tutorial series
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial series
     tags=TaggableManager() #Tags
-    objects = PublishedManager()
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published

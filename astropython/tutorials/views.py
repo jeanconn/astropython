@@ -42,10 +42,12 @@ def user_check(user,obj_check):
         return False
     return True
 
-def create(request,section):
+def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(model)
     exclude_fields=['slug','authors','state','hits']
+    if model==SeriesTutorial:
+        exclude_fields=['slug','authors','tut_series']
     form = PostForm(model,exclude_fields,'create',request.POST or None)
     context = RequestContext(request)
     if request.method=="POST":
@@ -61,12 +63,21 @@ def create(request,section):
                 slug=slugify(instance.title)
                 while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
                     slug=slug+str(random.randrange(1,1000+1))
-                instance.state="submitted"
+                if model != SeriesTutorial:
+                    instance.state="submitted"
             instance.slug=slug
             instance.save()
-            instance.authors.add(request.user)
+            if model==SeriesTutorial:
+                obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
+                instance.tut_series=obj
+            try:
+                instance.authors.add(request.user)
+            except:
+                u=User.objects.get_or_create(username="Anonymous")
+                instance.authors.add(u[0])
             form.save_m2m()
-            automoderate(instance,request.user)
+            if model != SeriesTutorial:
+                automoderate(instance,request.user)
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
@@ -95,6 +106,7 @@ def single(request,section,slug,**kwargs):
             instance=form.save(commit=False)
             instance.save()
             form.save_m2m()
+            automoderate(instance,request.user)
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':PostForm(model,edit_field,'edit',instance=obj),"mode":"display"},context)
 
@@ -131,11 +143,11 @@ def all(request,section,display_type,**kwargs):
     model=get_model(section)
     name=get_name(model)
     if display_type=="all":
-        obj_list=model.objects.all()
+        obj_list=model.objects.all().filter(state="submitted")
     elif display_type=="latest":
-        obj_list=model.objects.all().order_by('-created')
+        obj_list=model.objects.all().filter(state="submitted").order_by('-created')
     elif display_type=="popular":
-        obj_list=model.objects.all().order_by('-hits')
+        obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
     length=len(obj_list)
     paginator = Paginator(obj_list,15)
     page = request.GET.get('page')

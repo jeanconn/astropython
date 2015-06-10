@@ -9,7 +9,7 @@ class Moderator(GenericModerator):
     fields_exclude=['updated','hits']
 
     def is_auto_approve(self, obj, user):
-        if obj.state == "raw":
+        if obj.state != "submitted":
             return self.reason('Not Submitted Yet !')
         super(Moderator, self).is_auto_approve(obj, user)
 
