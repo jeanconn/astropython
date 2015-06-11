@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext
+from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext,get_object_or_404
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 
@@ -42,7 +42,7 @@ def create(request,section,**kwargs):
     if model==SeriesTutorial:
         exclude_fields=['slug','authors','tut_series']
     if 'slug' in kwargs:
-        obj=model.objects.get(slug=kwargs['slug'])
+        obj=model.objects.get_object_or_404(slug=kwargs['slug'])
         if ((not request.user in obj.authors.all()) or (obj.state=="submitted") ):
             raise Http404
         form = PostForm(model,exclude_fields,'create',request.POST or None,instance=obj)
@@ -72,7 +72,7 @@ def create(request,section,**kwargs):
             instance.slug=slug
             instance.save()
             if model==SeriesTutorial:
-                obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
+                obj=TutorialSeries.objects.get_object_or_404(slug=kwargs['series_slug'])
                 instance.tut_series=obj
             try:
                 user=request.user
@@ -93,7 +93,7 @@ To view a single model instance
 """
 def single(request,section,slug,**kwargs):
     model=get_model(section)
-    obj=model.objects.get(slug=slug)
+    obj=model.objects.get_object_or_404(slug=slug)
     if(obj.state=="raw"):
         if not request.user in obj.authors.all():
             raise Http404
@@ -126,7 +126,7 @@ def single(request,section,slug,**kwargs):
 
 
 def single_series(request,slug):
-    series=TutorialSeries.objects.get(slug=slug)
+    series=TutorialSeries.objects.get_object_or_404(slug=slug)
     obj=series.seriestutorial_set.order_by('order_id')
     series.hits=series.hits+1
     series.save()
@@ -136,7 +136,7 @@ def single_series(request,slug):
 
 def vote(request,section,choice,slug):
     model=get_model(section)
-    obj=model.objects.get(slug=slug)
+    obj=model.objects.get_object_or_404(slug=slug)
     v=model.objects.from_request(request).get(pk=obj.pk)
     token=request.secretballot_token
     if(choice=='upvote'):
