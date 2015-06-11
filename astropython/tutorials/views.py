@@ -35,13 +35,6 @@ def get_name(model):
     else:
         return "Tutorial for Series"
 
-def user_check(user,obj_check):
-    try:
-        obj_check.authors.get(username=user.username)
-    except:
-        return False
-    return True
-
 def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(model)
@@ -92,6 +85,9 @@ To view a single model instance
 def single(request,section,slug,**kwargs):
     model=get_model(section)
     obj=model.objects.get(slug=slug)
+    if(obj.state=="raw"):
+        if not request.user in obj.authors.all():
+            raise Http404
     context = RequestContext(request)
     if(model != SeriesTutorial):
         obj.hits = obj.hits +1
@@ -116,7 +112,7 @@ def single(request,section,slug,**kwargs):
             except:
                 u=User.objects.get_or_create(username="Anonymous")
                 automoderate(instance,u[0])
-            return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+            return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
     return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
 
 

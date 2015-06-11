@@ -54,7 +54,7 @@ BLOG CONTENT
 		{% if obj.abstract %}
 			<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
 		{% endif %}
-		<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+		<p id="body_display"><b>Body</b>:{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
 		<br/>
 		{% if section == "resources" %}
 			<p><b>Start Date : </b>{{obj.start_date}}</p>
