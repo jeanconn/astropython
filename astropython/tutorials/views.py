@@ -56,6 +56,8 @@ def create(request,section,**kwargs):
                 slug="%0.12d" % random.randint(0,999999999999)
                 while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
                     slug="%0.12d" % random.randint(0,999999999999)
+            else:
+                slug=kwargs['slug']
         if form.is_valid():
             instance=form.save(commit=False)
             if 'submit' in request.POST:
@@ -65,10 +67,7 @@ def create(request,section,**kwargs):
                     slug=slug+str(random.randrange(1,1000+1))
                 if model != SeriesTutorial:
                     instance.state="submitted"
-            if 'slug' not in kwargs:
-                instance.slug=slug
-            else:
-                slug=kwargs['slug']
+            instance.slug=slug
             instance.save()
             if model==SeriesTutorial:
                 obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
