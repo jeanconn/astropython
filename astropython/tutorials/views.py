@@ -39,8 +39,6 @@ def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(model)
     exclude_fields=['slug','authors','state','hits']
-    if model==SeriesTutorial:
-        exclude_fields=['slug','authors','tut_series']
     if 'slug' in kwargs:
         obj=model.objects.get(slug=kwargs['slug'])
         if ((not request.user in obj.authors.all()) or (obj.state=="submitted") ):
@@ -67,13 +65,9 @@ def create(request,section,**kwargs):
                 slug=slugify(instance.title)
                 while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
                     slug=slug+str(random.randrange(1,1000+1))
-                if model != SeriesTutorial:
-                    instance.state="submitted"
+                instance.state="submitted"
             instance.slug=slug
             instance.save()
-            if model==SeriesTutorial:
-                obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
-                instance.tut_series=obj
             try:
                 user=request.user
                 instance.authors.add(request.user)
@@ -82,8 +76,7 @@ def create(request,section,**kwargs):
                 instance.authors.add(u[0])
                 user=u[0]
             form.save_m2m()
-            if model != SeriesTutorial:
-                automoderate(instance,user)
+            automoderate(instance,user)
             return render(request,'tutorials/complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
     return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
