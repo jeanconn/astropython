@@ -57,6 +57,8 @@ def populate(path_localdata,obj):
                         date=s
             t.title=title#Set the title
             t.body=desc#Add the body
+            t.input_type="WYSIWYG"
+            t.state="submitted"
             try:
                 t.slug=slugify(title)#Generate slug
                 t.save()#Save the current state
