@@ -41,16 +41,21 @@ def create(request,section,**kwargs):
     exclude_fields=['slug','authors','state','hits']
     if model==SeriesTutorial:
         exclude_fields=['slug','authors','tut_series']
-    form = PostForm(model,exclude_fields,'create',request.POST or None)
+    if 'slug' in kwargs:
+        obj=model.objects.get(slug=kwargs['slug'])
+        form = PostForm(model,exclude_fields,'create',request.POST or None,instance=obj)
+    else:
+        form = PostForm(model,exclude_fields,'create',request.POST or None)
     context = RequestContext(request)
     if request.method=="POST":
         if 'save' in request.POST:
             mode="saved"
             for field in form.fields:
                 form.fields[field].required = False
-            slug="%0.12d" % random.randint(0,999999999999)
-            while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+            if 'slug' not in kwargs:
                 slug="%0.12d" % random.randint(0,999999999999)
+                while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+                    slug="%0.12d" % random.randint(0,999999999999)
         if form.is_valid():
             instance=form.save(commit=False)
             if 'submit' in request.POST:
@@ -60,7 +65,10 @@ def create(request,section,**kwargs):
                     slug=slug+str(random.randrange(1,1000+1))
                 if model != SeriesTutorial:
                     instance.state="submitted"
-            instance.slug=slug
+            if 'slug' not in kwargs:
+                instance.slug=slug
+            else:
+                slug=kwargs['slug']
             instance.save()
             if model==SeriesTutorial:
                 obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
