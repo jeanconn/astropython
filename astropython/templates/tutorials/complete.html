@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+{{name}}:
+{% endblock %}
+{% block styles %}
+{% endblock %}
+{% block content %}
+{% include 'tutorials/navbar.html' %}
+<div class="container mtb">
+<div class="row">
+	<! --LIST-->
+	<div class="col-lg-12">
+		<div style="text-align:center;color:orange">  
+			<h2>Your post has been {{mode}} !</h2>
+			<img src='{% static "img/complete_icon.png" %}' height="100px" width="100px"> 
+			{% if mode == "submitted" %}
+			<p> Access it <a href="/{{section}}/{{slug}}">here</a> after post is approved!</p>
+			{% else %}
+			<p> Come back later and complete it <a href="/{{section}}/{{slug}}">here</a>!</p>
+			{% endif %}
+			<p><a href="/">Return to Home</a></p>
+			<p><a href="/{{section}}">Return to Section Homepage</a></p>
+		</div>
+	</div><! --/col-lg-8 -->
+</div><! --/row -->
+</div><! --/container -->
+
+
+{% endblock %}

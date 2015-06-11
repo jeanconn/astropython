@@ -52,6 +52,7 @@ def create(request,section,**kwargs):
     context = RequestContext(request)
     if request.method=="POST":
         if 'save' in request.POST:
+            mode="saved"
             for field in form.fields:
                 form.fields[field].required = False
             slug="%0.12d" % random.randint(0,999999999999)
@@ -60,6 +61,7 @@ def create(request,section,**kwargs):
         if form.is_valid():
             instance=form.save(commit=False)
             if 'submit' in request.POST:
+                mode="submitted"
                 slug=slugify(instance.title)
                 while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
                     slug=slug+str(random.randrange(1,1000+1))
@@ -80,7 +82,7 @@ def create(request,section,**kwargs):
             form.save_m2m()
             if model != SeriesTutorial:
                 automoderate(instance,user)
-            return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
+            return render(request,'tutorials/complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
     return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
 
