@@ -88,7 +88,6 @@ To view a single model instance
 def single(request,section,slug,**kwargs):
     model=get_model(section)
     obj=model.objects.get(slug=slug)
-    edit_field=[]
     context = RequestContext(request)
     if(model != SeriesTutorial):
         obj.hits = obj.hits +1
@@ -99,16 +98,18 @@ def single(request,section,slug,**kwargs):
                 edit_field="__all__"
             else:
                 edit_field=edit.split(',')
-            return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':PostForm(model,edit_field,'edit',instance=obj),"mode":"edit"},context)
-    elif request.method=="POST":
-        form= PostForm(model,edit_field,'edit',request.POST,instance=obj)
+            form= PostForm(model,edit_field,'edit',instance=obj)
+            request.session['edit_field']=edit_field
+            return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
+    if request.method=="POST":
+        form= PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
         if form.is_valid():
             instance=form.save(commit=False)
             instance.save()
             form.save_m2m()
             automoderate(instance,request.user)
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
-    return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':PostForm(model,edit_field,'edit',instance=obj),"mode":"display"},context)
+    return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
 
 
 def single_series(request,slug):

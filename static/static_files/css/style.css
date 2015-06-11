@@ -306,6 +306,7 @@ a:focus {
 
 #titlewrap {
 	background: #ffe100;
+	min-height:100px;
 	margin-top: 60px;
 	margin-bottom: 60px;
 	padding-top: 25px;

@@ -14,7 +14,12 @@ TITLE WRAP
 <div id="titlewrap">
 <div class="container">
 	<div class="row">
+		<div style="position:absolute">
 		<h3>{{name}}</h3>
+		</div>
+		<div style="position: relative;right: 50px;margin-top:5px">
+		<a href="../{{section}}/create"><img src='{% static "img/add_new.png" %}' height="50px" width="50px" style="position: absolute;right: 0px;"> </a>
+		</div>
 	</div><!-- /row -->
 </div> <!-- /container -->
 </div><!-- /titlewrap -->
@@ -32,7 +37,7 @@ BLOG CONTENT
 			<p><a href="create">Create one here !</a></p>
 		{% endif %}
 		{% for single_obj in obj %}
-			<a href="http://amanjhunjhunwala.pythonanywhere.com/{{section}}/{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
+			<a href="../{{section}}/{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
 			<p><csmall>Posted:{{single_obj.created}}</csmall> |<csmall2>By:
 				{% for users in single_obj.authors.all %}
 					{{users.username}}
