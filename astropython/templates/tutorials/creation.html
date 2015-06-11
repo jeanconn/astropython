@@ -11,8 +11,8 @@
 
 {% load crispy_forms_tags %}
 {% block jquery %}
-	$("#id_input_type").change(function(){
-		ch=$("#id_input_type option:selected").val()
+	function changeEditor(){
+	ch=$("#id_input_type option:selected").val()
 		if (ch=="WYSIWYG")
 		{
 			$('#id_body').markItUpRemove();  
@@ -24,7 +24,11 @@
 			}
 			$("#id_body").markItUp(mySettings);
 		}
+	}
+	$("#id_input_type").change(function(){
+		changeEditor();
 		})
+	changeEditor();
 {% endblock %}
 
 {% block js %}

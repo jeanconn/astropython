@@ -43,6 +43,8 @@ def create(request,section,**kwargs):
         exclude_fields=['slug','authors','tut_series']
     if 'slug' in kwargs:
         obj=model.objects.get(slug=kwargs['slug'])
+        if ((not request.user in obj.authors.all()) or (obj.state=="submitted") ):
+            raise Http404
         form = PostForm(model,exclude_fields,'create',request.POST or None,instance=obj)
     else:
         form = PostForm(model,exclude_fields,'create',request.POST or None)
