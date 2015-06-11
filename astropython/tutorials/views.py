@@ -71,13 +71,15 @@ def create(request,section,**kwargs):
                 obj=TutorialSeries.objects.get(slug=kwargs['series_slug'])
                 instance.tut_series=obj
             try:
+                user=request.user
                 instance.authors.add(request.user)
             except:
                 u=User.objects.get_or_create(username="Anonymous")
                 instance.authors.add(u[0])
+                user=u[0]
             form.save_m2m()
             if model != SeriesTutorial:
-                automoderate(instance,request.user)
+                automoderate(instance,user)
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
 
@@ -107,7 +109,11 @@ def single(request,section,slug,**kwargs):
             instance=form.save(commit=False)
             instance.save()
             form.save_m2m()
-            automoderate(instance,request.user)
+            try:
+                automoderate(instance,request.user)
+            except:
+                u=User.objects.get_or_create(username="Anonymous")
+                automoderate(instance,u[0])
             return HttpResponseRedirect(reverse('all',kwargs={'section':section,'display_type':'latest'}))
     return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
 
