@@ -89,8 +89,8 @@ def create(request,section,**kwargs):
                 user=u[0]
             form.save_m2m()
             automoderate(instance,user)
-            return render(request,'tutorials/complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
-    return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
+            return render(request,'complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
+    return render(request,'creation.html',{'form':form,'name':name},context)
 
 
 """
@@ -114,7 +114,7 @@ def single(request,section,slug,**kwargs):
                 edit_field=edit.split(',')
             form= PostForm(model,edit_field,'edit',instance=obj)
             request.session['edit_field']=edit_field
-            return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
+            return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
     if request.method=="POST":
         form= PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
         if form.is_valid():
@@ -127,7 +127,7 @@ def single(request,section,slug,**kwargs):
                 u=User.objects.get_or_create(username="Anonymous")
                 automoderate(instance,u[0])
             return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
-    return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
+    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
 
 
 def single_series(request,slug):
@@ -136,7 +136,7 @@ def single_series(request,slug):
     series.hits=series.hits+1
     series.save()
     context = {'obj':obj,'series':series,'name':series.title,'length':len(obj)}
-    return render(request,'tutorials/single-series.html',context)
+    return render(request,'single-series.html',context)
 
 
 def vote(request,section,choice,slug):
@@ -175,4 +175,4 @@ def all(request,section,display_type,**kwargs):
     except:
         obj=paginator.page(1)
     context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
-    return render(request,'tutorials/all.html',context)
+    return render(request,'all.html',context)
