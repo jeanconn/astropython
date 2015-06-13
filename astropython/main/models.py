@@ -20,6 +20,7 @@ PACKAGE_CHOICES = (
 
 class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body = models.TextField(blank=False)
