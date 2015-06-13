@@ -15,8 +15,7 @@
     <!-- Custom styles for this template-->
 	<link rel='stylesheet' href='{% static "css/style.css" %}' >
 	<link rel='stylesheet' href='{% static "css/font-awesome.min.css" %}' >
-	{% block styles %}
-	{% endblock %}
+
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -37,9 +36,10 @@
 	})
 	</script>
     <script src='{%static "js/modernizr.js"%}'></script>
-	
+	{% block styles %}
+	{% endblock %}
   </head>
-	<body>
+  <body>
 		{% block content %}
 		{% endblock %}
 		
@@ -51,5 +51,5 @@
 		<script src='{%static "js/bootstrap.min.js"%}'></script>
 		<script src='{%static "js/retina-1.1.0.js"%}'></script>
 		<script src='{%static "js/custom.js"%}'></script>
-	</body>
+	<body>
 </html>
