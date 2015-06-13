@@ -86,7 +86,13 @@ class EducationalResource(Tutorial):
     def __unicode__(self):
 		return self.title
 
+
+class Wiki(Tutorial):
+
+    def __unicode__(self):
+		return self.title
 secretballot.enable_voting_on(Tutorial)
 secretballot.enable_voting_on(TutorialSeries)
 secretballot.enable_voting_on(EducationalResource)
 secretballot.enable_voting_on(CodeSnippet)
+secretballot.enable_voting_on(Wiki)

@@ -20,8 +20,8 @@ def get_model(name):
         return Tutorial
     elif name=='series':
         return TutorialSeries
-    else:
-        return SeriesTutorial
+    elif name=='wiki':
+        return Wiki
 
 def get_name(model):
     if model==Tutorial:
@@ -32,6 +32,8 @@ def get_name(model):
         return "Educational Resources"
     elif model== TutorialSeries:
         return "Tutorial Series"
+    elif model == Wiki:
+        return "Wiki Page"
     else:
         return "Tutorial for Series"
 
