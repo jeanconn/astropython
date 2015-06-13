@@ -13,15 +13,13 @@ import secretballot
 
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
-"""
-Base Model is an abstract model i.e. It doesn't physically exist in our DB
-but merely acts as a common wireframe to create child models. It contains common
-properties that we want the child models to have.
-"""
+PACKAGE_CHOICES = (
+	('Recommended', 'Recommended'),
+	('Others', 'Others'),
+ )
 
-class Tutorial(models.Model):
+class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body = models.TextField(blank=False)
@@ -31,7 +29,6 @@ class Tutorial(models.Model):
     hits = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
-    published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
 
     def __unicode__(self):
 		return self.title
@@ -39,10 +36,31 @@ class Tutorial(models.Model):
     def get_absolute_url(self):
         return reverse('tutorials.views.single',kwargs={'section':'tutorials','slug':self.slug})
 
-class CodeSnippet(Tutorial):
+    class Meta:
+        abstract=True
 
-    def __unicode__(self):
-		return self.title
+class Tutorial(BasePost):
+    pass
+
+class Snippet(BasePost):
+    pass
+
+class Wiki(BasePost):
+    pass
+
+class Announcement(BasePost):
+    pass
+
+class News(BasePost):
+    pass
+
+class Blog(BasePost):
+    pass
+
+class Package(BasePost):
+    category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others")
+    homepage=models.URLField(blank=True)#URL : homepage of the packages
+    docs = models.URLField(blank=True)
 
 class SeriesTutorial(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
@@ -74,7 +92,7 @@ class TutorialSeries(models.Model):
     def __unicode__(self):
 		return self.title
 
-class EducationalResource(Tutorial):
+class EducationalResource(BasePost):
     start_date = models.DateTimeField(null=True, blank=True)#Date the course starts
     instructor_names = models.CharField(max_length=400)#Names of Instructors
     website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
@@ -86,13 +104,41 @@ class EducationalResource(Tutorial):
     def __unicode__(self):
 		return self.title
 
+"""
+Events model are associated with any future events that are planned
+"""
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    creator = models.ForeignKey(User,blank=True,null=True)
+    body =models.TextField(blank=False)
+    slug = models.SlugField(unique=True)
+    state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
+    tags=TaggableManager()
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
+    start_date_time = models.DateTimeField()#start time
+    end_date_time = models.DateTimeField(blank=True, null=True)#When dies the event end
+    all_day_event = models.BooleanField(default=False)#If it is an all day event
 
-class Wiki(Tutorial):
+    def __unicode__(self): #Format of representation of event
+        date_format = '%Y-%m-%d %I:%M %p'
+        if self.all_day_event:
+            date_format = '%Y-%m-%d'
+        return '%(n)s (%(d)s)' % {'n': self.name, 'd': self.start_date_time.strftime(date_format), }
 
-    def __unicode__(self):
-		return self.title
+    def active(self):#IF event is active
+        if self.start_date_time and self.end_date_time:
+            t = timezone.now()
+            return self.start_date_time <= t and self.end_date_time >= t
+        return False
+    active.boolean = True
+
 secretballot.enable_voting_on(Tutorial)
+secretballot.enable_voting_on(Snippet)
+secretballot.enable_voting_on(Wiki)
+secretballot.enable_voting_on(Announcement)
+secretballot.enable_voting_on(News)
+secretballot.enable_voting_on(Blog)
+secretballot.enable_voting_on(Event)
 secretballot.enable_voting_on(TutorialSeries)
 secretballot.enable_voting_on(EducationalResource)
-secretballot.enable_voting_on(CodeSnippet)
-secretballot.enable_voting_on(Wiki)

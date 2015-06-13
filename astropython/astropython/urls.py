@@ -14,13 +14,9 @@ urlpatterns = patterns('',
     url(r'^search/', include('haystack.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')), #for social auth urls
     url(r'^admin/', include(admin.site.urls)), #additional admin urls
-    url(r'^$', 'home.views.home', name='home'),#home url
-    url(r'^roll/', 'home.views.roll', name='roll'),#Sample Templates
-    url(r'^single/', 'home.views.single', name='single'),#Sample Templates
-    url(r'^logout/', 'home.views.logout_view', name='logout'),#Sample Templates
-    url(r'',include('tutorials.urls')),#Teach and Learn
-    #url(r'^blogs/', include('blog.urls')),
-    #url(r'^packages/', include('packages.urls')),
+    url(r'^$', 'main.views.home', name='home'),#home url
+    url(r'^logout/', 'main.views.logout_view', name='logout'),#Sample Templates
+    url(r'',include('main.urls')),#Teach and Learn
 )
 
 #Access Static Files if in development

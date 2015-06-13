@@ -1,4 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext
+from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 
@@ -36,6 +37,15 @@ def get_name(model):
         return "Wiki Page"
     else:
         return "Tutorial for Series"
+
+def home(request):
+	template = 'index.html'
+	context = locals()
+	return render(request, template, context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
 
 def create(request,section,**kwargs):
     model=get_model(section)

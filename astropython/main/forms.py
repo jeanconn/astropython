@@ -2,7 +2,7 @@
 Contains forms that we shall use in a particular app
 """
 from django import forms
-from .models import CodeSnippet, Tutorial
+from .models import *
 from django.contrib.admin.widgets import AdminDateWidget
 from astropython.settings import INPUT_CHOICES
 

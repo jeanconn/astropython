@@ -1,7 +1,7 @@
 from django.conf.urls import patterns,url,include
 
-from .models import Tutorial,CodeSnippet,EducationalResource,TutorialSeries,SeriesTutorial
-from .views import create,single,vote,all,single_series
+from .models import *
+from .views import *
 
 urlpatterns = patterns('',
     url(r'^(?P<section>resources|snippets|tutorials|wiki)/create$',create,name="create"),
