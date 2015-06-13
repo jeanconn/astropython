@@ -4,27 +4,23 @@
 {{name}} Creation: 
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/skins/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/sets/default/style.css" />
 {{form.media}}
 {% endblock %}
 
 {% load crispy_forms_tags %}
 {% block jquery %}
 	function changeEditor(){
-	ch=$("#id_input_type option:selected").val()
+	ch=$("#id_input_type option:selected").val();
 		if (ch=="WYSIWYG")
 		{
-			$('#id_body').markItUpRemove();  
+			editor.unload(function () {
+				console.log("Editor unloaded.")});
 			CKEDITOR.replace( 'body' );
 		}else{
 			for(name in CKEDITOR.instances)
 			{
 				CKEDITOR.instances[name].destroy()
-			}
-			$("#id_body").markItUp(mySettings);
-		}
-	}
+			}};}
 	$("#id_input_type").change(function(){
 		changeEditor();
 		})
@@ -33,10 +29,78 @@
 
 {% block js %}
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
-<script type="text/javascript" src="{{STATIC_URL}}markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
 {% endblock %}
 {% block content %}
+<script>
+			var opts = {
+				  container: 'epiceditor',
+				  textarea: null,
+				  basePath: 'epiceditor',
+				  clientSideStorage: true,
+				  localStorageName: 'epiceditor',
+				  useNativeFullscreen: true,
+				  parser: marked,
+				  file: {
+					name: 'epiceditor',
+					defaultContent: '',
+					autoSave: 100
+				  },
+				  theme: {
+					base: 'http://127.0.0.1:8080{{STATIC_URL}}epiceditor/epiceditor/themes/base/epiceditor.css',
+					preview: 'http://127.0.0.1:8080/tutorials/epiceditor/epiceditor/themes/preview/github.css',
+					editor: 'http://127.0.0.1:8080{{STATIC_URL}}epiceditor/epiceditor/themes/editor/epic-dark.css'
+				  },
+				  button: {
+					preview: true,
+					fullscreen: true,
+					bar: "auto"
+				  },
+				  focusOnLoad: false,
+				  shortcut: {
+					modifier: 18,
+					fullscreen: 70,
+					preview: 80
+				  },
+				  string: {
+					togglePreview: 'Toggle Preview Mode',
+					toggleEdit: 'Toggle Edit Mode',
+					toggleFullscreen: 'Enter Fullscreen'
+				  },
+				  autogrow: true
+				};
+				var previewer;
+
+			var editor = new EpicEditor(opts).load(function() {
+				previewer = this.getElement('previewer');
+
+				// Prettify JS
+				var scriptTag = previewer.createElement('script');
+				scriptTag.src = 'http://127.0.0.1:8080{{STATIC_URL}}google-code-prettify/prettify.js';
+
+				// Prettify CSS
+				var cssTag = previewer.createElement('link');
+				cssTag.rel = 'stylesheet';
+				cssTag.type = 'text/css';
+				cssTag.href = 'http://127.0.0.1:8080{{STATIC_URL}}google-code-prettify/prettify.css';
+
+				// Add JS / CSS
+				previewer.body.appendChild(scriptTag);
+				previewer.head.appendChild(cssTag);
+			});
+
+			editor.on('preview', function() {
+				// Add necessary classes to <code> elements
+				var previewerBody = previewer.body;
+				var codeBlocks = previewerBody.getElementsByTagName('code');
+
+				for (var i = 0; i < codeBlocks.length; i++)
+					codeBlocks[i].className += ' prettyprint';
+				console.log(previewer);
+				prettyPrint(null, previewerBody);
+				console.log("Finally!");
+			});
+			
+	</script>
 {% include 'tutorials/navbar.html' %}
 <!-- *****************************************************************************************************************
 TITLE WRAP
@@ -54,7 +118,8 @@ BLOG CONTENT
 
 <div class="container mtb">
 <div class="row">
-	<div class="col-lg-8">
+	<div class="col-lg-12">
+	<div id="epiceditor"></div>
 	<form method="POST">{% csrf_token %}
 	{{form|crispy}}
 	<button type="submit" name="submit" class="btn btn-warning">Publish</button>
@@ -65,4 +130,5 @@ BLOG CONTENT
 	</div><! --/col-lg-8 -->
 </div>
 </div>
+<script src="{{STATIC_URL}}epiceditor/js/epiceditor.js"></script>
 {% endblock %}
