@@ -1,6 +1,5 @@
 import random
 from slugify import slugify
-import secretballot
 
 from .forms import *
 from .models import *
@@ -66,5 +65,39 @@ def check_editing_permission(user,obj):
         return False
     return True
 
-def save_instance():
-    pass
+def generate_temp_slug(model):
+    slug="%0.12d" % random.randint(0,999999999999)
+    while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+        slug="%0.12d" % random.randint(0,999999999999)
+    return slug
+
+def generate_final_slug(model,title):
+    slug=slugify(title)
+    while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
+        slug=slug+str(random.randrange(1,1000+1))
+    return slug
+
+def get_slug(request,model,title,kwargs):
+    if 'save' in request.POST:
+        if 'slug' not in kwargs:
+            return generate_temp_slug(model)
+        else:
+            return kwargs['slug']
+    elif 'submit' in request.POST:
+        return generate_final_slug(model,title)
+
+def set_state(request,form):
+    if 'submit' in request.POST:
+        return "submitted"
+    elif 'save' in request.POST:
+        for field in form.fields:
+            form.fields[field].required = False
+        return "raw"
+
+def get_user(request,):
+    user=request.user
+    if user.is_authenticated():
+        return user
+    else:
+        u=User.objects.get_or_create(username="Anonymous")
+        return u[0]

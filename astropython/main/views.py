@@ -5,8 +5,6 @@ from django.core.urlresolvers import reverse
 
 from moderation.helpers import automoderate
 
-import random
-from slugify import slugify
 import secretballot
 
 from .forms import *
@@ -27,39 +25,20 @@ def create(request,section,**kwargs):
     name =get_name(section)
     exclude_fields = get_exclude_fields(model)
     form = get_form(request,exclude_fields,model,kwargs)
-    context = RequestContext(request)
     if request.method=="POST":
-        if 'save' in request.POST:
-            mode="saved"
-            for field in form.fields:
-                form.fields[field].required = False
-            if 'slug' not in kwargs:
-                slug="%0.12d" % random.randint(0,999999999999)
-                while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
-                    slug="%0.12d" % random.randint(0,999999999999)
-            else:
-                slug=kwargs['slug']
+        state=set_state(request,form)
         if form.is_valid():
             instance=form.save(commit=False)
-            if 'submit' in request.POST:
-                mode="submitted"
-                slug=slugify(instance.title)
-                while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):
-                    slug=slug+str(random.randrange(1,1000+1))
-                instance.state="submitted"
+            slug = get_slug(request,model,instance.title,kwargs)
+            user=get_user(request)
+            instance.state=state
             instance.slug=slug
             instance.save()
-            try:
-                user=request.user
-                instance.authors.add(request.user)
-            except:
-                u=User.objects.get_or_create(username="Anonymous")
-                instance.authors.add(u[0])
-                user=u[0]
+            instance.authors.add(user)
             form.save_m2m()
             automoderate(instance,user)
-            return render(request,'complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
-    return render(request,'creation.html',{'form':form,'name':name},context)
+            return render(request,'complete.html',{'section':section,'slug':slug,'state':state,'name':name})
+    return render(request,'creation.html',{'form':form,'name':name})
 
 """
 To view a single model instance
