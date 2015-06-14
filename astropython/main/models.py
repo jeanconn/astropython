@@ -34,34 +34,46 @@ class BasePost(models.Model):
     def __unicode__(self):
 		return self.title
 
-    def get_absolute_url(self):
-        return reverse('tutorials.views.single',kwargs={'section':'tutorials','slug':self.slug})
-
     class Meta:
         abstract=True
 
 class Tutorial(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'tutorials','slug':self.slug})
 
 class Snippet(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'snippets','slug':self.slug})
 
 class Wiki(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'wiki','slug':self.slug})
 
 class Announcement(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'announcements','slug':self.slug})
 
 class News(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'news','slug':self.slug})
 
 class Blog(BasePost):
-    pass
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'blog','slug':self.slug})
 
 class Package(BasePost):
     category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others")
     homepage=models.URLField(blank=True)#URL : homepage of the packages
     docs = models.URLField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'packages','slug':self.slug})
 
 class SeriesTutorial(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
@@ -102,19 +114,24 @@ class EducationalResource(BasePost):
     faq=models.TextField(blank=True)#FAQ if any
     language = models.CharField(max_length=200,blank=True)#Language in which course is to be conducted
 
-    def __unicode__(self):
-		return self.title
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'education','slug':self.slug})
 
 """
 Events model are associated with any future events that are planned
 """
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    creator = models.ForeignKey(User,blank=True,null=True)
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
+    authors = models.ForeignKey(User,blank=True,null=True,related_name="authors")
+    attendee = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body =models.TextField(blank=False)
+    location = models.CharField(max_length=1000,blank=True)
+    website = models.URLField(blank=True)
     slug = models.SlugField(unique=True)
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw')
     tags=TaggableManager()
+    hits = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
     start_date_time = models.DateTimeField()#start time
@@ -133,6 +150,9 @@ class Event(models.Model):
             return self.start_date_time <= t and self.end_date_time >= t
         return False
     active.boolean = True
+
+    def get_absolute_url(self):
+        return reverse('main.views.single',kwargs={'section':'Event','slug':self.slug})
 
 secretballot.enable_voting_on(Tutorial)
 secretballot.enable_voting_on(Snippet)
