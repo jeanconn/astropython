@@ -1,4 +1,5 @@
 from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext
+from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 
@@ -12,34 +13,57 @@ from .forms import *
 from .models import *
 
 def get_model(name):
-    if name=='resources':
-        return EducationalResource
-    elif name=='snippets':
-        return CodeSnippet
-    elif name=='tutorials':
+    if name=='tutorials':
         return Tutorial
-    elif name=='series':
-        return TutorialSeries
-    elif name=='wiki':
+    elif name=="snippets":
+        return Snippet
+    elif name=="education":
+        return EducationalResource
+    elif name=="wiki":
         return Wiki
+    elif name=="announcements":
+        return Announcement
+    elif name=="news":
+        return News
+    elif name=="blog":
+        return Blog
+    elif name=="packages":
+        return Package
+    elif name=="events":
+        return Event
 
-def get_name(model):
-    if model==Tutorial:
+def get_name(name):
+    if name=='tutorials':
         return "Tutorials"
-    elif model == CodeSnippet:
+    elif name=="snippets":
         return "Code Snippets"
-    elif model== EducationalResource:
+    elif name=="education":
         return "Educational Resources"
-    elif model== TutorialSeries:
-        return "Tutorial Series"
-    elif model == Wiki:
-        return "Wiki Page"
-    else:
-        return "Tutorial for Series"
+    elif name=="wiki":
+        return "Wiki Pages"
+    elif name=="announcements":
+        return "Announcements"
+    elif name=="news":
+        return "News Articles"
+    elif name=="blog":
+        return "BLog Posts"
+    elif name=="packages":
+        return "Packages"
+    elif name=="events":
+        return "Events"
+
+def home(request):
+	template = 'index.html'
+	context = locals()
+	return render(request, template, context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
 
 def create(request,section,**kwargs):
     model=get_model(section)
-    name =get_name(model)
+    name =get_name(section)
     exclude_fields=['slug','authors','state','hits']
     if 'slug' in kwargs:
         obj=model.objects.get(slug=kwargs['slug'])
@@ -79,8 +103,8 @@ def create(request,section,**kwargs):
                 user=u[0]
             form.save_m2m()
             automoderate(instance,user)
-            return render(request,'tutorials/complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
-    return render(request,'tutorials/creation.html',{'form':form,'name':name},context)
+            return render(request,'complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
+    return render(request,'creation.html',{'form':form,'name':name},context)
 
 
 """
@@ -104,7 +128,7 @@ def single(request,section,slug,**kwargs):
                 edit_field=edit.split(',')
             form= PostForm(model,edit_field,'edit',instance=obj)
             request.session['edit_field']=edit_field
-            return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
+            return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
     if request.method=="POST":
         form= PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
         if form.is_valid():
@@ -117,7 +141,7 @@ def single(request,section,slug,**kwargs):
                 u=User.objects.get_or_create(username="Anonymous")
                 automoderate(instance,u[0])
             return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
-    return render(request,'tutorials/single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
+    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
 
 
 def single_series(request,slug):
@@ -126,7 +150,7 @@ def single_series(request,slug):
     series.hits=series.hits+1
     series.save()
     context = {'obj':obj,'series':series,'name':series.title,'length':len(obj)}
-    return render(request,'tutorials/single-series.html',context)
+    return render(request,'single-series.html',context)
 
 
 def vote(request,section,choice,slug):
@@ -150,7 +174,7 @@ General listing of all sections
 
 def all(request,section,display_type,**kwargs):
     model=get_model(section)
-    name=get_name(model)
+    name=get_name(section)
     if display_type=="all":
         obj_list=model.objects.all().filter(state="submitted")
     elif display_type=="latest":
@@ -165,4 +189,4 @@ def all(request,section,display_type,**kwargs):
     except:
         obj=paginator.page(1)
     context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
-    return render(request,'tutorials/all.html',context)
+    return render(request,'all.html',context)

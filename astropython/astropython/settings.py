@@ -45,10 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'moderation', # Adding moderations
-    'home', # Central app
-    'blog', #Blogs Section
-    'packages', #Packages section
-    'tutorials',# Tutorial section
+    'main',
     'social.apps.django_app.default', #Social  Authentication
 )
 

@@ -37,7 +37,7 @@
 <script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
 {% endblock %}
 {% block content %}
-{% include 'tutorials/navbar.html' %}
+{% include 'navbar.html' %}
 <!-- *****************************************************************************************************************
 TITLE WRAP
 ***************************************************************************************************************** -->
@@ -54,7 +54,7 @@ BLOG CONTENT
 
 <div class="container mtb">
 <div class="row">
-	<div class="col-lg-8">
+	<div class="col-lg-12">
 	<form method="POST">{% csrf_token %}
 	{{form|crispy}}
 	<button type="submit" name="submit" class="btn btn-warning">Publish</button>

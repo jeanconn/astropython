@@ -2,9 +2,7 @@
 Contains forms that we shall use in a particular app
 """
 from django import forms
-from .models import CodeSnippet, Tutorial
-from django.contrib.admin.widgets import AdminDateWidget
-from astropython.settings import INPUT_CHOICES
+from .models import *
 
 def PostForm(model_type,form_fields,action,*args,**kwargs):
     class PostForm(forms.ModelForm):
