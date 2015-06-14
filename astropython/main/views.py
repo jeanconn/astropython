@@ -11,46 +11,7 @@ import secretballot
 
 from .forms import *
 from .models import *
-
-def get_model(name):
-    if name=='tutorials':
-        return Tutorial
-    elif name=="snippets":
-        return Snippet
-    elif name=="education":
-        return EducationalResource
-    elif name=="wiki":
-        return Wiki
-    elif name=="announcements":
-        return Announcement
-    elif name=="news":
-        return News
-    elif name=="blog":
-        return Blog
-    elif name=="packages":
-        return Package
-    elif name=="events":
-        return Event
-
-def get_name(name):
-    if name=='tutorials':
-        return "Tutorials"
-    elif name=="snippets":
-        return "Code Snippets"
-    elif name=="education":
-        return "Educational Resources"
-    elif name=="wiki":
-        return "Wiki Pages"
-    elif name=="announcements":
-        return "Announcements"
-    elif name=="news":
-        return "News Articles"
-    elif name=="blog":
-        return "BLog Posts"
-    elif name=="packages":
-        return "Packages"
-    elif name=="events":
-        return "Events"
+from .utilities import *
 
 def home(request):
 	template = 'index.html'
@@ -64,14 +25,8 @@ def logout_view(request):
 def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(section)
-    exclude_fields=['slug','authors','state','hits']
-    if 'slug' in kwargs:
-        obj=model.objects.get(slug=kwargs['slug'])
-        if ((not request.user in obj.authors.all()) or (obj.state=="submitted") ):
-            raise Http404
-        form = PostForm(model,exclude_fields,'create',request.POST or None,instance=obj)
-    else:
-        form = PostForm(model,exclude_fields,'create',request.POST or None)
+    exclude_fields = get_exclude_fields(model)
+    form = get_form(request,exclude_fields,model,kwargs)
     context = RequestContext(request)
     if request.method=="POST":
         if 'save' in request.POST:
@@ -105,7 +60,6 @@ def create(request,section,**kwargs):
             automoderate(instance,user)
             return render(request,'complete.html',{'section':section,'slug':slug,'mode':mode,'name':name},context)
     return render(request,'creation.html',{'form':form,'name':name},context)
-
 
 """
 To view a single model instance
