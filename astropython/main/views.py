@@ -47,8 +47,6 @@ def single(request,section,slug,**kwargs):
     model=get_model(section)
     name=get_name(section)
     obj=model.objects.get(slug=slug)
-    #obj.hits = obj.hits +1
-    #obj.save()
     mode="display"
     if request.method=="GET" and 'edit' in request.GET:
         edit=request.GET['edit']
@@ -65,6 +63,7 @@ def single(request,section,slug,**kwargs):
         mode="edit"
         if form.is_valid():
             instance=form.save(commit=False)
+            instance.hits=instance.hits + 1
             user=get_user(request)
             instance.save()
             form.save_m2m()
