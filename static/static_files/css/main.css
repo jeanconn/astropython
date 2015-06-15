@@ -516,19 +516,21 @@ ul.sub-menu {
 
 #home-slider .slider-house {
   position: absolute;
-  right: 0;
+  right: 100px;
   bottom: 0;
 }
 
 .animate-in .slider-house {
-  -webkit-animation: fadeInDown 700ms ease-in-out 200ms both;
-  animation: fadeInDown 700ms ease-in-out 200ms both;
+  -webkit-animation: fadeInDown 700ms ease-in-out 3200ms both;
+  animation: fadeInDown 700ms ease-in-out 3200ms both;
 }
 
 #home-slider .slider-circle1 {
   position: absolute;
-  right: 430px;
-  bottom: 210px;
+  height: 80px;
+  width:80px;
+  right: 50px;
+  bottom: 170px;
 }
 
 .animate-in .slider-circle1 {
@@ -536,19 +538,10 @@ ul.sub-menu {
   animation: bounceIn 500ms ease-in-out 900ms both;
 }
 
-#home-slider .slider-circle2 {
-  position: absolute;
-  right: 420px;
-  bottom: 245px;
-}
-
-.animate-in .slider-circle2 {
-  -webkit-animation: bounceIn 500ms ease-in-out 1100ms both;
-  animation: bounceIn 500ms ease-in-out 1100ms both;
-}
-
 #home-slider .slider-cloud1 {
   position: absolute;
+  height:100px;
+  width:100px;
   right: 290px;
   bottom: 250px;
 }
@@ -560,41 +553,50 @@ ul.sub-menu {
 
 #home-slider .slider-cloud2 {
   position: absolute;
+  height:140px;
+  width:140px;
   right: 375px;
   bottom: 330px;
 }
 
 .animate-in .slider-cloud2 {
-  -webkit-animation: bounceIn 500ms ease-in-out 1500ms both;
-  animation: bounceIn 500ms ease-in-out 1500ms both;
+  -webkit-animation: bounceIn 500ms ease-in-out 1700ms both;
+  animation: bounceIn 500ms ease-in-out 1700ms both;
 }
 
 #home-slider .slider-cloud3 {
   position: absolute;
+  height:150px;
+  width:150px;
   right: 75px;
   bottom: 300px;
 }
 
 .animate-in .slider-cloud3 {
-  -webkit-animation: bounceIn 500ms ease-in-out 1700ms both;
-  animation: bounceIn 500ms ease-in-out 1700ms both;
+  -webkit-animation: bounceIn 500ms ease-in-out 2100ms both;
+  animation: bounceIn 500ms ease-in-out 2100ms both;
 }
 
 #home-slider .slider-sun {
   position: absolute;
-  right: 190px;
-  bottom: 300px;
+  height:200px;
+  width:250px;
+  right: 500px;
+  bottom: 500px;
+  z-index:0;
 }
 
 .animate-in .slider-sun {
-  -webkit-animation: bounceIn 800ms ease-in-out 1900ms both;
-  animation: bounceIn 800ms ease-in-out 1900ms both;
+  -webkit-animation: bounceIn 800ms ease-in-out 2500ms both;
+  animation: bounceIn 800ms ease-in-out 2500ms both;
 }
 
 #home-slider .slider-cycle {
+  width: 100px;
+  height:100px;
   position: absolute;
   right: 500px;
-  bottom: 0;
+  bottom: 150px;
 }
 
 .animate-in .slider-cycle {
@@ -764,10 +766,10 @@ ul.sub-menu {
 .tour-button {
   background-image: url(../images/home/tour-icon2.png);
   height: 100%;
+  width:100%;
   background-repeat: no-repeat;
   position: absolute;
   width: 100%;
-  left: 0;
   background-position: 151px 4px;
 }
 
