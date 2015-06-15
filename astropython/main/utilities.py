@@ -50,7 +50,7 @@ def get_exclude_fields(model):
     else:
         return ['slug','authors','state','hits']
 
-def get_form(request,exclude_fields,model,kwargs):
+def get_create_form(request,exclude_fields,model,kwargs):
     if 'slug' in kwargs:
         obj=model.objects.get(slug=kwargs['slug'])
         if check_editing_permission(request.user,obj):
@@ -59,12 +59,26 @@ def get_form(request,exclude_fields,model,kwargs):
             raise Http404
     return PostForm(model,exclude_fields,'create',request.POST or None)
 
+def get_edit_form(request,model,obj):
+    edit=request.GET['edit']
+    if edit=="all":
+        edit_field="__all__"
+    else:
+        edit_field=edit.split(',')
+    request.session['edit_field']=edit_field
+    request.session.modified = True
+    return PostForm(model,edit_field,'edit',request.POST or None,instance=obj)
 
 def check_editing_permission(user,obj):
     if ((not user in obj.authors.all()) or (obj.state=="submitted") ):
         return False
     return True
 
+def check_viewing_permission(user,obj):
+    if(obj.state=="raw"):
+        if not request.user in obj.authors.all():
+            return False
+    return True
 def generate_temp_slug(model):
     slug="%0.12d" % random.randint(0,999999999999)
     while (model.objects.filter(slug=slug).exists() or model.unmoderated_objects.filter(slug=slug).exists()):

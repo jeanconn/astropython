@@ -24,7 +24,7 @@ def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(section)
     exclude_fields = get_exclude_fields(model)
-    form = get_form(request,exclude_fields,model,kwargs)
+    form = get_create_form(request,exclude_fields,model,kwargs)
     if request.method=="POST":
         state=set_state(request,form)
         if form.is_valid():
@@ -46,35 +46,24 @@ To view a single model instance
 def single(request,section,slug,**kwargs):
     model=get_model(section)
     obj=model.objects.get(slug=slug)
-    if(obj.state=="raw"):
-        if not request.user in obj.authors.all():
-            raise Http404
-    context = RequestContext(request)
-    if(model != SeriesTutorial):
-        obj.hits = obj.hits +1
+    obj.hits = obj.hits +1
     obj.save()
+    mode="display"
+    if not check_viewing_permission(request.user,obj):
+        raise Http404
     if request.method=="GET" and 'edit' in request.GET:
-            edit=request.GET['edit']
-            if edit=="all":
-                edit_field="__all__"
-            else:
-                edit_field=edit.split(',')
-            form= PostForm(model,edit_field,'edit',instance=obj)
-            request.session['edit_field']=edit_field
-            return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),'form':form,"mode":"edit"},context)
-    if request.method=="POST":
-        form= PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
+            form= get_edit_form(request,model,obj)
+            mode="edit"
+    elif request.method=="POST":
+        form = PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
         if form.is_valid():
             instance=form.save(commit=False)
             instance.save()
             form.save_m2m()
-            try:
-                automoderate(instance,request.user)
-            except:
-                u=User.objects.get_or_create(username="Anonymous")
-                automoderate(instance,u[0])
             return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
-    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":"display"},context)
+    else:
+        form=None
+    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form})
 
 
 def single_series(request,slug):
