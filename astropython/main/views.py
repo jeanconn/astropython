@@ -45,26 +45,34 @@ To view a single model instance
 """
 def single(request,section,slug,**kwargs):
     model=get_model(section)
+    name=get_name(section)
     obj=model.objects.get(slug=slug)
-    obj.hits = obj.hits +1
-    obj.save()
+    #obj.hits = obj.hits +1
+    #obj.save()
     mode="display"
-    if not check_viewing_permission(request.user,obj):
-        raise Http404
     if request.method=="GET" and 'edit' in request.GET:
-            form= get_edit_form(request,model,obj)
-            mode="edit"
+        edit=request.GET['edit']
+        if edit=="all":
+            edit_field="__all__"
+        else:
+            edit_field=edit.split(',')
+        request.session['edit_field']=edit_field
+        request.session.modified = True
+        form= PostForm(model,edit_field,'edit',instance=obj)
+        mode="edit"
     elif request.method=="POST":
-        form = PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
+        form= PostForm(model,request.session['edit_field'],'edit',request.POST,instance=obj)
+        mode="edit"
         if form.is_valid():
             instance=form.save(commit=False)
+            user=get_user(request)
             instance.save()
             form.save_m2m()
+            automoderate(instance,user)
             return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
     else:
         form=None
     return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form})
-
 
 def single_series(request,slug):
     series=TutorialSeries.objects.get(slug=slug)
