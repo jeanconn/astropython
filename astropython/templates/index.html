@@ -4,184 +4,152 @@
 Welcome to
 {% endblock %}
 {% block styles %}
-<link rel='stylesheet' href='{% static "css/home.css" %}' >
 {% endblock %}
 {% block content %}
-	<!-- *****************************************************************************************************************
-	 HEADERWRAP
-	 ***************************************************************************************************************** -->
-	<div id="headerwrap" style='background-image: url("{%static "img/wallpaper1.jpg"%}");background-size: 100%;'>
-		{% if user.is_authenticated %}
-			<div class="container">
-			<a href="{% url 'logout'%}">Logout</a>
-			</div>
-		{% endif %}
-	    <div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-					<h1><img src='{% static "img/logo.png" %}' height="60px" width="60px">   AstroPython</h1>
-				</div>
-			</div><!-- /row -->
-	    </div> <!-- /container -->
-		<br>
-		<br>
-		<br>
-		{% if user.is_authenticated %}
-		<div class="container_search">
-			<div class="row">
-				<div class="col-md-6 col-lg-offset-3">
-					<div id="custom-search-input">
-						<div class="input-group col-md-12">
-							<input type="text" class="form-control input-lg" placeholder="What are we looking for today,{{request.user.username}} ?" />
-							<span class="input-group-btn">
-								<button class="btn btn-info btn-lg" type="button">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
-						</div>
-				</div>
-				</div>
-			</div>
-		</div>
-		<div style="margin-top:200px">
-		  <a class="ghost-button-border-color" href="tutorials">Teach & Learn</a>
-		  <a class="ghost-button-border-color" href="#">Forum</a>
-		  <a class="ghost-button-border-color" href="#">Blog</a>
-		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
-		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
-		</div>
-		{% else %}
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5" id="custom-search-input" >
-						<div class="input-group" style="margin:10px;">
-							<input type="text" class="form-control input-lg" placeholder="Username" />
-							<span class="input-group-btn">
-								<button class="btn btn-info btn-lg" type="button">
-									<i class="glyphicon glyphicon-user"></i>
-								</button>
-							</span>
-						</div>
-						<br/>
-						<div class="input-group" style="margin:10px;">
-							<input type="password" class="form-control input-lg" placeholder="Password" />
-							<span class="input-group-btn">
-								<button class="btn btn-info btn-lg" type="button">
-									<i class="glyphicon glyphicon-lock"></i>
-								</button>
-							</span>
-						</div>
-						<div class="input-group" style="margin:10px;">
-						<div class="btn-block">
-								<button class="btn btn-success btn-block" type="submit" style="background:white;margin-left:60%;margin-top:10px;padding-left:75px;padding-right:75px;padding-top:15px;padding-bottom:15px;color:grey">Login</button>
-						</div></div>
-						<hr/>
-						
-						<div style="margin-top:20px">
-						  <a class="ghost-button-border-color" href="login/facebook">Facebook</a>
-						  <a class="ghost-button-border-color" href="login/github">Github</a>
-						  <a class="ghost-button-border-color" href="login/google-oauth2">Google+</a>
-						  <a class="ghost-button-border-color" href="login/twitter">Twitter</a>
-						</div>
-				</div>
-		
-		<div class="col-md-6 col-md-offset-1" style="margin-top:50px;">
-			<div id="custom-search-input" style="margin-bottom:50px;">
-						<div class="input-group col-md-12">
-							<input type="text" class="form-control input-lg" placeholder="What are we looking for today,{{request.user.username}} ?" />
-							<span class="input-group-btn">
-								<button class="btn btn-info btn-lg" type="button">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
-						</div>
-				</div>
-		  <a class="ghost-button-border-color" href="tutorials">Teach & Learn</a>
-		  <a class="ghost-button-border-color" href="#">Forum</a>
-		  <a class="ghost-button-border-color" href="#">Blog</a>
-		  <a class="ghost-button-border-color" href="#">Code Snippets</a>
-		  <a class="ghost-button-border-color" href="#">Resources and Tools</a>
-		</div>
-		</div>
-		</div>
-		
-		{% endif %}
-		
-	</div>
-	</div><!-- /headerwrap -->
-	 
-	 
-	<!-- *****************************************************************************************************************
-	 MIDDLE CONTENT
-	 ***************************************************************************************************************** -->
+<section id="home-slider">
+        <div class="container">
+            <div class="main-slider">
+                <div class="slide-text">
+                    <h1>Python for Astronomers</h1>
+                    <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic. A traditional "blog" view of the most recently posted topics is visible from the site Home page.</p>
+                    <a href="#" class="btn btn-common">SIGN UP</a>
+                </div>
+                <img src="{% static 'img/home/slider/slide1/house.png'%}" class="img-responsive slider-house" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/circle1.png' %}" class="slider-circle1" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/circle2.png'%}" class="slider-circle2" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/cloud1.png'%}" class="slider-cloud1" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/cloud2.png'%}" class="slider-cloud2" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/cloud3.png'%}" class="slider-cloud3" alt="slider image">
+                <img src="{% static 'img/home/slider/slide1/sun.png' %}" class="slider-sun" alt="slider image">
+                <img src="{% static 'img/home/cycle.png'%}" class="slider-cycle" alt="">
+            </div>
+        </div>
+        <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
+    </section>
+    <!--/#home-slider-->
 
-	 <div class="container mtb">
-	 	<div class="row">
-	 		<div class="col-lg-4 col-lg-offset-1">
-		 		<h4>About</h4>
-		 		<p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic. A traditional "blog" view of the most recently posted topics is visible from the site Home page.</p>
- 				<p><br/><a href="#" class="btn btn-theme">More Info</a></p>
-	 		</div>
-	 		
-	 		<div class="col-lg-3">
-	 			<h4>Most Popular</h4>
-	 			<div class="hline"></div>
-	 			<p><a href="#">Post 1</a></p>
-	 			<p><a href="#">Post 2</a></p>
-	 			<p><a href="#">Post 3</a></p>
-	 			<p><a href="#">Post 4</a></p>
-	 			<p><a href="#">Post 5</a></p>
-	 		</div>
-	 		
-	 		<div class="col-lg-3">
-	 			<h4>Latest Posts</h4>
-	 			<div class="hline"></div>
-	 			<p><a href="#">Post 1</a></p>
-	 			<p><a href="#">Post 2</a></p>
-	 			<p><a href="#">Post 3</a></p>
-	 			<p><a href="#">Post 4</a></p>
-	 			<p><a href="#">Post 5</a></p>
-	 		</div>
-	 		
-	 	</div><! --/row -->
-	 </div><! --/container -->
-	 
-<!-- *****************************************************************************************************************
-	 CONTRIBUTE
-	 ***************************************************************************************************************** -->
-	 <div id="twrap" style='background: url("{%static "img/community.jpg"%}");no-repeat center top;'>
-	 	<div class="container centered">
-	 		<div class="row">
-	 			<div class="col-lg-8 col-lg-offset-2">
-				<h2>Contribute</h2>
-	 			<h4>Contributions from the community are strongly encouraged. If you are interested please contact the AstroPython team via the Contribute page. We can either post material on your behalf or give you an astropython.org user account to allow your own postings.</h4>
-	 			<h4><br/>Astropy Community</h4>
-	 			</div>
-	 		</div><! --/row -->
-	 	</div><! --/container -->
-	 </div><! --/twrap -->
-	 
-	 	<!-- *****************************************************************************************************************
-	 COMMUNITY PARTNERS
-	 ***************************************************************************************************************** -->
-	 <div id="cwrap">
-		 <div class="container">
-		 	<div class="row centered">
-			 	<h3>COMMUNITY PARTNERS</h3>
-			 	<div class="col-lg-3 col-md-3 col-sm-3">
-			 		<img src='{%static "img/partners/01.png"%}' class="img-responsive">
-			 	</div>
-			 	<div class="col-lg-3 col-md-3 col-sm-3">
-			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
-			 	</div>
-			 	<div class="col-lg-3 col-md-3 col-sm-3">
-			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
-			 	</div>
-			 	<div class="col-lg-3 col-md-3 col-sm-3">
-			 		<img src='{%static "img/partners/02.png"%}' class="img-responsive">
-			 	</div>
-		 	</div><! --/row -->
-		 </div><! --/container -->
-	 </div><! --/cwrap -->
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="single-service">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
+                            <img src="images/home/icon1.png" alt="">
+                        </div>
+                        <h2>Incredibly Responsive</h2>
+                        <p>Ground round tenderloin flank shank ribeye. Hamkevin meatball swine. Cow shankle beef sirloin chicken ground round.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="single-service">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
+                            <img src="images/home/icon2.png" alt="">
+                        </div>
+                        <h2>Superior Typography</h2>
+                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                    <div class="single-service">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                            <img src="images/home/icon3.png" alt="">
+                        </div>
+                        <h2>Swift Page Builder</h2>
+                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#services-->
 
+    <section id="action" class="responsive">
+        <div class="vertical-center">
+             <div class="container">
+                <div class="row">
+                    <div class="action take-tour">
+                        <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                            <h1 class="title">Triangle Corporate Template</h1>
+                            <p>A responsive, retina-ready &amp; wide multipurpose template.</p>
+                        </div>
+                        <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                            <div class="tour-button">
+                                <a href="#" class="btn btn-common">TAKE THE TOUR</a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </section>
+    <!--/#action-->
+
+    <section id="features">
+        <div class="container">
+            <div class="row">
+                <div class="single-features">
+                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="images/home/image1.png" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Experienced and Enthusiastic</h2>
+                        <P>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</P>
+                    </div>
+                </div>
+                <div class="single-features">
+                    <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Built for the Responsive Web</h2>
+                        <P>Mollit eiusmod id chuck turducken laboris meatloaf pork loin tenderloin swine. Pancetta excepteur fugiat strip steak tri-tip. Swine salami eiusmod sint, ex id venison non. Fugiat ea jowl cillum meatloaf.</P>
+                    </div>
+                    <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="images/home/image2.png" class="img-responsive" alt="">
+                    </div>
+                </div>
+                <div class="single-features">
+                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <img src="images/home/image3.png" class="img-responsive" alt="">
+                    </div>
+                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Experienced and Enthusiastic</h2>
+                        <P>Ut officia cupidatat anim excepteur fugiat cillum ea occaecat rump pork chop tempor. Ut tenderloin veniam commodo. Shankle aliquip short ribs, chicken eiusmod exercitation shank landjaeger spare ribs corned beef.</P>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     <!--/#features-->
+
+    <section id="clients">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <p><img src="images/home/clients.png" class="img-responsive" alt=""></p>
+                        <h1 class="title">Happy Clients</h1>
+                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Ut enim ad minim veniam, quis nostrud </p>
+                    </div>
+                    <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client1.png" class="img-responsive" alt=""></a>
+                        </div>
+                        <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client2.png" class="img-responsive" alt=""></a>
+                        </div>
+                         <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client3.png" class="img-responsive" alt=""></a>
+                        </div>
+                         <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client4.png" class="img-responsive" alt=""></a>
+                        </div>
+                         <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client5.png" class="img-responsive" alt=""></a>
+                        </div>
+                         <div class="col-xs-3 col-sm-2">
+                            <a href="#"><img src="images/home/client6.png" class="img-responsive" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </section>
 {% endblock %}
