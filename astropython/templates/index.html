@@ -14,14 +14,14 @@ Welcome to
                     <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic. A traditional "blog" view of the most recently posted topics is visible from the site Home page.</p>
                     <a href="#" class="btn btn-common">SIGN UP</a>
                 </div>
-                <img src="{% static 'img/home/slider/slide1/house.png'%}" class="img-responsive slider-house" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/circle1.png' %}" class="slider-circle1" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/circle2.png'%}" class="slider-circle2" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/cloud1.png'%}" class="slider-cloud1" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/cloud2.png'%}" class="slider-cloud2" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/cloud3.png'%}" class="slider-cloud3" alt="slider image">
-                <img src="{% static 'img/home/slider/slide1/sun.png' %}" class="slider-sun" alt="slider image">
-                <img src="{% static 'img/home/cycle.png'%}" class="slider-cycle" alt="">
+                <img src="{% static 'images/home/slider/slide1/house.png'%}" class="img-responsive slider-house" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/circle1.png' %}" class="slider-circle1" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/circle2.png'%}" class="slider-circle2" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/cloud1.png'%}" class="slider-cloud1" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/cloud2.png'%}" class="slider-cloud2" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/cloud3.png'%}" class="slider-cloud3" alt="slider image">
+                <img src="{% static 'images/home/slider/slide1/sun.png' %}" class="slider-sun" alt="slider image">
+                <img src="{% static 'images/home/cycle.png'%}" class="slider-cycle" alt="">
             </div>
         </div>
         <div class="preloader"><i class="fa fa-sun-o fa-spin"></i></div>
@@ -34,28 +34,28 @@ Welcome to
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <img src="images/home/icon1.png" alt="">
+                            <img src="{% static 'images/home/icon1.png' %}" alt="">
                         </div>
-                        <h2>Incredibly Responsive</h2>
-                        <p>Ground round tenderloin flank shank ribeye. Hamkevin meatball swine. Cow shankle beef sirloin chicken ground round.</p>
+                        <h2>Teach & Learn</h2>
+                        <p>Tutorials , Educational Resources , Code Snippets and much more !</p>
                     </div>
                 </div>
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <img src="images/home/icon2.png" alt="">
+                            <img src="{% static 'images/home/icon2.jpg' %}" alt="">
                         </div>
-                        <h2>Superior Typography</h2>
-                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
+                        <h2>Forum</h2>
+                        <p>Broadcast to the world with Blogs, News, Announcements and Events !</p>
                     </div>
                 </div>
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <div class="single-service">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                            <img src="images/home/icon3.png" alt="">
+                            <img src="{% static 'images/home/icon3.png' %}" alt="">
                         </div>
-                        <h2>Swift Page Builder</h2>
-                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
+                        <h2>Packages</h2>
+                        <p>Your helping bots !</p>
                     </div>
                 </div>
             </div>
@@ -69,12 +69,12 @@ Welcome to
                 <div class="row">
                     <div class="action take-tour">
                         <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <h1 class="title">Triangle Corporate Template</h1>
-                            <p>A responsive, retina-ready &amp; wide multipurpose template.</p>
+                            <h1 class="title">Sign In or Register</h1>
+                            <p>Say Hi! to fellow astronomers !</p>
                         </div>
                         <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
                             <div class="tour-button">
-                                <a href="#" class="btn btn-common">TAKE THE TOUR</a>
+                                <a href="#" class="btn btn-common">Sign In /Register </a>
                              </div>
                         </div>
                     </div>
@@ -86,31 +86,23 @@ Welcome to
 
     <section id="features">
         <div class="container">
-            <div class="row">
+            <div class="row text-center">
+			<h1> Latest Posts </h1>
                 <div class="single-features">
-                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image1.png" class="img-responsive" alt="">
-                    </div>
-                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Experienced and Enthusiastic</h2>
+                    <div class="col-sm-12 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Post 1</h2>
                         <P>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</P>
                     </div>
                 </div>
                 <div class="single-features">
-                    <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Built for the Responsive Web</h2>
+                    <div class="col-sm-12 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Post 2</h2>
                         <P>Mollit eiusmod id chuck turducken laboris meatloaf pork loin tenderloin swine. Pancetta excepteur fugiat strip steak tri-tip. Swine salami eiusmod sint, ex id venison non. Fugiat ea jowl cillum meatloaf.</P>
-                    </div>
-                    <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image2.png" class="img-responsive" alt="">
                     </div>
                 </div>
                 <div class="single-features">
-                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image3.png" class="img-responsive" alt="">
-                    </div>
-                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Experienced and Enthusiastic</h2>
+                    <div class="col-sm-12 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
+                        <h2>Post 3</h2>
                         <P>Ut officia cupidatat anim excepteur fugiat cillum ea occaecat rump pork chop tempor. Ut tenderloin veniam commodo. Shankle aliquip short ribs, chicken eiusmod exercitation shank landjaeger spare ribs corned beef.</P>
                     </div>
                 </div>
@@ -124,29 +116,9 @@ Welcome to
             <div class="row">
                 <div class="col-sm-12">
                     <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <p><img src="images/home/clients.png" class="img-responsive" alt=""></p>
-                        <h1 class="title">Happy Clients</h1>
-                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client1.png" class="img-responsive" alt=""></a>
-                        </div>
-                        <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client2.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client3.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client4.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client5.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client6.png" class="img-responsive" alt=""></a>
-                        </div>
+                        <p><img src="{% static 'images/home/clients.png' %}" class="img-responsive" alt=""></p>
+                        <h1 class="title">Contribute</h1>
+                        <p>Contributions from the community are strongly encouraged. If you are interested please contact the AstroPython team via the Contribute page.<br/> We can either post material on your behalf or give you an astropython.org user account to allow your own postings.</p>
                     </div>
                 </div>
             </div>

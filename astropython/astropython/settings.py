@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'secretballot',
     'crispy_forms',
     'haystack',
+    "compressor",
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
