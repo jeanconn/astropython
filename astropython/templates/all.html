@@ -44,7 +44,19 @@ BLOG CONTENT
 					<div class="post-content overflow">
 						<h2 class="post-title bold"><a href="../{{section}}/{{single_obj.slug}}">{{single_obj.title}}</a></h2>
 						<h3 class="post-author"><a href="#">Posted by {% for users in single_obj.authors.all %}{{users.username}}{% endfor %}</a></h3>
-						<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+						{% if section == "events" %}
+							<p><b>Start Date :</b>{{single_obj.start_date_time|date}}</p>
+							{% if single_obj.website %}
+							<p><b>Website :</b><a href="{{single_obj.website}}">{{single_obj.website}}</a></p>
+							{% endif %}
+						{% else %}
+							{% if section == "packages" %}
+							<p><b>Category:</b>{{single_obj.category}}</p>
+							{% endif %}
+							{% if single_obj.abstract %}
+							<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+							{% endif %}
+						{% endif %}
 						<a href="{{single_obj.slug}}" class="read-more">View More</a>
 						<div class="post-bottom overflow">
 							<ul class="nav navbar-nav post-nav">

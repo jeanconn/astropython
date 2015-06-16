@@ -47,7 +47,7 @@ def get_name(name):
 
 def get_exclude_fields(model):
     if model==Event:
-        return ['slug','authors','state','hits','attendee']
+        return ['slug','authors','state','hits']
     else:
         return ['slug','authors','state','hits']
 
@@ -60,15 +60,6 @@ def get_create_form(request,exclude_fields,model,kwargs):
             raise Http404
     return PostForm(model,exclude_fields,'create',request.POST or None)
 
-def get_edit_form(request,model,obj):
-    edit=request.GET['edit']
-    if edit=="all":
-        edit_field="__all__"
-    else:
-        edit_field=edit.split(',')
-    request.session['edit_field']=edit_field
-    request.session.modified = True
-    return PostForm(model,edit_field,'edit',request.POST or None,instance=obj)
 
 def check_editing_permission(user,obj):
     if ((not user in obj.authors.all()) or (obj.state=="submitted") ):
