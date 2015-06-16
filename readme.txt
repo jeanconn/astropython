@@ -20,5 +20,5 @@ Quick set of commands to run the project :-
 3.python manage.py createsuperuser
 4.python manage.py collectstatic
 5.python manage.py runserver
-6.python populate.py (See the old data in WYSIWYGTutorial,WYSIWYGPost(in Blogs) and WYSIWYGInput(in Packages)
-Goto /admin to access admin panel
+6.python populate.py
+Goto /admin to access admin panel and under the tab "Django Moderations" approve all posts... It would take some time. SQLite 3 is pretty slow , let it complete
