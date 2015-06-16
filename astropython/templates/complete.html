@@ -7,13 +7,12 @@
 {% block styles %}
 {% endblock %}
 {% block content %}
-{% include 'navbar.html' %}
 <div class="container mtb">
 <div class="row">
 	<! --LIST-->
 	<div class="col-lg-12">
 		<div style="text-align:center;color:orange">
-			<img src='{% static "img/complete_icon.png" %}' height="100px" width="100px"> 
+			<img src='{% static "images/complete_icon.png" %}' height="100px" width="100px"> 
 			{% if state == "raw" %}
 			<h2>Your post has been saved !</h2>
 			<p> Come back later and complete it <a href="/{{section}}/create/{{slug}}">here</a>!</p>
