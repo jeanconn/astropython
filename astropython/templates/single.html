@@ -20,87 +20,78 @@
 <script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
 {% endblock %}
 {% block content %}
-{% include 'navbar.html' %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1572784622983498";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 <!-- *****************************************************************************************************************
 TITLE WRAP
 ***************************************************************************************************************** -->
-<div id="titlewrap">
-<div class="container">
-	<div class="row">
-		<h3 id ="title">{{obj.title}}</h3>
-	</div><!-- /row -->
-</div> <!-- /container -->
-</div><!-- /titlewrap -->
+<section id="page-breadcrumb">
+	<div class="vertical-center sun">
+		 <div class="container">
+			<div class="row">
+				<div class="action">
+					<div class="col-sm-12">
+						<h1 class="title">{{obj.title}}</h1>
+					</div>                                                                                
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 <!-- *****************************************************************************************************************
 BLOG CONTENT
 ***************************************************************************************************************** -->
 {% include 'edit_modal.html' %}
-<div class="container mtb">
-<div class="row">
-	<! -- SINGLE Tutorial -->
-	<div class="col-lg-8" style="word-wrap: break-word">
-		{% if section == "seriestutorial" %}
-			<p><b>From Tutorial Series :</b> <a href=".">{{obj.tut_series}}</a></p>
-			<p><b>Tutorial number in series :</b>{{obj.order_id}}</p>
-		{% endif %}
-		{% if obj.abstract %}
-			<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
-		{% endif %}
-		<p id="body_display"><b>Body</b>:{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
-		<br/>
-		{% if section == "resources" %}
-			<p><b>Start Date : </b>{{obj.start_date}}</p>
-			<p><b>Instructors : </b>{{obj.instructor_names}}</p>
-			<p><b>Website : </b><a href="{{obj.website}}">{{obj.website}}</a></p>
-			<p><b>Language : </b>{{obj.language}}</p>
-			<h4>Course Structure & Contents </h4>
-			{% autoescape off %}{{obj.contents}}{% endautoescape %}
-			<br/>
-			<h4>Recommended Background </h4>
-			{% autoescape off %}{{obj.background}}{% endautoescape %}
-			<br/>
-			<h4>Frequently Asked Questions </h4>
-			{% autoescape off %}{{obj.faq}}{% endautoescape %}
-			<br/>
-		{% endif %}
-		<hr/>
-		{% if section != "seriestutorial"%}
-		<h4>Tags</h4>
-		<p id="tags">
-		{% for tag in obj.tags.all %}
-			<a class="btn btn-theme" href="#" role="button">{{tag.name}}</a>
-		{% endfor %}
-		</p>
-		{% endif %}
-		<p><csmall>Posted: {{obj.created}}</csmall> <br/><csmall2>
-		By: 
-		{% for users in obj.authors.all %}
-			{{users.username}}
-		{% endfor %}
-		</csmall2></p>
-		<div class="spacing"></div>
-		{% if section != "seriestutorial" %}
-		<div style="text-align:center">  
-			<a href="./upvote"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_upvotes}}</span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<a href="./downvote"><i class="glyphicon glyphicon-thumbs-down"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_downvotes}}</span></a>
-			<div class="spacing"></div>
-			<h6>SHARE</h6>
-			<p class="share">
-				<div class="fb-share-button" data-href="{{full_url}}" data-layout="button_count"></div>	 		
-			</p>
+<section id="blog-details" class="padding-top">
+<div class="container">
+	<div class="row">
+	<div class="col-md-9 col-sm-7" style="word-wrap: break-word;">
+		<div class="row">
+			 <div class="col-md-12 col-sm-12">
+				<div class="single-blog blog-details two-column">
+					<div class="post-content overflow">
+						<h5 class="post-author">Posted by <a href="#">{% for users in obj.authors.all %}{{users.username}}{% endfor %}</a></h5>
+						{% if obj.abstract %}
+							<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
+						{% endif %}
+						<p id="body_display"><b>Body</b>:{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+						<br/>
+						{% if section == "resources" %}
+							<p><b>Start Date : </b>{{obj.start_date}}</p>
+							<p><b>Instructors : </b>{{obj.instructor_names}}</p>
+							<p><b>Website : </b><a href="{{obj.website}}">{{obj.website}}</a></p>
+							<p><b>Language : </b>{{obj.language}}</p>
+							<h4>Course Structure & Contents </h4>
+							{% autoescape off %}{{obj.contents}}{% endautoescape %}
+							<br/>
+							<h4>Recommended Background </h4>
+							{% autoescape off %}{{obj.background}}{% endautoescape %}
+							<br/>
+							<h4>Frequently Asked Questions </h4>
+							{% autoescape off %}{{obj.faq}}{% endautoescape %}
+							<br/>
+						{% endif %}
+							<div class="sidebar-item tag-cloud">
+								<h3>Tags</h3>
+								<ul class="nav nav-pills">
+								{% for tag in obj.tags.all %}
+									<li><a href="#">{{tag.name}}</a></li>
+								{% endfor %}
+								</ul>
+							</div>
+							<div style="text-align:center">  
+								<a href="./upvote"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_upvotes}}</span></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<a href="./downvote"><i class="glyphicon glyphicon-thumbs-down"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_downvotes}}</span></a>
+								<div class="spacing"></div>
+								<h6>SHARE</h6>
+							</div>
+						<div class="response-area">
+						<h2 class="bold">Comments</h2>
+						<div id="disqus_thread" style='margin-top:50px;'></div>
+						</div><!--/Response-area-->
+					</div>
+				</div>
+			</div>
 		</div>
-		{% endif %}
-		 <!--Disqus Comment Section -->
-	
-	<div id="disqus_thread" style='margin-top:50px;'></div>
+	 </div>
 	<script type="text/javascript">
 		$( "#title,#abstract,#body_display,#tags").hover(
 		  function() {
@@ -141,8 +132,9 @@ BLOG CONTENT
 	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 	
 	<!--End of comments section-->
-	</div><! --/col-lg-8 -->
-	{% include 'sidebar.html' %}
+
+	{% include 'sidebar.html' %}	
+	</div>
 </div>
-</div>
+</section>
 {% endblock %}
