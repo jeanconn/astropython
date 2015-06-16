@@ -73,6 +73,7 @@ def single(request,section,slug,**kwargs):
         form=None
     return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form})
 
+
 def single_series(request,slug):
     series=TutorialSeries.objects.get(slug=slug)
     obj=series.seriestutorial_set.order_by('order_id')
@@ -104,18 +105,21 @@ General listing of all sections
 def all(request,section,display_type,**kwargs):
     model=get_model(section)
     name=get_name(section)
-    if display_type=="all":
-        obj_list=model.objects.all().filter(state="submitted")
-    elif display_type=="latest":
-        obj_list=model.objects.all().filter(state="submitted").order_by('-created')
-    elif display_type=="popular":
-        obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
-    length=len(obj_list)
-    paginator = Paginator(obj_list,10)
-    page = request.GET.get('page')
-    try:
-        obj=paginator.page(page)
-    except:
-        obj=paginator.page(1)
-    context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
-    return render(request,'all.html',context)
+    if model==Wiki:
+        return single(request,"wiki","home")
+    else:
+        if display_type=="all":
+            obj_list=model.objects.all().filter(state="submitted")
+        elif display_type=="latest":
+            obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+        elif display_type=="popular":
+            obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
+        length=len(obj_list)
+        paginator = Paginator(obj_list,10)
+        page = request.GET.get('page')
+        try:
+            obj=paginator.page(page)
+        except:
+            obj=paginator.page(1)
+        context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+        return render(request,'all.html',context)

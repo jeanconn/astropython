@@ -6,7 +6,7 @@ from .views import *
 urlpatterns = patterns('',
     url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/create$',create,name="create"),
     url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/create/(?P<slug>[\w-]+)$',create,name="create"),
-    url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/(?P<display_type>all|latest|popular)/$',all,name="all"),
+    url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials)/(?P<display_type>all|latest|popular)/$',all,name="all"),
     url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/(?P<slug>[\w-]+)/$',single,name="single"),
     url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/(?P<slug>[\w-]+)/(?P<choice>upvote|downvote)/$',vote,name="vote"),
     url(r'^(?P<section>announcements|blog|education|events|news|packages|snippets|tutorials|wiki)/$',all,{'display_type':'all'},name="default"),
