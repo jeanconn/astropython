@@ -36,7 +36,6 @@ INSTALLED_APPS = (
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
-    'haystack',
     "compressor",
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
@@ -142,14 +141,3 @@ INPUT_CHOICES = (
  )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-        'INCLUDE_SPELLING':True,
-    },
-}
-
-HAYSTACK_ITERATOR_LOAD_PER_QUERY=50
