@@ -1,26 +1,17 @@
-<div id="footerwrap">
-<div class="container">
-	<div class="row">
-		<div class="col-lg-4">
-			<h4>Colomn1</h4>
-			<div class="hline-w"></div>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+{% load staticfiles %}
+<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 text-center bottom-separator">
+				<img src="{%static 'images/home/under.png' %}" class="img-responsive inline" alt="">
+			</div>
+			<h1>This is the footer</h1>
+			<div class="col-sm-12">
+				<div class="copyright-text text-center">
+					<p>&copy; AstroPython 2015</p>
+				</div>
+			</div>
 		</div>
-		<div class="col-lg-4">
-			<h4>Social Links</h4>
-			<div class="hline-w"></div>
-			<p>
-				<a href="#"><i class="fa fa-dribbble"></i></a>
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-instagram"></i></a>
-				<a href="#"><i class="fa fa-tumblr"></i></a>
-			</p>
-		</div>
-		<div class="col-lg-4">
-			<h4>Colomn3</h4>
-		</div>
-	
-	</div><! --/row -->
-</div><! --/container -->
-</div><! --/footerwrap -->
+	</div>
+</footer>
+<!--/#footer-->

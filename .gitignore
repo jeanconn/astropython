@@ -43,6 +43,7 @@ Temporary Items
 Lib/*
 Include/*
 Scripts/*
+static/static_root/*
 
 .apdisk
 *.h
