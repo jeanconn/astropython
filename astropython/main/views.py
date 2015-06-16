@@ -111,7 +111,7 @@ def all(request,section,display_type,**kwargs):
     elif display_type=="popular":
         obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
     length=len(obj_list)
-    paginator = Paginator(obj_list,15)
+    paginator = Paginator(obj_list,10)
     page = request.GET.get('page')
     try:
         obj=paginator.page(page)

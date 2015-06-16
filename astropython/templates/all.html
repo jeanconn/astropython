@@ -7,50 +7,57 @@
 {% block styles %}
 {% endblock %}
 {% block content %}
-{% include 'navbar.html' %}
 <!-- *****************************************************************************************************************
 TITLE WRAP
 ***************************************************************************************************************** -->
-<div id="titlewrap">
-<div class="container">
-	<div class="row">
-		<div style="position:absolute">
-		<h3>{{name}}</h3>
+<section id="page-breadcrumb">
+	<div class="vertical-center sun">
+		 <div class="container">
+			<div class="row">
+				<div class="action">
+					<div class="col-sm-12">
+						<h1 class="title">{{name}}</h1>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div style="position: relative;right: 50px;margin-top:5px">
-		<a href="../{{section}}/create"><img src='{% static "img/add_new.png" %}' height="50px" width="50px" style="position: absolute;right: 0px;"> </a>
-		</div>
-	</div><!-- /row -->
-</div> <!-- /container -->
-</div><!-- /titlewrap -->
+	</div>
+</section>
+<!--/#page-breadcrumb-->
 <!-- *****************************************************************************************************************
 BLOG CONTENT
 ***************************************************************************************************************** -->
 
-<div class="container mtb">
-<div class="row">
-
-	<! --LIST-->
-	<div class="col-lg-8">
-		{%if length == 0 %}
+<section id="blog" class="padding-top">
+<div class="container">
+	<div class="row">
+		<div class="col-md-9 col-sm-7">
+			<div class="row">
+			{%if length == 0 %}
 			<h2>No {{name}} created yet !</h2>
 			<p><a href="create">Create one here !</a></p>
-		{% endif %}
-		{% for single_obj in obj %}
-			<a href="../{{section}}/{{single_obj.slug}}"><h3 class="ctitle">{{single_obj.title}}</h3></a>
-			<p><csmall>Posted:{{single_obj.created}}</csmall> |<csmall2>By:
-				{% for users in single_obj.authors.all %}
-					{{users.username}}
-				{% endfor %}
-				</csmall2></p>
-			<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
-			<p><a href="{{single_obj.slug}}">[Read More]</a></p>
-			<div class="hline"></div>
-			<div class="spacing"></div>
+			{% endif %}
+			{% for single_obj in obj %}
+			<div class="col-sm-12 col-md-12">
+				<div class="single-blog single-column">
+					<div class="post-content overflow">
+						<h2 class="post-title bold"><a href="../{{section}}/{{single_obj.slug}}">{{single_obj.title}}</a></h2>
+						<h3 class="post-author"><a href="#">Posted by {% for users in single_obj.authors.all %}{{users.username}}{% endfor %}</a></h3>
+						<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+						<a href="{{single_obj.slug}}" class="read-more">View More</a>
+						<div class="post-bottom overflow">
+							<ul class="nav navbar-nav post-nav">
+								<li><a><i class="fa fa-tag">&nbsp&nbsp{% for tag in single_obj.tags.all %}{{tag.name}}&nbsp&nbsp&nbsp {% endfor %}</i></a> </li>
+								<li><a href="#"><i class="fa fa-heart"></i>{{single_obj.total_upvotes}} Love</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		{% endfor %}
-		<div style="text-align:center">
+		</div>
+		 <div class="blog-pagination">
 		{% if  obj.paginator.num_pages > 1 %}
-			<nav>
 				<ul class="pagination">
 					{% if obj.has_previous %}
 						<li><a href="?page={{ obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
@@ -70,13 +77,13 @@ BLOG CONTENT
 						<li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 					{% endif %}
 				</ul>
-			</nav>
 		{% endif %}
 		</div>
-	</div><! --/col-lg-8 -->
+		</div>
 	{% include 'sidebar.html' %}
-</div><! --/row -->
-</div><! --/container -->
+	</div>
+</div>
+</section>
 
 
 {% endblock %}
