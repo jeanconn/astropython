@@ -29,7 +29,7 @@ TITLE WRAP
 			<div class="row">
 				<div class="action">
 					<div class="col-sm-12">
-						<h1 class="title">{{obj.title}}</h1>
+						<h1 class="title" id="title">{{obj.title}}</h1>
 					</div>                                                                                
 				</div>
 			</div>
@@ -100,7 +100,7 @@ BLOG CONTENT
 			{
 				attribute="body";
 			}
-			$( this ).append( $( "<span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='?edit="+attribute+"'><img src='{% static 'img/edit_logo.png' %}' height='15px' width='15px'></a></span>" ) );
+			$( this ).append( $( "<span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='?edit="+attribute+"'><img src='{% static 'images/edit_logo.png' %}' height='15px' width='15px'></a></span>" ) );
 		  }, function() {
 			$( this ).find( "span:last" ).remove();
 		  }
