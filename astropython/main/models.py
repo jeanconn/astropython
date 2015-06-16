@@ -123,8 +123,7 @@ Events model are associated with any future events that are planned
 class Event(models.Model):
     title = models.CharField(max_length=200)
     input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
-    authors = models.ForeignKey(User,blank=True,null=True,related_name="authors")
-    attendee = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
+    authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body =models.TextField(blank=False)
     location = models.CharField(max_length=1000,blank=True)
     website = models.URLField(blank=True)
@@ -152,7 +151,7 @@ class Event(models.Model):
     active.boolean = True
 
     def get_absolute_url(self):
-        return reverse('main.views.single',kwargs={'section':'Event','slug':self.slug})
+        return reverse('main.views.single',kwargs={'section':'events','slug':self.slug})
 
 secretballot.enable_voting_on(Tutorial)
 secretballot.enable_voting_on(Snippet)

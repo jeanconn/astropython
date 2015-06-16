@@ -1,3 +1,4 @@
+from django.shortcuts import Http404
 import random
 from slugify import slugify
 
