@@ -12,9 +12,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'astropython.settings')
 import django
 django.setup()
 
-from tutorials.models import Tutorial
-from blog.models import Post
-from packages.models import Package
+from main.models import *
 
 from django.contrib.auth.models import User
 

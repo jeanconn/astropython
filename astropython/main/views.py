@@ -10,6 +10,7 @@ import secretballot
 from .forms import *
 from .models import *
 from .utilities import *
+from taggit.models import Tag,TaggedItem
 
 def home(request):
 	template = 'index.html'
@@ -46,6 +47,7 @@ To view a single model instance
 def single(request,section,slug,**kwargs):
     model=get_model(section)
     name=get_name(section)
+    tags=model.tags.all()
     obj=model.objects.get(slug=slug)
     mode="display"
     if request.method=="GET" and 'edit' in request.GET:
@@ -71,7 +73,9 @@ def single(request,section,slug,**kwargs):
             return HttpResponseRedirect(reverse('single',kwargs={'section':section,'slug':obj.slug}))
     else:
         form=None
-    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form})
+    popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
+    recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
+    return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form,"tags":tags,'page':'single','recent':recent,'popular':popular})
 
 
 def single_series(request,slug):
@@ -102,18 +106,29 @@ def vote(request,section,choice,slug):
 General listing of all sections
 """
 
-def all(request,section,display_type,**kwargs):
+def all(request,section,**kwargs):
     model=get_model(section)
     name=get_name(section)
-    if model==Wiki:
+    message=""
+    if model==Wiki and 'sort' not in request.GET:
         return single(request,"wiki","home")
     else:
-        if display_type=="all":
-            obj_list=model.objects.all().filter(state="submitted")
-        elif display_type=="latest":
-            obj_list=model.objects.all().filter(state="submitted").order_by('-created')
-        elif display_type=="popular":
-            obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
+        if 'sort' in request.GET:
+            sort=request.GET['sort']
+            message+="Ordered by "+sort+"   "
+            if sort=="popularity":
+                obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
+            elif sort=="ratings":
+                obj_list=model.objects.all().filter(state="submitted").order_by('total_upvotes')
+            else:
+                obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+        else:
+                obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+        if 'tags' in request.GET:
+            tags=request.GET['tags']
+            message+="Filtered by tags : "+tags
+            tag=tags.split(',')
+            obj_list=obj_list.filter(tags__name__in=tag).distinct()
         length=len(obj_list)
         paginator = Paginator(obj_list,10)
         page = request.GET.get('page')
@@ -121,5 +136,8 @@ def all(request,section,display_type,**kwargs):
             obj=paginator.page(page)
         except:
             obj=paginator.page(1)
-        context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1)}
+        tags = model.tags.all()
+        popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
+        recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
+        context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}
         return render(request,'all.html',context)
