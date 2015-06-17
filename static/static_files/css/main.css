@@ -638,8 +638,10 @@ ul.sub-menu {
 
 #action, 
 #page-breadcrumb {
+  background-image: url(../images/home/tour-bg.png);
+  background-size:700px 200px;
   background-color: #FFFFC4;
-  background-repeat: repeat-x;
+  background-repeat: no-repeat;
   height: 155px;
   background-position: center;
   display: table;
