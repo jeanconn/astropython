@@ -20,7 +20,75 @@ from django.contrib.auth.models import User
 initialize() will be used to create Groups and other general entities in the future
 """
 def initialize():
-    pass
+    ob=Wiki.objects.create(title="Wiki HomePage",input_type="WYSIWYG",state="submitted",slug="home",body=' "<h1>Initial Data from AstroBetter Wiki- Feel Free to edit !</h1>\
+\
+<p>This is the companion wiki to the <a class="wiki" href="http://www.astrobetter.com">AstroBetter Blog</a>. You can register (see right sidebar) to edit or comment on wiki pages. Please, share your expertise with us! If you have questions or do not know where to add your content, please email us at admin <a class="wiki" href="at">at</a> astrobetter.com</p>\
+\
+<h3 class="showhide_heading">Mac Setup</h3>\
+\
+<ul><li><a class="wiki" href="tiki-index.php?page=Setup+a+New+Mac+for+Astronomy">Setup Guide</a> for Mac Astronomers</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Mac+Apps">Mac Apps</a> - Top apps for boosting astronomy productivity</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Mac+Care">Mac Care and Maintenance</a> - Advice for keeping your Mac operating well.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=iPhone+OS+Apps">iPhone and iPad Apps</a> - <a class="wiki" href="http://www.astrobetter.com/tag/iphone/">related blog posts</a>\
+	<ul><li><a class="wiki" href="tiki-index.php?page=Android+Apps">Android Apps</a></li>\
+	</ul></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Setup+User+Accounts">Setup User Accounts</a> - For those who integrate into a larger network (beyond just ssh and such)</li>\
+	<li><a class="wiki" href="tiki-index.php?page=scisoft">Scisoft</a> - quick way to install many data reduction packages</li>\
+	<li><a class="wiki" href="tiki-index.php?page=windows">Running Windows on OS X</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Computing">Computing</a> - Other useful computing resources.</li>\
+</ul><h3>Tips and Tricks (by application)</h3>\
+\
+<ul><li><a class="wiki" href="astro-comp-ed">Computing</a> - compilation of tutorials and activities for teaching/learning</li>\
+	<li><a class="wiki" href="tiki-index.php?page=idl">IDL</a> - Installation Tips and Common IDL problems</li>\
+	<li><a class="wiki" href="tiki-index.php?page=python">Python</a> - see also <a class="wiki" href="http://www.astrobetter.com/category/python/">related blog posts</a>\
+	<ul><li><a class="wiki" href="tiki-index.php?page=Python+Setup+for+Astronomy">Setting up Python for Astronomy</a>. There are several ways to do this.</li>\
+		<li><a class="wiki" href="tiki-index.php?page=pyraf">PyRAF</a></li>\
+		<li><a class="wiki" href="tiki-index.php?page=idl_vs_python">IDL vs. Python</a> pros and cons</li>\
+		<li><a class="wiki" href="tiki-index.php?page=Python+Switchers+Guide">Python Switchers Guide</a> (i.e. Python translations of IDL and IRAF commands)</li>\
+	</ul></li>\
+	<li><a class="wiki" href="tiki-index.php?page=AIPS">AIPS/CASA</a> - radio/sub-mm interferometric data reduction</li>\
+	<li><a class="wiki" href="tiki-index.php?page=LaTeX">LaTeX</a> - <a class="wiki" href="http://www.astrobetter.com/tag/latex/">related blog posts</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=sshfs">Mounting remote directories (SSHFS</a>)</li>\
+	<li><a class="wiki" href="tiki-index.php?page=osx">OS X</a> - general tips</li>\
+	<li><a class="wiki" href="tiki-index.php?page=pgplot">PGPLOT</a></li>\
+	<li><a href="http://www.astrobetter.com/wiki/tiki-index.php?page=DAOphot">DAOphot</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=MATLAB">MATLAB</a> - packages and tools for astronomy</li>\
+	<li><a href="http://www.stsci.edu/science/starburst99/docs/default.htm">Starburst 99</a> (spectrophotometric simulation of star-forming galaxies)</li>\
+</ul><h3>Astronomical Methods</h3>\
+\
+<ul><li><a class="wiki" href="tiki-index.php?page=Observing">Observing</a> - info for various telescopes and instruments\
+\
+	<ul><li><a class="wiki" href="tiki-index.php?page=Airmass+and+Visibility+Plots">Airmass and Visibility Plots</a></li>\
+	</ul></li>\
+	<li><a class="wiki" href="tiki-index.php?page=How+to+observe">How to observe</a> - general advice for the new observer</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Data+Reduction">Data Reduction</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Making+Images">Making Images</a> - IDL, SuperMongo, etc.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Analysis+Tools">Analysis Tools</a> - <a class="wiki" href="http://www.astrobetter.com/category/analysis/">blog posts</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Data+Modeling">Data Modeling</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Statistical+Tools">Statistical Tools</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Simulations">Simulations</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Astronomical+Databases">Astronomical Databases</a> - Individually maintained web pages that provide data and/or catalogs.</li>\
+</ul><p><a id="career"></a></p>\
+\
+\
+</ul><h3>Other Resources</h3>\
+\
+<ul><li><a class="wiki" href="tiki-index.php?page=Getting+Started+Guide" title="Getting Started Guide">Getting Started Guide</a> - Guide for those just getting started in Astronomy.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Astro-ph+Tools">Astro-ph Tools</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Telescope+and+Grant+Proposal+Deadline+Calendar" title="Telescope and Grant Proposal Deadline Calendar">Telescope and Grant Proposal Deadline Calendar</a></li>\
+	<li><a class="wiki" href="tiki-index.php?page=Writing">Writing</a> - Resources for writing papers and proposals.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Refereeing+and+Peer+Review" title="Refereeing and Peer Review">Refereeing and Peer Review</a> - Thoughts on writing referee reports.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Presentation+Skills">Presentation Skills</a> - Tips for giving talks and posters.</li>\
+	<li><a href="http://www.astrobetter.com/wiki/tiki-index.php?page=Mental+Health">Mental Health</a> - Links to articles about academia and mental health</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Diversity">Diversity</a> - Links to articles relevant to fostering diversity in physics and astronomy.</li>\
+	<li><a class="wiki" href="tiki-index.php?page=Acknowledgements">Acknowledgements</a> - How to acknowledge (in paper, talks) the various institutions that support your research.</li>\
+</ul>"')
+    ob.save()
+    u=User.objects.get_or_create(username="admin")
+    if(u[1]==True):
+        u[0].save()#If the user is not present ,create it
+    ob.authors.add(u[0])
+    ob.tags.add("home")
 
 """
 Main population script that parses JSON and stores them in model objects and then to the database

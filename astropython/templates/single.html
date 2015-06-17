@@ -55,9 +55,9 @@ BLOG CONTENT
 						{% if obj.abstract %}
 							<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
 						{% endif %}
-						<p id="body_display"><b>Body</b>:{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+						<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
 						<br/>
-						{% if section == "resources" %}
+						{% if section == "education" %}
 							<p><b>Start Date : </b>{{obj.start_date}}</p>
 							<p><b>Instructors : </b>{{obj.instructor_names}}</p>
 							<p><b>Website : </b><a href="{{obj.website}}">{{obj.website}}</a></p>
@@ -73,10 +73,10 @@ BLOG CONTENT
 							<br/>
 						{% endif %}
 							<div class="sidebar-item tag-cloud">
-								<h3>Tags</h3>
+								<h3 id="tags">Tags</h3>
 								<ul class="nav nav-pills">
 								{% for tag in obj.tags.all %}
-									<li><a href="#">{{tag.name}}</a></li>
+									<li><a href="/{{section}}/?tags={{tag.name}}">{{tag.name}}</a></li>
 								{% endfor %}
 								</ul>
 							</div>
@@ -96,13 +96,9 @@ BLOG CONTENT
 		</div>
 	 </div>
 	<script type="text/javascript">
-		$( "#title,#abstract,#body_display,#tags").hover(
+		$( "#title,#abstract,#tags").hover(
 		  function() {
 			attribute=$(this).attr('id');
-			if(attribute=="body_display")
-			{
-				attribute="body";
-			}
 			$( this ).append( $( "<span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='?edit="+attribute+"'><img src='{% static 'images/edit_logo.png' %}' height='15px' width='15px'></a></span>" ) );
 		  }, function() {
 			$( this ).find( "span:last" ).remove();
