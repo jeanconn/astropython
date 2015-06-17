@@ -171,3 +171,20 @@ def search(request):
         obj=paginator.page(1)
     context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1),'query':query}
     return render(request,'search.html',context)
+
+def written(request):
+    u=request.user
+    message=None
+    tutorials_list=u.tutorial_set.all()
+    announcements_list=u.announcement_set.all()
+    blogs_list=u.blog_set.all()
+    edresources_list=u.educationalresource_set.all()
+    news_list=u.news_set.all()
+    events_list=u.event_set.all()
+    packages_list=u.package_set.all()
+    snippets_list=u.snippet_set.all()
+    wiki_list=u.wiki_set.all()
+    if (len(tutorials_list)+len(announcements_list)+len(blogs_list)+len(edresources_list)+len(news_list)+len(events_list)+len(packages_list)+len(snippets_list)+len(wiki_list))==0:
+        message="You do not have any posts yet !"
+    context={'message':message,'tutorials_list':tutorials_list,'announcements_list':announcements_list,'blogs_list':blogs_list,'edresources_list':edresources_list,'news_list':news_list,'events_list':events_list,'packages_list':packages_list,'snippets_list':snippets_list,'wiki_list':wiki_list}
+    return render(request,'written.html',context)
