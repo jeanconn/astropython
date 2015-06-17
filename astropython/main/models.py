@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
 
 import secretballot
+import watson
 
 from astropython.settings import STATE_CHOICES,INPUT_CHOICES
 
@@ -162,3 +163,13 @@ secretballot.enable_voting_on(Blog)
 secretballot.enable_voting_on(Event)
 secretballot.enable_voting_on(TutorialSeries)
 secretballot.enable_voting_on(EducationalResource)
+
+watson.register(Tutorial.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(Snippet.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(Wiki.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(Announcement.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(News.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(Blog.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(EducationalResource.objects.all(),fields=("title","abstract","body","tags","contents","faq","background","instructor_names","language"))
+watson.register(Package.objects.all(),fields=("title","abstract","body","tags"))
+watson.register(Event.objects.all(),fields=("title","body","tags","location","start_date_time"))

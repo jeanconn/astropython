@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from moderation.helpers import automoderate
 
 import secretballot
+import watson
 
 from .forms import *
 from .models import *
@@ -141,3 +142,27 @@ def all(request,section,**kwargs):
         recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
         context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}
         return render(request,'all.html',context)
+
+def search(request):
+    if request.GET['q']:
+        query=request.GET['q']
+        if request.GET['section']:
+            section=request.GET['section']
+            if section=="all":
+                results=watson.search(query)
+            else:
+                sec=[]
+                model=get_model(section)
+                name=get_name(section)
+                sec.append(model)
+                results=watson.search(query,models=tuple(sec))
+            length=len(results)
+            print results
+    paginator = Paginator(results,10)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    context = {'name':name,'obj':obj,'section':section,'length':length,'range':range(1,obj.paginator.num_pages+1),'query':query}
+    return render(request,'search.html',context)

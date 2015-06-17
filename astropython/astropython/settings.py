@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
-    "compressor",
+    'compressor',
+    'watson',
     'django.contrib.admin',# Default Django Apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +58,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'secretballot.middleware.SecretBallotIpUseragentMiddleware',
+    'watson.middleware.SearchContextMiddleware',
     )
 
 ROOT_URLCONF = 'astropython.urls'
