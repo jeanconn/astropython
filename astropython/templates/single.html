@@ -49,13 +49,22 @@ BLOG CONTENT
 	<div class="col-md-9 col-sm-7" style="word-wrap: break-word;">
 		<div class="row">
 			 <div class="col-md-12 col-sm-12">
+			 {% if section == "wiki" %}
+			 <div style="text-align:right">
+			 <a href="?edit=body"><h5>Add to this Wiki Page</h5></a>
+			 </div>
+			 {% endif %}
 				<div class="single-blog blog-details two-column">
 					<div class="post-content overflow">
-						<h5 class="post-author">Posted by <a href="#">{% for users in obj.authors.all %}{{users.username}}{% endfor %}</a></h5>
 						{% if obj.abstract %}
 							<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
 						{% endif %}
 						<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+						{% if section != "wiki" %}
+						 <div style="text-align:right">
+						 <a href="?edit=body"><h5>Add to this Wiki Page</h5></a>
+						 </div>
+						 {% endif %}
 						<br/>
 						{% if section == "education" %}
 							<p><b>Start Date : </b>{{obj.start_date}}</p>
@@ -72,6 +81,7 @@ BLOG CONTENT
 							{% autoescape off %}{{obj.faq}}{% endautoescape %}
 							<br/>
 						{% endif %}
+						<h5 class="post-author">Posted by <a href="#">{% for users in obj.authors.all %}{{users.username}}{% endfor %}</a></h5>
 							<div class="sidebar-item tag-cloud">
 								<h3 id="tags">Tags</h3>
 								<ul class="nav nav-pills">

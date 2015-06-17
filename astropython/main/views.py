@@ -53,10 +53,7 @@ def single(request,section,slug,**kwargs):
     mode="display"
     if request.method=="GET" and 'edit' in request.GET:
         edit=request.GET['edit']
-        if edit=="all":
-            edit_field="__all__"
-        else:
-            edit_field=edit.split(',')
+        edit_field=edit.split(',')
         request.session['edit_field']=edit_field
         request.session.modified = True
         form= PostForm(model,edit_field,'edit',instance=obj)
