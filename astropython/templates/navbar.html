@@ -40,10 +40,29 @@
 				</ul>
 			</div>
 			<div class="search">
-				<form role="form">
+				<form role="search" action="{% url 'search' %}">
 					<i class="fa fa-search"></i>
 					<div class="field-toggle">
-						<input type="text" class="search-form" autocomplete="off" placeholder="Search">
+					  <label for="sel1">Select list:</label>
+					  <select class="form-control" name="section">
+					  <optgroup label="Teach and Learn">
+						<option value="tutorials">Tutorials</option>
+						<option value="snippets">Code Snippets</option>
+						<option value="education">Educational Resources</option>
+						<option value="wiki">Reference & Wiki</option>
+					</optgroup>
+					  <optgroup label="Forum">
+						<option value="blog">Blogs</option>
+						<option value="announcements">Announcements</option>
+						<option value="events">Events</option>
+						<option value="news">News</option>
+					</optgroup>
+					  <optgroup label="Packages">
+						<option value="packages">All Packages</option>
+					</optgroup>
+					  </select>
+					  <input type="text" class="search-form" name='q' placeholder="Search for ... ">
+					  <button type="submit" class="btn btn-default" type="button">Search</button>
 					</div>
 				</form>
 			</div>

@@ -145,8 +145,10 @@ def all(request,section,**kwargs):
 
 def search(request):
     if request.GET['q']:
+        name="All Sections"
+        section="all"
         query=request.GET['q']
-        if request.GET['section']:
+        if 'section' in request.GET:
             section=request.GET['section']
             if section=="all":
                 results=watson.search(query)
@@ -156,8 +158,11 @@ def search(request):
                 name=get_name(section)
                 sec.append(model)
                 results=watson.search(query,models=tuple(sec))
-            length=len(results)
-            print results
+        else:
+            results=watson.search(query)
+    else:
+        return HttpResponseRedirect(reverse('home'))
+    length=len(results)
     paginator = Paginator(results,10)
     page = request.GET.get('page')
     try:
