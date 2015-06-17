@@ -11,8 +11,15 @@ Welcome to
             <div class="main-slider">
                 <div class="slide-text">
                     <h1>Python for Astronomers</h1>
-                    <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic. A traditional "blog" view of the most recently posted topics is visible from the site Home page.</p>
-                    <a href="#" class="btn btn-common">SIGN UP</a>
+                    <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic.</p>
+					{% if request.user.is_authenticated %}
+					<h2>Welcome @{{request.user.username}}</h2>
+					{% else %}
+					<h5>Register or Sign In with the Oauth options below!</h5>
+                    <a href="login/facebook" class="btn btn-common">Facebook</a>
+					<a href="login/google-oauth2" class="btn btn-common">Google</a>
+					<a href="login/github" class="btn btn-common">Github</a>
+					{% endif %}
                 </div>
                 <img src="{% static 'images/home/slider/slide1/welcome1.png'%}" class="img-responsive slider-house" alt="slider image">
                 <img src="{% static 'images/home/slider/slide1/moon.png' %}" class="slider-circle1" alt="slider image">
@@ -68,13 +75,10 @@ Welcome to
                 <div class="row">
                     <div class="action take-tour">
                         <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <h1 class="title">Sign In or Register</h1>
-                            <p>Say Hi to fellow astronomers !</p>
+                            <h1 class="title">Subscribe to our newsletters !</h1>
+                            <p>Stay Updated with the latest and greatest in Python & Astronomy</p>
                         </div>
                         <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <div class="tour-button">
-                                <a href="#" class="btn btn-common">Sign In /Register </a>
-                             </div>
                         </div>
                     </div>
                 </div>

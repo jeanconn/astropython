@@ -80,7 +80,7 @@
   .btn-common {
     font-size: 14px;
     color: #797979;
-    border: 1px solid #F6EFB1;
+    border: 1px solid #CCCC7A;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     padding: 10px 25px;
@@ -100,7 +100,7 @@
     outline: none;
     background: none;
     box-shadow: none;
-    color: #F6EFB1;
+    color: #CCCC7A;
   }
 
   .align-right{
@@ -1234,7 +1234,7 @@ Blog Default
 }
 
 a.read-more{
-  color: #F6EFB1;
+  color: #CCCC7A;
   font-weight: 300;
 }
 
@@ -1307,7 +1307,7 @@ Blog with right sidebar
 }
 
 .post-nav li a i{
-  color: #F6EFB1;
+  color: #CCCC7A;
   margin-right: 8px;
 }
 
@@ -1355,4 +1355,59 @@ span.stMainServices,
 span.stButton_gradient, 
 .stButton .chicklets{
   height:24px !important;
+}
+
+#action , 
+#page-breadcrumb{
+  position: relative;
+}
+
+.single-service img {
+  height: 85px;
+}
+
+.tour-button {
+  background-image: url(../images/home/tour-icon2.png);
+  height: 100%;
+  width:100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  background-position: 151px 4px;
+}
+
+.progress .progress-bar.six-sec-ease-in-out {
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -ms-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition:  width 1s ease-in-out;
+}
+
+.top-zero{
+  margin-top: 0;
+}
+
+h3.top-zero{
+  font-size: 20px;
+}
+
+.single-skill h3{
+  font-size: 16px;
+}
+
+.progress{
+  height: 30px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.progress-bar{
+  line-height: 30px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.progress-bar.progress-bar-primary{
+  background: #dab074;
 }
