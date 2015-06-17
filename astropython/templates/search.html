@@ -30,7 +30,7 @@ BLOG CONTENT
 <section id="blog" class="padding-top">
 <div class="container">
 	<div class="row">
-		<div class="col-md-12 col-sm-7">
+		<div class="col-md-12">
 			<div class="row">
 			{%if length == 0 %}
 			<h2>No matching search results found !</h2>
@@ -38,16 +38,8 @@ BLOG CONTENT
 			{% for single_obj in obj %}
 			<div class="col-sm-12 col-md-12">
 				<div class="single-blog single-column">
-					<div class="post-content overflow">
-						<h2 class="post-title bold"><a href="{{single_obj.url}}">{{single_obj.title}}</a></h2>
-						<h3 class="post-author"><a href="#">Posted by {% for users in single_obj.authors.all %}{{users.username}}{% endfor %}</a></h3>
-						<a href="{{single_obj.slug}}" class="read-more">View More</a>
-						<div class="post-bottom overflow">
-							<ul class="nav navbar-nav post-nav">
-								<li><a><i class="fa fa-tag">&nbsp&nbsp{% for tag in single_obj.tags.all %}{{tag.name}}&nbsp&nbsp&nbsp {% endfor %}</i></a> </li>
-								<li><a href="#"><i class="fa fa-heart"></i>{{single_obj.total_upvotes}} Love</a></li>
-							</ul>
-						</div>
+					<div class="post-content overflow"><hr/>
+						<h2 class="post-title bold"><a href="{{single_obj.url}}">{{single_obj.title}}</a></h2><hr/>
 					</div>
 				</div>
 			</div>
