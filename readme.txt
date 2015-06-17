@@ -20,5 +20,6 @@ Quick set of commands to run the project :-
 3.python manage.py createsuperuser
 4.python manage.py collectstatic
 5.python manage.py runserver
-6.python populate.py
-Goto /admin to access admin panel and under the tab "Django Moderations" approve all posts... It would take some time. SQLite 3 is pretty slow , let it complete
+6.python populate.py to create a initial wiki page and populate the DB
+
+Goto /admin to access admin panel and under the tab "Django Moderations" approve all posts(especially the wiki post- that is the main Wiki Page)... It would take some time. SQLite 3 is pretty slow , let it complete
