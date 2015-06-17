@@ -49,11 +49,13 @@
 							<li><a href="{% url 'all' 'news' %}">News</a></li>
                         </ul>
 					</li>       
-					<li><a href="{% url 'all' 'packages' %}">Packages</a></li>					
-					<li class="dropdown"><a href="">Profile<i class="fa fa-angle-down"></i></a>
+					<li><a href="{% url 'all' 'packages' %}">Packages</a></li>				
+					{% if request.user.is_authenticated %}
+					<li class="dropdown"><a href="">My Profile<i class="fa fa-angle-down"></i></a>
 						<ul role="menu" class="sub-menu">
                         </ul>
-					</li>                 
+					</li>
+					{% endif %}
 				</ul>
 			</div>
 			<div class="search">
