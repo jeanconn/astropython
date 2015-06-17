@@ -59,12 +59,31 @@ BLOG CONTENT
 						{% if obj.abstract %}
 							<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
 						{% endif %}
+						{% if section == "packages" %}
+							<p><b>Category : </b>{{obj.category}}</p>
+							{% if obj.homepage %}
+							<p><b>Homepage : </b><a href="{{obj.homepage}}">{{obj.homepage}}</a></p>
+							{% endif %}
+							{% if obj.docs %}
+							<p><b>Start Date : </b><a href="{{obj.docs}}">{{obj.docs}}</a></p>
+							{% endif %}
+						{% endif %}
+						{% if section == "events" %}
+							{% if obj.website %}
+							<p><b>Event Website : </b><a href="{{obj.website}}">{{obj.website}}</a></p>
+							{% endif %}
+							{% if obj.location %}
+							<p><b>Location : </b>{{obj.location}}</p>
+							{% endif %}
+							<p><b>Event Date: </b>{{obj.start_date_time|date}}</p>
+							{% if obj.end_date_time %}
+							<p><b>Event End Date : </b>{{obj.end_date_time|date}}</p>
+							{% endif %}
+							{% if obj.all_day_event %}
+							<p>This is an all day event !</p>
+							{% endif %}
+						{% endif %}
 						<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
-						{% if section != "wiki" %}
-						 <div style="text-align:right">
-						 <a href="?edit=body"><h5>Add to this Wiki Page</h5></a>
-						 </div>
-						 {% endif %}
 						<br/>
 						{% if section == "education" %}
 							<p><b>Start Date : </b>{{obj.start_date}}</p>
@@ -81,6 +100,12 @@ BLOG CONTENT
 							{% autoescape off %}{{obj.faq}}{% endautoescape %}
 							<br/>
 						{% endif %}
+						{% if section != "wiki" %}
+						 <div style="text-align:right">
+						 <a href="?edit=body"><h5>Add to this Wiki Page</h5></a>
+						 </div>
+						 {% endif %}
+						<br/>
 						<h5 class="post-author">Posted by <a href="#">{% for users in obj.authors.all %}{{users.username}}{% endfor %}</a></h5>
 							<div class="sidebar-item tag-cloud">
 								<h3 id="tags">Tags</h3>

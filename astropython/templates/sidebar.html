@@ -6,6 +6,9 @@
 	<div class="sidebar-item categories">
 		<h3>Sort by</h3>
 		<ul class="nav navbar-stacked">
+			{% if section == "packages"%}
+			<li><a href="?sort=recommended">Recommended</a></li>
+			{% endif %}
 			<li><a href="?sort=popularity">Popularity</a></li>
 			<li><a href="?sort=ratings">Ratings</a></li>
 			<li><a href="?sort=date">Date Created</a></li>
