@@ -111,37 +111,34 @@ def all(request,section,**kwargs):
     model=get_model(section)
     name=get_name(section)
     message=""
-    if model==Wiki and 'sort' not in request.GET:
-        return single(request,"wiki","home")
-    else:
-        if 'sort' in request.GET:
-            sort=request.GET['sort']
-            message+="Ordered by "+sort+"   "
-            if sort=="popularity":
-                obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
-            elif sort=="ratings":
-                obj_list=model.objects.all().filter(state="submitted").order_by('total_upvotes')
-            else:
-                obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+    if 'sort' in request.GET:
+        sort=request.GET['sort']
+        message+="Ordered by "+sort+"   "
+        if sort=="popularity":
+            obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
+        elif sort=="ratings":
+            obj_list=model.objects.all().filter(state="submitted").order_by('total_upvotes')
         else:
-                obj_list=model.objects.all().filter(state="submitted").order_by('-created')
-        if 'tags' in request.GET:
-            tags=request.GET['tags']
-            message+="Filtered by tags : "+tags
-            tag=tags.split(',')
-            obj_list=obj_list.filter(tags__name__in=tag).distinct()
-        length=len(obj_list)
-        paginator = Paginator(obj_list,10)
-        page = request.GET.get('page')
-        try:
-            obj=paginator.page(page)
-        except:
-            obj=paginator.page(1)
-        tags = model.tags.all()
-        popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
-        recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
-        context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}
-        return render(request,'all.html',context)
+            obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+    else:
+            obj_list=model.objects.all().filter(state="submitted").order_by('-created')
+    if 'tags' in request.GET:
+        tags=request.GET['tags']
+        message+="Filtered by tags : "+tags
+        tag=tags.split(',')
+        obj_list=obj_list.filter(tags__name__in=tag).distinct()
+    length=len(obj_list)
+    paginator = Paginator(obj_list,10)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    tags = model.tags.all()
+    popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
+    recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
+    context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}
+    return render(request,'all.html',context)
 
 def search(request):
     if request.GET['q']:
