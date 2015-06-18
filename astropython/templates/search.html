@@ -49,7 +49,7 @@ BLOG CONTENT
 		{% if  obj.paginator.num_pages > 1 %}
 				<ul class="pagination">
 					{% if obj.has_previous %}
-						<li><a href="?page={{ obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+						<li><a href="search?section={{section}}&q={{query}}&page={{ obj.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 					{% else %}
 						<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 					{% endif %}
@@ -57,11 +57,11 @@ BLOG CONTENT
 						{% if num == obj.number %}
 							<li class="active"><a href="#">{{num}} <span class="sr-only">(current)</span></a></li>
 						{% else %}
-							<li><a href="?page={{num}}">{{num}}</a></li>
+							<li><a href="search?section={{section}}&q={{query}}&page={{num}}">{{num}}</a></li>
 						{% endif %}
 					{% endfor %}
 					{% if obj.has_next %}
-						<li><a href="?page={{ obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+						<li><a href="search?section={{section}}&q={{query}}&page={{ obj.next_page_number }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 					{% else %}
 						<li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 					{% endif %}
