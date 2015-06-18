@@ -105,13 +105,14 @@ def populate(path_localdata,obj):
         with open(path_localdata+"//"+str(i)+".json") as data_file:#open the json file
             data=json.load(data_file)#load data in python variable
             t=typeObj()#create a new object
-            t.slug="abc"
-            t.save()#initially save the empty object. This generates a primary key which is required to add any new properties
             for name in data:
                 if (name=='tags'):
-                    for items in data[name]:
-                        s1=str(items)
-                        t.tags.add(s1)#Add tags one by one.Note that this handles duplicate tags automatically
+                    pass
+                    """
+                        for items in data[name]:
+                            s1=str(items)
+                            t.tags.add(s1)#Add tags one by one.Note that this handles duplicate tags automatically
+                    """
                 else:
                     s=data[name]#Find the field
                     if(name=='author'):
@@ -126,11 +127,8 @@ def populate(path_localdata,obj):
             t.body=desc#Add the body
             t.input_type="WYSIWYG"
             t.state="submitted"
-            try:
-                t.slug=slugify(title)#Generate slug
-                t.save()#Save the current state
-            except:
-                t.slug=slugify(title)+str(random.randrange(1,10000000+1))#If 2 objects have same title,this prevents the same slug from being generated
+            t.slug=slugify(title)+str(random.randrange(1,100+1))#If 2 objects have same title,this prevents the same slug from being generated
+            t.save()#Save the current state
             #t.published=datetime.datetime.strptime(date,"%Y-%m-%d") #Add publishing date
             u=User.objects.get_or_create(username=author)#If user is absent, create user
             t.save()
@@ -138,6 +136,11 @@ def populate(path_localdata,obj):
                 u[0].save()#If the user is not present ,create it
             t.authors.add(u[0])
             t.save()#save all elements
+            for name in data:
+                if (name=='tags'):
+                        for items in data[name]:
+                            s1=str(items)
+                            t.tags.add(s1)#Add tags one by one.Note that this handles duplicate tags automatically
             print("Entered an element successfully!")
 
 # Start execution here!

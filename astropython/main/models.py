@@ -107,7 +107,7 @@ class TutorialSeries(models.Model):
 		return self.title
 
 class EducationalResource(BasePost):
-    start_date = models.DateTimeField(null=True, blank=True)#Date the course starts
+    start_date = models.DateTimeField(null=True, blank=True,help_text="Format : YYYY-MM-DD")#Date the course starts
     instructor_names = models.CharField(max_length=400)#Names of Instructors
     website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
     contents = models.TextField(blank=True) #Syllabus or contents of the course
@@ -134,8 +134,8 @@ class Event(models.Model):
     hits = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
-    start_date_time = models.DateTimeField()#start time
-    end_date_time = models.DateTimeField(blank=True, null=True)#When dies the event end
+    start_date_time = models.DateTimeField(help_text="Format : YYYY-MM-DD")#start time
+    end_date_time = models.DateTimeField(blank=True, null=True,help_text="Format : YYYY-MM-DD")#When dies the event end
     all_day_event = models.BooleanField(default=False)#If it is an all day event
 
     def __unicode__(self): #Format of representation of event
@@ -164,12 +164,12 @@ secretballot.enable_voting_on(Event)
 secretballot.enable_voting_on(TutorialSeries)
 secretballot.enable_voting_on(EducationalResource)
 
-watson.register(Tutorial.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(Snippet.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(Wiki.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(Announcement.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(News.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(Blog.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(EducationalResource.objects.all(),fields=("title","abstract","body","tags","contents","faq","background","instructor_names","language"))
-watson.register(Package.objects.all(),fields=("title","abstract","body","tags"))
-watson.register(Event.objects.all(),fields=("title","body","tags","location","start_date_time"))
+watson.register(Tutorial)
+watson.register(Snippet)
+watson.register(Wiki)
+watson.register(Announcement)
+watson.register(News)
+watson.register(Blog)
+watson.register(EducationalResource)
+watson.register(Package)
+watson.register(Event)
