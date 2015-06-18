@@ -13,6 +13,9 @@
 {{form.media}}
 <link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}markdown/less/bootstrap-markdown.less" />
 <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markdown/css/bootstrap-markdown.min.css" />
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "626bc566-fe39-4650-9440-d70b61157997", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 {% endblock %}
 {% block js %}
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
@@ -118,6 +121,10 @@ BLOG CONTENT
 								<a href="./downvote"><i class="glyphicon glyphicon-thumbs-down"></i>&nbsp&nbsp&nbsp <span class="badge">{{obj.total_downvotes}}</span></a>
 								<div class="spacing"></div>
 								<h6>SHARE</h6>
+								<span class='st_facebook_large' displayText='Facebook'></span>
+								<span class='st_twitter_large' displayText='Tweet'></span>
+								<span class='st_googleplus_large' displayText='Google +'></span>
+								<span class='st_email_large' displayText='Email'></span>
 							</div>
 						<div class="response-area">
 						<h2 class="bold">Comments</h2>
