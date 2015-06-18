@@ -21,7 +21,7 @@ PACKAGE_CHOICES = (
 
 class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
     abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body = models.TextField(blank=False)
@@ -123,7 +123,7 @@ Events model are associated with any future events that are planned
 """
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body =models.TextField(blank=False)
     location = models.CharField(max_length=1000,blank=True)

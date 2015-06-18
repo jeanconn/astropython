@@ -10,14 +10,12 @@
 {% endblock %}
 {% load crispy_forms_tags %}
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/skins/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markitup/sets/default/style.css" />
 {{form.media}}
+<link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}markdown/less/bootstrap-markdown.less" />
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markdown/css/bootstrap-markdown.min.css" />
 {% endblock %}
 {% block js %}
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
-<script type="text/javascript" src="{{STATIC_URL}}markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}markitup/sets/default/set.js"></script>
 {% endblock %}
 {% block content %}
 <!-- *****************************************************************************************************************
@@ -139,11 +137,6 @@ BLOG CONTENT
 			$( this ).find( "span:last" ).remove();
 		  }
 		);
-		{% if obj.input_type == "WYSIWYG" %}
-			CKEDITOR.replace( '#body' );
-		{% else %}
-			$("#id_body").markItUp(mySettings);
-		{% endif %}
 	</script>
 	<script type="text/javascript">
 		/* * * CONFIGURATION VARIABLES * * */
@@ -171,4 +164,10 @@ BLOG CONTENT
 	</div>
 </div>
 </section>
+{% endblock %}
+{% block endjs %}
+<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"type="text/javascript"></script>
+<script src="{{STATIC_URL}}markdown/js/markdown.js"></script>
+<script src="{{STATIC_URL}}markdown/js/to-markdown.js"></script>
+<script src="{{STATIC_URL}}markdown/js/bootstrap-markdown.js"></script> 
 {% endblock %}
