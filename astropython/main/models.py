@@ -21,10 +21,10 @@ PACKAGE_CHOICES = (
 
 class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
-    abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown",label='Text Editor Choice',help_text='All current editor contents will be lost once editors are switched')
+    abstract = models.TextField(null=True,blank=True,help_text='Optional Summary of Post') #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
-    body = models.TextField(blank=False)
+    body = models.TextField(blank=False,label='Page Body / Contents')
     slug = models.SlugField(unique=True) #Slug to a tutorial
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
     tags=TaggableManager() #Tags
@@ -69,9 +69,9 @@ class Blog(BasePost):
         return reverse('main.views.single',kwargs={'section':'blog','slug':self.slug})
 
 class Package(BasePost):
-    category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others")
-    homepage=models.URLField(blank=True)#URL : homepage of the packages
-    docs = models.URLField(blank=True)
+    category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others",help_text='Packages not actively mantained come under "Others"')
+    homepage=models.URLField(blank=True,label="Homepage URL")#URL : homepage of the packages
+    docs = models.URLField(blank=True,label="URL to Docs")
 
     def get_absolute_url(self):
         return reverse('main.views.single',kwargs={'section':'packages','slug':self.slug})
@@ -109,11 +109,11 @@ class TutorialSeries(models.Model):
 class EducationalResource(BasePost):
     start_date = models.DateTimeField(null=True, blank=True,help_text="Format : YYYY-MM-DD")#Date the course starts
     instructor_names = models.CharField(max_length=400)#Names of Instructors
-    website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
-    contents = models.TextField(blank=True) #Syllabus or contents of the course
-    background = models.TextField()#Recommended Backgroud
-    faq=models.TextField(blank=True)#FAQ if any
-    language = models.CharField(max_length=200,blank=True)#Language in which course is to be conducted
+    website = models.URLField(blank=True,label='Course Website')#Website hosting the course, or having more info about the course
+    contents = models.TextField(blank=True,label='Course Contents') #Syllabus or contents of the course
+    background = models.TextField(blank=True,label='Recommended Background')#Recommended Backgroud
+    faq=models.TextField(blank=True,label='Frequently Asked Questions')#FAQ if any
+    language = models.CharField(max_length=200,blank=True,label='Language of Instruction')#Language in which course is to be conducted
 
     def get_absolute_url(self):
         return reverse('main.views.single',kwargs={'section':'education','slug':self.slug})
@@ -123,7 +123,7 @@ Events model are associated with any future events that are planned
 """
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown",label='Text Editor Choice',help_text='All current editor contents will be lost once editors are switched')
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
     body =models.TextField(blank=False)
     location = models.CharField(max_length=1000,blank=True)
