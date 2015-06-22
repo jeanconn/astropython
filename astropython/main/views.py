@@ -76,15 +76,6 @@ def single(request,section,slug,**kwargs):
     return render(request,'single.html',{'obj':obj,'section':section,'full_url':request.build_absolute_uri(),"mode":mode,"form":form,"tags":tags,'page':'single','recent':recent,'popular':popular})
 
 
-def single_series(request,slug):
-    series=TutorialSeries.objects.get(slug=slug)
-    obj=series.seriestutorial_set.order_by('order_id')
-    series.hits=series.hits+1
-    series.save()
-    context = {'obj':obj,'series':series,'name':series.title,'length':len(obj)}
-    return render(request,'single-series.html',context)
-
-
 def vote(request,section,choice,slug):
     model=get_model(section)
     obj=model.objects.get(slug=slug)
