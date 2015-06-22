@@ -6,10 +6,9 @@
 {% endblock %}
 {% block styles %}
 {{form.media}}
+ <link rel="stylesheet" href="{{STATIC_URL}}markdown/css/editormd.css" />
 {% endblock %}
 {% load crispy_forms_tags %}
-{% block jquery %}		
-{% endblock %}
 
 {% block js %}
 {% compress js %}
@@ -30,8 +29,8 @@
 						CKEDITOR.instances[name].destroy()
 					}
 					$.getScript("{{STATIC_URL}}markdown/editormd.js", function() {
-								$("#id_body").append("<div id=\"test-editormd\"></div>");
-								
+								$("#id_body").before("<div id=\"test-editormd\"></div>");
+								$("#id_body").after("</div>");
 								testEditormd = editormd("test-editormd", {
 									width: "90%",
 									height: 640,
