@@ -12,6 +12,8 @@
 
 {% block js %}
 {% compress js %}
+<script src="{{STATIC_URL}}markdown/editormd.js"></script>
+<script src="{{STATIC_URL}}markdown/languages/en.js"></script>
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -21,6 +23,7 @@
 				if (ch=="WYSIWYG")
 				{
 					testEditormd.editor.remove();
+					$("#div_id_body > .controls").append('<textarea class="textarea form-control editormd-html-textarea" cols="40" id="id_body" name="body" rows="10"></textarea>');
 					CKEDITOR.replace( 'body' );
 				}
 				else{
@@ -28,24 +31,34 @@
 					{
 						CKEDITOR.instances[name].destroy()
 					}
-					$.getScript("{{STATIC_URL}}markdown/editormd.js", function() {
-								$("#id_body").before("<div id=\"test-editormd\"></div>");
-								$("#id_body").after("</div>");
-								testEditormd = editormd("test-editormd", {
-									width: "90%",
-									height: 640,
-									markdown : "### 动态创建 Editor.md\r\n\r\nDynamic create Editor.md",
-									path : '{{STATIC_URL}}markdown/lib/'
-								});
-						});
+					$("#id_body").replaceWith('<div id=\"test-editormd\"></div>');
+					testEditormd = editormd("test-editormd", {
+						width: "100%",
+						height : 800,
+						path : '{{STATIC_URL}}markdown/lib/',
+						tex:true,
+						emoji:true,
+						taskList:true,
+						flowChart:true, 
+						sequenceDiagram:true,
+						codeFold : true,
+                        syncScrolling : true,
+                        saveHTMLToTextarea : true,
+                        searchReplace : true,
+                        previewCodeHighlight : true,
+                        tocm : true,
+                        imageUpload : false,
+					});
+					$(".editormd-html-textarea").attr("name","body");
 				}
 			}
 			$("#id_input_type").change(function(){
 				changeEditor();
-				})
+				});
 			changeEditor(); 
-	})
+	});
 </script>
+
 {% endcompress %}
 {% endblock %}
 {% block content %}
