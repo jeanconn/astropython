@@ -31,7 +31,7 @@
 					{
 						CKEDITOR.instances[name].destroy()
 					}
-					$("#id_body").replaceWith('<div id=\"test-editormd\"></div>');
+					$("#id_body").replaceWith('<div id=\"test-editormd\"><textarea style="display:none;">'{% if form.body.value %}+'{{form.body.value}}'+{% endif %}'</textarea></div>');
 					testEditormd = editormd("test-editormd", {
 						width: "100%",
 						height : 800,
@@ -43,7 +43,6 @@
 						sequenceDiagram:true,
 						codeFold : true,
                         syncScrolling : true,
-                        saveHTMLToTextarea : true,
                         searchReplace : true,
                         previewCodeHighlight : true,
                         tocm : true,

@@ -27,6 +27,25 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 			{% if mode == "edit" %}
+			$("#id_body").replaceWith('<div id=\"test-editormd\"></div>');
+			testEditormd = editormd("test-editormd", {
+						width: "100%",
+						height : 800,
+						path : '{{STATIC_URL}}markdown/lib/',
+						tex:true,
+						emoji:true,
+						taskList:true,
+						flowChart:true, 
+						sequenceDiagram:true,
+						codeFold : true,
+                        syncScrolling : true,
+                        saveHTMLToTextarea : true,
+                        searchReplace : true,
+                        previewCodeHighlight : true,
+                        tocm : true,
+                        imageUpload : false,
+					});
+					$(".editormd-markdown-textarea").attr("name","body");
 			$("#edit_modal").modal("show");
 			{% endif %}
 			
