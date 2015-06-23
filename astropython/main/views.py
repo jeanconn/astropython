@@ -105,7 +105,7 @@ def all(request,section,**kwargs):
         if sort=="popularity":
             obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
         elif sort=="ratings":
-            obj_list=model.objects.all().filter(state="submitted").order_by('total_upvotes')
+            obj_list=model.objects.all().filter(state="submitted").order_by('-total_upvotes')
         elif sort=="recommended" and section=="packages":
             obj_list=model.objects.all().filter(category="Recommended").order_by('-created')
         else:
