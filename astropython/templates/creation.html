@@ -1,36 +1,68 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load compress %}
 {% block head_title %}
 {{name}} Creation: 
 {% endblock %}
 {% block styles %}
-<link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}markdown/less/bootstrap-markdown.less" />
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markdown/css/bootstrap-markdown.min.css" />
 {{form.media}}
+ <link rel="stylesheet" href="{{STATIC_URL}}markdown/css/editormd.css" />
 {% endblock %}
-
 {% load crispy_forms_tags %}
-{% block jquery %}		
-{% if form.input_type.value == "Markdown" %}	
-	$("#div_id_body").replaceWith('<div id="div_id_body" class="form-group"><label for="id_body" class="control-label  requiredField">Body<span class="asteriskField">*</span></label><div class="controls "><textarea class="textarea form-control" cols="40" id="id_body" name="body" rows="10" data-provide="markdown">'+document.getElementById('id_body').value+'</textarea></div></div>');
-	$("#div_id_input_type").replaceWith('	<div id="div_id_input_type" class="form-group"><label for="id_input_type" class="control-label  requiredField">Markdown Editor present, shift to Rich Editor ? <span class="asteriskField">*</span></label><div class="controls "><select class="select form-control" id="id_input_type" name="input_type"><option value="WYSIWYG">Yes</option>><option value="Markdown" selected="selected">No</option></select></div></div>');
-{% endif %}
-	function changeEditor(){
-	ch=$("#id_input_type option:selected").val();
-		if (ch=="WYSIWYG")
-		{
-			$("#div_id_body").replaceWith('<div id="div_id_body" class="form-group"><label for="id_body" class="control-label  requiredField">Body<span class="asteriskField">*</span></label><div class="controls "><textarea class="textarea form-control" cols="40" id="id_body" name="body" rows="10">'+ $('#id_body').val() +'</textarea></div></div>');
-			CKEDITOR.replace( 'body' );
-		}
-	}
-	$("#id_input_type").change(function(){
-		changeEditor();
-		})
-	changeEditor(); 
-{% endblock %}
 
 {% block js %}
+{% compress js %}
+<script src="{{STATIC_URL}}markdown/editormd.js"></script>
+<script src="{{STATIC_URL}}markdown/languages/en.js"></script>
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
+<script type="text/javascript">
+	$(document).ready(function(){
+			var testEditormd;
+			function changeEditor(){
+			ch=$("#id_input_type option:selected").val();
+				if (ch=="WYSIWYG")
+				{
+					try{
+					testEditormd.editor.remove();
+					$("#div_id_body > .controls").append('<textarea class="textarea form-control" cols="40" id="id_body" name="body" rows="10"></textarea>');
+					}catch(err)
+					{
+					}
+					CKEDITOR.replace( 'body' );
+				}
+				else{
+					for(name in CKEDITOR.instances)
+					{
+						CKEDITOR.instances[name].destroy()
+					}
+					$("#id_body").replaceWith('<div id=\"test-editormd\"><textarea style="display:none;">{% if form.body.value and form.input_type.value == "Markdown" %}{{form.body.value|escapejs}}{% endif %}</textarea></div>');
+					testEditormd = editormd("test-editormd", {
+						width: "100%",
+						height : 800,
+						path : '{{STATIC_URL}}markdown/lib/',
+						tex:true,
+						emoji:true,
+						taskList:true,
+						flowChart:true, 
+						sequenceDiagram:true,
+						codeFold : true,
+                        syncScrolling : true,
+                        searchReplace : true,
+                        previewCodeHighlight : true,
+                        tocm : true,
+                        imageUpload : false,
+					});
+					$(".editormd-markdown-textarea").attr("name","body");
+				}
+			}
+			$("#id_input_type").change(function(){
+				changeEditor();
+				});
+			changeEditor(); 
+	});
+</script>
+
+{% endcompress %}
 {% endblock %}
 {% block content %}
 <!-- *****************************************************************************************************************
@@ -69,8 +101,4 @@ BLOG CONTENT
 </section>
 {% endblock %}
 {% block endjs %}
-<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"type="text/javascript"></script>
-<script src="{{STATIC_URL}}markdown/js/markdown.js"></script>
-<script src="{{STATIC_URL}}markdown/js/to-markdown.js"></script>
-<script src="{{STATIC_URL}}markdown/js/bootstrap-markdown.js"></script> 
 {% endblock %}

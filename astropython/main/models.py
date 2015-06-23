@@ -21,10 +21,10 @@ PACKAGE_CHOICES = (
 
 class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
-    abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown",verbose_name='Text Editor Choice',help_text='All current editor contents will be lost once editors are switched')
+    abstract = models.TextField(null=True,blank=True,help_text='Optional Summary of Post') #Short abstract of the tutorial
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
-    body = models.TextField(blank=False)
+    body = models.TextField(blank=False,verbose_name='Page Body / Contents')
     slug = models.SlugField(unique=True) #Slug to a tutorial
     state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial
     tags=TaggableManager() #Tags
@@ -69,51 +69,21 @@ class Blog(BasePost):
         return reverse('main.views.single',kwargs={'section':'blog','slug':self.slug})
 
 class Package(BasePost):
-    category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others")
-    homepage=models.URLField(blank=True)#URL : homepage of the packages
-    docs = models.URLField(blank=True)
+    category=models.CharField(max_length=60,choices=PACKAGE_CHOICES,default="Others",help_text='Packages not actively mantained are labelled "Others"')
+    homepage=models.URLField(blank=True,verbose_name="Homepage URL")#URL : homepage of the packages
+    docs = models.URLField(blank=True,verbose_name="URL to Docs")
 
     def get_absolute_url(self):
         return reverse('main.views.single',kwargs={'section':'packages','slug':self.slug})
 
-class SeriesTutorial(models.Model):
-    title = models.CharField(max_length=200)#Title of the Post
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES)
-    abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial
-    authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
-    tut_series=models.ForeignKey('TutorialSeries',blank=False,null=False)
-    order_id=models.IntegerField(default=0)
-    body = models.TextField(blank=False)
-    slug = models.SlugField(unique=True) #Slug to a tutorial
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
-
-    def __unicode__(self):
-		return self.title
-
-class TutorialSeries(models.Model):
-    title = models.CharField(max_length=200)#Title of the Series
-    authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial series
-    abstract = models.TextField(null=True,blank=True) #Short abstract of the tutorial series
-    slug = models.SlugField(unique=True) #Slug to a tutorial series
-    state = models.CharField(max_length=60,choices=STATE_CHOICES,default='raw') #State of a tutorial series
-    tags=TaggableManager() #Tags
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)  # Date when first revision was created
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)  # Date when last revision was created (even if not published)
-    published = models.DateTimeField(null=True, blank=True,editable=False)  # Date when last published
-    hits = models.IntegerField(default=0)
-
-    def __unicode__(self):
-		return self.title
-
 class EducationalResource(BasePost):
     start_date = models.DateTimeField(null=True, blank=True,help_text="Format : YYYY-MM-DD")#Date the course starts
     instructor_names = models.CharField(max_length=400)#Names of Instructors
-    website = models.URLField(blank=True)#Website hosting the course, or having more info about the course
-    contents = models.TextField(blank=True) #Syllabus or contents of the course
-    background = models.TextField()#Recommended Backgroud
-    faq=models.TextField(blank=True)#FAQ if any
-    language = models.CharField(max_length=200,blank=True)#Language in which course is to be conducted
+    website = models.URLField(blank=True,verbose_name='Course Website')#Website hosting the course, or having more info about the course
+    contents = models.TextField(blank=True,verbose_name='Course Contents') #Syllabus or contents of the course
+    background = models.TextField(blank=True,verbose_name='Recommended Background')#Recommended Backgroud
+    faq=models.TextField(blank=True,verbose_name='Frequently Asked Questions')#FAQ if any
+    language = models.CharField(max_length=200,blank=True,verbose_name='Language of Instruction')#Language in which course is to be conducted
 
     def get_absolute_url(self):
         return reverse('main.views.single',kwargs={'section':'education','slug':self.slug})
@@ -123,9 +93,9 @@ Events model are associated with any future events that are planned
 """
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown")
+    input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown",verbose_name='Text Editor Choice',help_text='All current editor contents will be lost once editors are switched')
     authors = models.ManyToManyField(User,blank=True,null=True) # Collaborators of a tutorial
-    body =models.TextField(blank=False)
+    body =models.TextField(blank=False,verbose_name='Page Body / Contents')
     location = models.CharField(max_length=1000,blank=True)
     website = models.URLField(blank=True)
     slug = models.SlugField(unique=True)
@@ -161,7 +131,6 @@ secretballot.enable_voting_on(Announcement)
 secretballot.enable_voting_on(News)
 secretballot.enable_voting_on(Blog)
 secretballot.enable_voting_on(Event)
-secretballot.enable_voting_on(TutorialSeries)
 secretballot.enable_voting_on(EducationalResource)
 
 watson.register(Tutorial)

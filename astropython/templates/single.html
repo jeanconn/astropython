@@ -1,24 +1,83 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load compress %}
 {% block head_title %}
 {{obj.title}} :
-{% endblock %}
-{% block jquery %}
-{% if mode == "edit" %}
-	$("#edit_modal").modal("show");
-{% endif %}
 {% endblock %}
 {% load crispy_forms_tags %}
 {% block styles %}
 {{form.media}}
-<link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}markdown/less/bootstrap-markdown.less" />
-<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}markdown/css/bootstrap-markdown.min.css" />
+ <link rel="stylesheet" href="{{STATIC_URL}}markdown/css/editormd.css" />
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({publisher: "626bc566-fe39-4650-9440-d70b61157997", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 {% endblock %}
 {% block js %}
 <script src="{{STATIC_URL}}ckeditor/ckeditor.js"></script> 
+{% if obj.input_type == "Markdown" %}
+<script src="{{STATIC_URL}}markdown/lib/marked.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/prettify.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/raphael.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/underscore.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/sequence-diagram.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/flowchart.min.js"></script>
+<script src="{{STATIC_URL}}markdown/lib/jquery.flowchart.min.js"></script>
+<script src="{{STATIC_URL}}markdown/editormd.js"></script>
+<link rel="stylesheet" href="{{STATIC_URL}}markdown/css/editormd.preview.css" />
+<script type="text/javascript">
+	$(document).ready(function(){
+			{% if mode == "edit" %}
+			$("#id_body").replaceWith('<div id=\"test-editormd\"><textarea style="display:none;">{{obj.body|escapejs}}</textarea></div>');
+			testEditormd = editormd("test-editormd", {
+						width: "100%",
+						height : 800,
+						path : '{{STATIC_URL}}markdown/lib/',
+						tex:true,
+						emoji:true,
+						taskList:true,
+						flowChart:true, 
+						sequenceDiagram:true,
+						codeFold : true,
+                        syncScrolling : true,
+                        saveHTMLToTextarea : true,
+                        searchReplace : true,
+                        previewCodeHighlight : true,
+                        tocm : true,
+                        imageUpload : false,
+					});
+					$(".editormd-markdown-textarea").attr("name","body");
+			$("#edit_modal").modal("show");
+			{% endif %}
+			
+            $(function() {
+                var testEditormdView;
+				    testEditormdView = editormd.markdownToHTML("test-editormd-view", {
+                        //htmlDecode      : true,  
+                        htmlDecode      : "style,script,iframe", 
+                        //toc             : false,
+                        tocm            : true,    // Using [TOCM]
+                        //tocContainer    : "#custom-toc-container"
+                        gfm             : true,
+                        tocDropdown     : true,
+                        // markdownSourceCode : true, // 
+                        emoji           : true,
+                        taskList        : true,
+                        tex             : true, 
+                        flowChart       : true,  
+                        sequenceDiagram : true,  
+                   
+                });
+            });
+	});
+</script>
+{% else %}
+{% if mode == "edit" %}
+<script>
+$(document).ready(function(){
+$("#edit_modal").modal("show");});
+</script>
+{% endif %}
+{% endif %}
 {% endblock %}
 {% block content %}
 <!-- *****************************************************************************************************************
@@ -47,9 +106,10 @@ BLOG CONTENT
 <section id="blog-details" class="padding-top">
 <div class="container">
 	<div class="row">
-	<div class="col-md-9 col-sm-7" style="word-wrap: break-word;">
+	<div class="col-md-9 col-sm-9" style="word-wrap: break-word;margin-left:0px;">
 		<div class="row">
 			 <div class="col-md-12 col-sm-12">
+			  
 			 {% if section == "wiki" %}
 			 <div style="text-align:right">
 			 <a href="?edit=body"><h5>Add to this Wiki Page</h5></a>
@@ -84,7 +144,13 @@ BLOG CONTENT
 							<p>This is an all day event !</p>
 							{% endif %}
 						{% endif %}
+						{% if obj.input_type == "Markdown" %}
+						<div id="test-editormd-view">
+						<textarea style="display:none;" name="test-editormd-markdown-doc">{{obj.body}}</textarea>               
+						</div>
+						{% else %}
 						<p id="body_display">{% autoescape off %}{{obj.body}}{% endautoescape %}</p>
+						{% endif %}
 						<br/>
 						{% if section == "education" %}
 							<p><b>Start Date : </b>{{obj.start_date}}</p>
@@ -173,8 +239,4 @@ BLOG CONTENT
 </section>
 {% endblock %}
 {% block endjs %}
-<script src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"type="text/javascript"></script>
-<script src="{{STATIC_URL}}markdown/js/markdown.js"></script>
-<script src="{{STATIC_URL}}markdown/js/to-markdown.js"></script>
-<script src="{{STATIC_URL}}markdown/js/bootstrap-markdown.js"></script> 
 {% endblock %}
