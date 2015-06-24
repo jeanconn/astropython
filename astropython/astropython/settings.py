@@ -45,6 +45,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'pagination',
+    'tagging',
+    'pinax_theme_bootstrap',
+    'planet',
     'moderation', # Adding moderations
     'main',
     'social.apps.django_app.default', #Social  Authentication
@@ -59,6 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'secretballot.middleware.SecretBallotIpUseragentMiddleware',
     'watson.middleware.SearchContextMiddleware',
+    'pagination.middleware.PaginationMiddleware',
     )
 
 ROOT_URLCONF = 'astropython.urls'
@@ -76,6 +82,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
+    'planet.context_processors.context',
 )
 
 TEMPLATE_LOADERS = (
@@ -143,3 +150,7 @@ INPUT_CHOICES = (
  )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+PLANET = {
+    "USER_AGENT": "My Planet/1.0",
+}
