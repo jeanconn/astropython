@@ -437,7 +437,7 @@ html {
 
 body {
   *zoom: 1;
-  max-width: 68em;
+  max-width: 90%;
   margin-left: auto;
   margin-right: auto; }
   body:before, body:after {
@@ -619,7 +619,7 @@ input[type="submit"].button,
   padding: 0 12px 6px 12px; }
   .tab-link.is-selected {
     color: #1c1c1c;
-    border-bottom: #cecece 4px solid; }
+    border-bottom: white 4px solid; }
 
 .side-menu {
   z-index: 9000;
@@ -701,7 +701,7 @@ input[type="submit"].button,
 .header-tab-content {
   display: none;
   padding-bottom: 24px;
-  border-bottom: #cecece 1px solid; }
+  border-bottom: white 1px solid; }
 
 @media screen and (min-width: 768px) {
   .header-nav {
@@ -736,7 +736,7 @@ input[type="submit"].button,
   max-height: 144px;
   margin-bottom: 24px;
   background-color: #fefefe;
-  border: 1px solid #cecece; }
+  border: 1px solid white; }
 
 .errorlist {
   color: #c65555;
@@ -761,10 +761,10 @@ input[type="submit"].button,
 .row,
 .comment {
   padding: 12px;
-  border-top: #cecece 1px solid; }
+  border-top: white 1px solid; }
   .row:last-child,
   .comment:last-child {
-    border-bottom: #cecece 1px solid; }
+    border-bottom: white 1px solid; }
 
 .row-title {
   float: left;
@@ -873,7 +873,7 @@ input[type="submit"].button,
   z-index: 1;
   display: block;
   width: 100%;
-  background: #cecece;
+  background: white;
   padding: 6px 0; }
 
 .move-container {
@@ -944,7 +944,7 @@ input.move-comment-checkbox {
 
 .comment-text blockquote {
   margin: 0;
-  border-left: #cecece 4px solid;
+  border-left: white 4px solid;
   padding-left: 24px; }
 .comment-text ul {
   list-style-type: disc;
@@ -980,8 +980,7 @@ input.move-comment-checkbox {
 
 .paginator-button {
   display: block;
-  padding: 4px 12px;
-  border: #cecece 1px solid; }
+  padding: 4px 12px; }
 
 .notify {
   margin-bottom: 48px; }
@@ -1040,7 +1039,7 @@ ul.reply-markdown {
       margin-top: -75px;
       margin-left: -150px;
       padding: 24px;
-      border: #cecece 1px solid; } }
+      border: white 1px solid; } }
 
 .share-close {
   float: right;
