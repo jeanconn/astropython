@@ -48,7 +48,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'pagination',
     'tagging',
-    'pinax_theme_bootstrap',
     'planet',
     'moderation', # Adding moderations
     'main',
@@ -154,3 +153,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 PLANET = {
     "USER_AGENT": "My Planet/1.0",
 }
+
+LANGUAGE_COOKIE_NAME = "myplanetlng"
+SESSION_COOKIE_NAME = "myplanetid"
