@@ -54,7 +54,7 @@ ROOT_URLCONF = 'astropython.urls'
 
 WSGI_APPLICATION = 'astropython.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS += (
+TEMPLATES[0]['OPTIONS']['context_processors'] += (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
 )
