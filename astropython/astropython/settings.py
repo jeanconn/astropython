@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 #Do not change the order of installed apps
 
 INSTALLED_APPS += (
-    'grappelli', # Cleaner admin panel
     'taggit', # Easy tagging functionality
     'secretballot',
     'crispy_forms',
@@ -59,7 +58,7 @@ TEMPLATES[0]['OPTIONS']['context_processors'] += (
     'social.apps.django_app.context_processors.login_redirect',
 )
 
-TEMPLATE_LOADERS = (
+TEMPLATES[0]['OPTIONS']['loaders'] = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     )
@@ -107,9 +106,9 @@ STATICFILES_DIRS = (
     os.path.join(os.path.dirname(BASE_DIR), "static", "static_files"),
 )
 
-TEMPLATE_DIRS = (
+TEMPLATES[0]['DIRS'] = [
     os.path.join(BASE_DIR, 'templates'),
-)
+]
 
 #States of a post
 STATE_CHOICES = (
