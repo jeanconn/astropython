@@ -18,7 +18,21 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 			var testEditormd;
-			function changeEditor(){
+			$("#id_input_type").change(function(){
+				$("#conform_modal").modal("show");
+				});
+			changeEditor(); 
+	});
+	function revert(in_type){
+		if(in_type=="WYSIWYG"){
+		$('#id_input_type option[value="Markdown"]').attr("selected","selected");
+		}
+		else{
+		$('#id_input_type option[value="WYSIWYG"]').attr("selected","selected");
+		}
+		$("#conform_modal").modal("hide");
+	}
+	function changeEditor(){
 			ch=$("#id_input_type option:selected").val();
 				if (ch=="WYSIWYG")
 				{
@@ -55,11 +69,6 @@
 					$(".editormd-markdown-textarea").attr("name","body");
 				}
 			}
-			$("#id_input_type").change(function(){
-				changeEditor();
-				});
-			changeEditor(); 
-	});
 </script>
 
 {% endcompress %}
@@ -84,6 +93,23 @@ TITLE WRAP
 <!-- *****************************************************************************************************************
 BLOG CONTENT
 ***************************************************************************************************************** -->
+<div class="modal fade" id="conform_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">Conformation</h2>
+		<h5>Once you change editors, the current editor contents will be lost.</h5>
+      </div>
+      <div class="modal-body">
+		<div class="btn-group" role="group" aria-label="..." style="left:25%;">
+		  <button type="button" class="btn btn-success" onclick='changeEditor();$("#conform_modal").modal("hide");'>Yes, I am sure !</button>
+		  <button type="button" class="btn btn-danger" onclick='revert($("#id_input_type option:selected").val());'>No, take me back !</button>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
 <section id="blog-details" class="padding-top">
 <div class="container">
 <div class="row">
