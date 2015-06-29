@@ -25,6 +25,7 @@ def logout_view(request):
 def create(request,section,**kwargs):
     model=get_model(section)
     name =get_name(section)
+    tags=model.tags.all()
     exclude_fields = get_exclude_fields(model)
     form = get_create_form(request,exclude_fields,model,kwargs)
     if request.method=="POST":
@@ -40,7 +41,7 @@ def create(request,section,**kwargs):
             form.save_m2m()
             automoderate(instance,user)
             return render(request,'complete.html',{'section':section,'slug':slug,'state':state,'name':name})
-    return render(request,'creation.html',{'form':form,'name':name})
+    return render(request,'creation.html',{'form':form,'name':name,'tags': tags})
 
 """
 To view a single model instance

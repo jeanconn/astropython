@@ -21,7 +21,16 @@
 			$("#id_input_type").change(function(){
 				$("#conform_modal").modal("show");
 				});
-			changeEditor(); 
+			$('.tag-cloud a').click(function(e) {
+				  var txt = $(e.target).text();
+				  var curr_tags = $('#id_tags').val();
+				  if(curr_tags==''){
+				  $('#id_tags').val(txt);
+				  }else{
+				  $('#id_tags').val(curr_tags+','+txt);
+				  }
+				});
+			changeEditor();
 	});
 	function revert(in_type){
 		if(in_type=="WYSIWYG"){
@@ -116,6 +125,15 @@ BLOG CONTENT
 	<div class="col-lg-12">
 	<form method="POST">{% csrf_token %}
 	{{form|crispy}}
+	<div class="tag-cloud" style="margin-bottom:30px;">
+		<h3>Current Tags</h3>
+		<h6>(Click on the tag names to add them)</h6>
+		<ul class="nav nav-pills">
+		{% for tag in tags %}
+			<li><a>{{tag.name}}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
 	<button type="submit" name="submit" class="btn btn-warning">Publish</button>
 	{% if user.is_authenticated %}
 	<button type="submit" name="save" class="btn btn-warning">Save</button>
