@@ -8,6 +8,8 @@ from .models import *
 class Moderator(GenericModerator):
     fields_exclude=['updated','hits']
     visible_until_rejected=True
+    auto_approve_for_groups=['Trusted Users','Moderators']
+    auto_reject_for_groups=['Banned Users']
 
     def is_auto_approve(self, obj, user):
         if obj.state == "raw":
