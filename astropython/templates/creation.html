@@ -125,6 +125,7 @@ BLOG CONTENT
 	<div class="col-lg-12">
 	<form method="POST">{% csrf_token %}
 	{{form|crispy}}
+	{% if tags %}
 	<div class="tag-cloud" style="margin-bottom:30px;">
 		<h3>Current Tags</h3>
 		<h6>(Click on the tag names to add them)</h6>
@@ -134,6 +135,7 @@ BLOG CONTENT
 		{% endfor %}
 		</ul>
 	</div>
+	{% endif %}
 	<button type="submit" name="submit" class="btn btn-warning">Publish</button>
 	{% if user.is_authenticated %}
 	<button type="submit" name="save" class="btn btn-warning">Save</button>
