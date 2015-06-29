@@ -118,7 +118,10 @@ def all(request,section,**kwargs):
         tag=tags.split(',')
         obj_list=obj_list.filter(tags__name__in=tag).distinct()
     length=len(obj_list)
-    paginator = Paginator(obj_list,10)
+    if section=="packages":
+        paginator = Paginator(obj_list,30)
+    else:
+        paginator = Paginator(obj_list,10)
     page = request.GET.get('page')
     try:
         obj=paginator.page(page)
