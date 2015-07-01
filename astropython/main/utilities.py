@@ -25,6 +25,26 @@ def get_model(name):
     elif name=="events":
         return Event
 
+def get_section(model):
+    if model==Tutorial:
+        return 'tutorials'
+    elif model==Snippet:
+        return "snippets"
+    elif model==EducationalResource:
+        return "education"
+    elif model==Wiki:
+        return "wiki"
+    elif model==Announcement:
+        return "announcements"
+    elif model==News:
+        return "news"
+    elif model==Blog:
+        return "blog"
+    elif model==Package:
+        return "packages"
+    elif model==Event:
+        return "events"
+
 def get_name(name):
     if name=='tutorials':
         return "Tutorials"
@@ -39,7 +59,7 @@ def get_name(name):
     elif name=="news":
         return "News Articles"
     elif name=="blog":
-        return "BLog Posts"
+        return "Blog Posts"
     elif name=="packages":
         return "Packages"
     elif name=="events":

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from moderation.helpers import automoderate
 
+from itertools import chain
 import secretballot
 import watson
 
@@ -12,6 +13,7 @@ from .forms import *
 from .models import *
 from .utilities import *
 from taggit.models import Tag,TaggedItem
+from django.apps import apps
 
 def home(request):
 	template = 'index.html'
@@ -185,3 +187,15 @@ def written(request):
         message="You do not have any posts yet !"
     context={'message':message,'tutorials_list':tutorials_list,'announcements_list':announcements_list,'blogs_list':blogs_list,'edresources_list':edresources_list,'news_list':news_list,'events_list':events_list,'packages_list':packages_list,'snippets_list':snippets_list,'wiki_list':wiki_list}
     return render(request,'written.html',context)
+
+def timeline(request):
+    object_list=[]
+    app = apps.get_app_config('main')
+    model_list=app.models
+    for model in model_list:
+        if not (str(model)).endswith('authors'):
+            object_list=chain(object_list,(model_list[model].objects.filter(state="submitted").order_by('-created').all()))
+    for obj in object_list:
+        print obj
+    context = {'data': object_list}
+    return render(request,'timeline.html',context)
