@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-
+{% load custom_tags %}
 {% block head_title %}
 {{name}}:
 {% endblock %}
@@ -80,11 +80,12 @@ BLOG CONTENT
 							<p><b>Website :</b><a href="{{single_obj.website}}">{{single_obj.website}}</a></p>
 							{% endif %}
 						{% else %}
-							{% if section == "packages" %}
-							<p><b>Category:</b>{{single_obj.category}}</p>
-							{% endif %}
 							{% if single_obj.abstract %}
-							<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+							<p><b>Abstract :</b>{{single_obj.abstract}}</p>
+							{% else %}
+							{% filter truncatechars:350 %}
+							<p>{{single_obj.body|raw_content}}</p>
+							{% endfilter %}
 							{% endif %}
 						{% endif %}
 						<a href="{{single_obj.slug}}" class="read-more">View More</a>
