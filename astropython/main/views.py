@@ -117,7 +117,10 @@ def all(request,section,**kwargs):
         tags=request.GET['tags']
         message+="Filtered by tags : "+tags
         tag=tags.split(',')
-        obj_list=obj_list.filter(tags__name__in=tag).distinct()
+        for tag_elem in tag:
+            tag_list=[]
+            tag_list.append(tag_elem)
+            obj_list=obj_list.filter(tags__name__in=tag_list).distinct()
     length=len(obj_list)
     if section=="packages":
         paginator = Paginator(obj_list,30)
@@ -128,7 +131,10 @@ def all(request,section,**kwargs):
         obj=paginator.page(page)
     except:
         obj=paginator.page(1)
-    tags = model.tags.all()
+    tags=[]
+    for ob in obj_list:
+        tags += ob.tags.all()
+    tags=list(set(tags))
     popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
     recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
     context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}

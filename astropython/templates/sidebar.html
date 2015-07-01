@@ -18,7 +18,11 @@
 		<h3>All Tags</h3>
 		<ul class="nav nav-pills">
 		{% for tag in tags %}
+			{% if request.GET.tags %}
+			<li><a href="?tags={{request.GET.tags}},{{tag.name}}">{{tag.name}}</a></li>
+			{% else %}
 			<li><a href="?tags={{tag.name}}">{{tag.name}}</a></li>
+			{% endif %}
 		{% endfor %}
 		</ul>
 	</div>
