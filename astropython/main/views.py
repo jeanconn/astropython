@@ -195,7 +195,5 @@ def timeline(request):
     for model in model_list:
         if not (str(model)).endswith('authors'):
             object_list=chain(object_list,(model_list[model].objects.filter(state="submitted").order_by('-created').all()))
-    for obj in object_list:
-        print obj
-    context = {'data': object_list}
+    context = {'data': list(object_list)}
     return render(request,'timeline.html',context)
