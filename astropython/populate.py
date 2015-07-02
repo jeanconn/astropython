@@ -152,13 +152,19 @@ if __name__ == '__main__':
     _temp_orig_path=os.getcwd()
     _orig_path=os.path.dirname(_temp_orig_path)
     base=os.path.join(_orig_path,'ported_data/html')#Path to Json data
-    initialize()
+    opt=raw_input("Do you wish to initialize the database(create user organizations,home wiki page,etc):(y/n)")
+    if opt=='y':
+        initialize()
     #Take inputs
     print "Starting Astropython population script..."
     opt=raw_input("Do you want to populate the tutorials? (y/n):")
     if opt=='y':
         obj=Tutorial()
         populate(path_localdata=os.path.join(base,'Tutorials'),obj=obj)
+    opt=raw_input("Do you want to populate the code snippets? (y/n):")
+    if opt=='y':
+        obj=Snippet()
+        populate(path_localdata=os.path.join(base,'Code Snippets'),obj=obj)
     opt=raw_input("Do you want to populate the blogs? (y/n):")
     if opt=='y':
         obj=Blog()

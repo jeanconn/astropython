@@ -4,7 +4,7 @@ from .models import Tutorial
 
 class RSSFeed(Feed):
     title = "Police beat site news"
-    link = "/feeds/rss"
+    link = "feed/rss"
     description = "Updates on changes and additions to police beat central."
 
     def items(self):
