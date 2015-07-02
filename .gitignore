@@ -50,4 +50,3 @@ static/static_root/*
 *.pyc
 pip-selfcheck.json
 *.sqlite3
-*.sqlite3
