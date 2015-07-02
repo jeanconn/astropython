@@ -188,12 +188,19 @@ def written(request):
     context={'message':message,'tutorials_list':tutorials_list,'announcements_list':announcements_list,'blogs_list':blogs_list,'edresources_list':edresources_list,'news_list':news_list,'events_list':events_list,'packages_list':packages_list,'snippets_list':snippets_list,'wiki_list':wiki_list}
     return render(request,'written.html',context)
 
-def timeline(request):
+def timeline(request,**kwargs):
     object_list=[]
     app = apps.get_app_config('main')
     model_list=app.models
     for model in model_list:
-        if not (str(model)).endswith('authors'):
+        if (not (str(model)).endswith('authors')) and (str(model) !="contact"):
             object_list=chain(object_list,(model_list[model].objects.filter(state="submitted").order_by('-created').all()))
     context = {'data': list(object_list)}
     return render(request,'timeline.html',context)
+
+def contact(request):
+    if request.POST:
+        form=ContactForm(request.POST)
+        form.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+

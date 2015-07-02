@@ -17,3 +17,10 @@ def PostForm(model_type,form_fields,action,*args,**kwargs):
             super(PostForm, self).__init__(*args, **kwargs)
 
     return PostForm()
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model=Contact
+        fields="__all__"
+

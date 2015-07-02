@@ -124,6 +124,13 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('main.views.single',kwargs={'section':'events','slug':self.slug})
 
+class Contact(models.Model):
+    username=models.CharField(max_length=60)
+    email=models.URLField(blank=False)
+    content=models.TextField(blank=False)
+    def __unicode__(self):
+		return self.content
+
 secretballot.enable_voting_on(Tutorial)
 secretballot.enable_voting_on(Snippet)
 secretballot.enable_voting_on(Wiki)
