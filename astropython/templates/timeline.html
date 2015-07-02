@@ -16,7 +16,9 @@ TITLE WRAP
 			<div class="row">
 				<div class="action">
 					<div class="col-sm-12">
-						<h1 class="title">Posts Timeline</h1>
+						
+						<h1 class="title">{% if section == "all" %}All Posts Timeline{% elif section == "tl" %}All Teach and Learn Posts{% elif section == "forum" %}All Forum Posts{%endif%}</h1>
+						
 					</div>
 				</div>
 			</div>

@@ -120,10 +120,18 @@ def set_state(request,form):
             form.fields[field].required = False
         return "raw"
 
-def get_user(request,):
+def get_user(request):
     user=request.user
     if user.is_authenticated():
         return user
     else:
         u=User.objects.get_or_create(username="Anonymous")
         return u[0]
+
+def get_section_models(name):
+    if name=="all":
+        return [Tutorial,Snippet,Wiki,Announcement,News,Blog,EducationalResource,Package,Event]
+    elif name=="tl":
+        return[Tutorial,Snippet,Wiki,EducationalResource]
+    elif name=="forum":
+        return [Announcement,News,Blog,Event]

@@ -20,7 +20,6 @@ urlpatterns = patterns('',
     url(r'^logout/', 'main.views.logout_view', name='logout'),#Sample Templates
     url(r'',include('main.urls')),#Teach and Learn
     url(r'^qa/', include('spirit.urls')),
-    url(r'^timeline/', 'main.views.timeline',name="timeline"),
 )
 
 #Access Static Files if in development
