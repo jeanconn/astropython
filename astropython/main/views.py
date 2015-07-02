@@ -14,6 +14,7 @@ from .models import *
 from .utilities import *
 from taggit.models import Tag,TaggedItem
 from django.apps import apps
+from operator import attrgetter
 
 def home(request):
 	template = 'index.html'
@@ -194,7 +195,8 @@ def timeline(request,**kwargs):
     model_list=app.models
     for model in model_list:
         if (not (str(model)).endswith('authors')) and (str(model) !="contact"):
-            object_list=chain(object_list,(model_list[model].objects.filter(state="submitted").order_by('-created').all()))
+            object_list=chain(object_list,(model_list[model].objects.filter(state="submitted").order_by('created').all()))
+    object_list = sorted(object_list, key=attrgetter('created'),reverse=True)
     context = {'data': list(object_list)}
     return render(request,'timeline.html',context)
 
