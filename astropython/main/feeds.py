@@ -1,17 +1,51 @@
 from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
-from .models import Tutorial
+from django.utils.feedgenerator import Atom1Feed,Rss201rev2Feed
 
+from .utilities import get_all_objects
+
+"""
+REPLACE HARDCODED URLS TO ASTROPYTHON.ORG
+"""
 class RSSFeed(Feed):
-    title = "Police beat site news"
-    link = "feed/rss"
-    description = "Updates on changes and additions to police beat central."
+    feed_type=Rss201rev2Feed
+    title = "Latest Posts on Astropython.org - Python for Astronomers"
+    link = "http://amanjhunjhunwala.pythonanywhere.com/feeds/rss"
+    description = "This feed hosts all the posts posted on Astrpython.org"
 
     def items(self):
-        return Tutorial.objects.order_by('-created')[:5]
+        return get_all_objects('all')
 
     def item_title(self, item):
         return item.title
 
     def item_description(self, item):
-        return item.body
+        body=item.body
+        body=body.replace("&gt",'>')
+        body=body.replace("&lt",'<')
+
+    def item_link(self,item):
+        return 'http://amanjhunjhunwala.pythonanywhere.com'+item.get_absolute_url()
+
+    def item_author_name(self,item):
+        authors=''
+        for author in item.authors.all():
+            authors+=str(author)+','
+        return authors[:-1]
+
+    def item_author_email(self,item):
+        authors=''
+        for author in item.authors.all():
+            authors+=str(author.email)+','
+        return authors[:-1]
+
+    def item_pubdate(self, item):
+        return item.created
+
+    def item_updateddate(self, item):
+        return item.updated
+
+
+class ATOMFeed(RSSFeed):
+    feed_type = Atom1Feed
+    subtitle = RSSFeed.description

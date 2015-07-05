@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 
 from moderation.helpers import automoderate
 
-from itertools import chain
 import secretballot
 import watson
 
@@ -13,8 +12,6 @@ from .forms import *
 from .models import *
 from .utilities import *
 from taggit.models import Tag,TaggedItem
-from django.apps import apps
-from operator import attrgetter
 
 def home(request):
 	template = 'index.html'
@@ -190,11 +187,7 @@ def written(request):
     return render(request,'written.html',context)
 
 def timeline(request,section):
-    object_list=[]
-    model_list=get_section_models(section)
-    for model in model_list:
-            object_list=chain(object_list,(model.objects.filter(state="submitted").order_by('created').all()))
-    object_list = sorted(object_list, key=attrgetter('created'),reverse=True)
+    object_list=get_all_objects(section)
     context = {'data': list(object_list),'section':section}
     return render(request,'timeline.html',context)
 

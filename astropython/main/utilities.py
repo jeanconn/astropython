@@ -5,6 +5,9 @@ from slugify import slugify
 from .forms import *
 from .models import *
 
+from operator import attrgetter
+from itertools import chain
+
 def get_model(name):
     if name=='tutorials':
         return Tutorial
@@ -135,3 +138,11 @@ def get_section_models(name):
         return[Tutorial,Snippet,Wiki,EducationalResource]
     elif name=="forum":
         return [Announcement,News,Blog,Event]
+
+def get_all_objects(section):
+    object_list=[]
+    model_list=get_section_models(section)
+    for model in model_list:
+            object_list=chain(object_list,(model.objects.filter(state="submitted").order_by('created').all()))
+    object_list = sorted(object_list, key=attrgetter('created'),reverse=True)
+    return object_list
