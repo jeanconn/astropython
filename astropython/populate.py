@@ -157,19 +157,26 @@ if __name__ == '__main__':
         initialize()
     #Take inputs
     print "Starting Astropython population script..."
-    opt=raw_input("Do you want to populate the tutorials? (y/n):")
+    opt=raw_input("Do you want to populate all the sections? (y/n):")
     if opt=='y':
-        obj=Tutorial()
-        populate(path_localdata=os.path.join(base,'Tutorials'),obj=obj)
-    opt=raw_input("Do you want to populate the code snippets? (y/n):")
-    if opt=='y':
-        obj=Snippet()
-        populate(path_localdata=os.path.join(base,'Code Snippets'),obj=obj)
-    opt=raw_input("Do you want to populate the blogs? (y/n):")
-    if opt=='y':
-        obj=Blog()
-        populate(path_localdata=os.path.join(base,'Blogs'),obj=obj)
-    opt=raw_input("Do you want to populate the packages? (y/n):")
-    if opt=='y':
-        obj=Package()
-        populate(path_localdata=os.path.join(base,'Resources and Tools'),obj=obj)
+        populate(path_localdata=os.path.join(base,'Tutorials'),obj=Tutorial())
+        populate(path_localdata=os.path.join(base,'Code Snippets'),obj=Snippet())
+        populate(path_localdata=os.path.join(base,'Blogs'),obj=Blog())
+        populate(path_localdata=os.path.join(base,'Resources and Tools'),obj=Package())
+    else:
+        opt=raw_input("Do you want to populate the tutorials? (y/n):")
+        if opt=='y':
+            obj=Tutorial()
+            populate(path_localdata=os.path.join(base,'Tutorials'),obj=obj)
+        opt=raw_input("Do you want to populate the code snippets? (y/n):")
+        if opt=='y':
+            obj=Snippet()
+            populate(path_localdata=os.path.join(base,'Code Snippets'),obj=obj)
+        opt=raw_input("Do you want to populate the blogs? (y/n):")
+        if opt=='y':
+            obj=Blog()
+            populate(path_localdata=os.path.join(base,'Blogs'),obj=obj)
+        opt=raw_input("Do you want to populate the packages? (y/n):")
+        if opt=='y':
+            obj=Package()
+            populate(path_localdata=os.path.join(base,'Resources and Tools'),obj=obj)
