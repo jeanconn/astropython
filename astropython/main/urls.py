@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^timeline/(?P<section>tl|forum|all)$',timeline,name="timeline"),
     url(r'^feeds/rss$',RSSFeed(),name="rss_feed"),
     url(r'^feeds/atom$',ATOMFeed(),name="atom_feed"),
+    url(r'^feeds/update$',update_feed,name="update_feed"),
     )

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 
 from moderation.helpers import automoderate
 
+import feedparser
 import secretballot
 import watson
 
@@ -197,3 +198,6 @@ def contact(request):
         form.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def update_feed(request):
+    update_feeds()
+    return render(request,'complete.html',{'state':'feed_update','name':'Feed Update'})

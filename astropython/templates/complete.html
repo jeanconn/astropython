@@ -16,6 +16,8 @@
 			{% if state == "raw" %}
 			<h2>Your post has been saved !</h2>
 			<p> Come back later and complete it <a href="/{{section}}/create/{{slug}}">here</a> or access it from the 'My Posts' section of the navigation bar above !</p>
+			{% elif state == "feed_update" %}
+			<p>All the feeds have been updated ! <br/> The new posts are awaiting Moderator approval....</p>
 			{% else %}
 			<h2>Your post has been submitted !</h2>
 			<p> Access it <a href="/{{section}}/{{slug}}">here</a> after post is approved!</p>

@@ -122,7 +122,7 @@ BLOG CONTENT
 				<div class="single-blog blog-details two-column">
 					<div class="post-content overflow">
 						{% if obj.abstract %}
-							<p id="abstract"><b>Abstract :</b> {{obj.abstract}}</p>
+							<p id="abstract"><b>Abstract :</b> {% autoescape off %}{{obj.abstract}}{% endautoescape %}</p>
 						{% endif %}
 						{% if section == "packages" %}
 							<p id="category"><b>Category : </b>{{obj.category}}</p>

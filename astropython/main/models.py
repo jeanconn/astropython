@@ -19,6 +19,18 @@ PACKAGE_CHOICES = (
 	('Others', 'Others'),
  )
 
+SECTION_CHOICES = (
+	('tutorials', 'Tutorials'),
+	('snippets', 'Code Snippets'),
+    ('education', 'Educational Resources'),
+	('wiki', 'Wiki Pages'),
+    ('announcements', 'Announcements'),
+	('news', 'News'),
+    ('blog', 'Blog'),
+	('packages', 'Packages'),
+    ('events', 'Events'),
+ )
+
 class BasePost(models.Model):
     title = models.CharField(max_length=200)#Title of the Post
     input_type=models.CharField(max_length=60,choices=INPUT_CHOICES,default="Markdown",verbose_name='Text Editor Choice',help_text='All current editor contents will be lost once editors are switched')
@@ -128,8 +140,18 @@ class Contact(models.Model):
     username=models.CharField(max_length=60)
     email=models.URLField(blank=False)
     content=models.TextField(blank=False)
+
     def __unicode__(self):
 		return self.content
+
+class Feed(models.Model):
+    title=models.CharField(max_length=120,blank=False)
+    url=models.URLField(blank=False)
+    section=models.CharField(max_length=60,choices=SECTION_CHOICES,default="blog")
+    notes=models.TextField(blank=True)
+
+    def __unicode__(self):
+		return self.title
 
 secretballot.enable_voting_on(Tutorial)
 secretballot.enable_voting_on(Snippet)

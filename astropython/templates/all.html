@@ -53,7 +53,7 @@ BLOG CONTENT
 						<h3 class="post-author"><a href="#">Posted by {% for users in single_obj.authors.all %}{{users.username}}{% endfor %}</a></h3>
 						<p>Category:{{single_obj.category}}</p>
 						{% if single_obj.abstract %}
-						<p><b>Abstract :</b>{{single_obj.abstract|truncatechars:300}}</p>
+						<p><b>Abstract :</b>{% autoescape off %}{{single_obj.abstract}}{% endautoescape %}</p>
 						{% endif %}
 						<a href="{{single_obj.slug}}" class="read-more">View More</a>
 						<div class="post-bottom overflow">
@@ -81,7 +81,7 @@ BLOG CONTENT
 							{% endif %}
 						{% else %}
 							{% if single_obj.abstract %}
-							<p><b>Abstract :</b>{{single_obj.abstract}}</p>
+							<p><b>Abstract :</b>{% autoescape off %}{{single_obj.abstract}}{% endautoescape %}</p>
 							{% else %}
 							{% filter truncatechars:350 %}
 							<p>{{single_obj.body|raw_content}}</p>

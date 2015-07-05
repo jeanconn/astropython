@@ -121,4 +121,5 @@ INPUT_CHOICES = (
 	('Markdown', 'Markdown'),
  )
 
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

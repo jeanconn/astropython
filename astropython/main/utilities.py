@@ -5,6 +5,9 @@ from slugify import slugify
 from .forms import *
 from .models import *
 
+import os
+import feedparser
+
 from operator import attrgetter
 from itertools import chain
 
@@ -146,3 +149,30 @@ def get_all_objects(section):
             object_list=chain(object_list,(model.objects.filter(state="submitted").order_by('created').all()))
     object_list = sorted(object_list, key=attrgetter('created'),reverse=True)
     return object_list
+
+def update_feeds():
+    feeds=Feed.objects.all()
+    for feed in feeds:
+        model=get_model(feed.section)
+        contents=feedparser.parse(feed.url)
+        if not feed.notes:
+            feed.notes=contents['feed']['description']
+            feed.save()
+        for entry in contents.entries:
+            if model.objects.filter(title=entry.title).exists():
+                continue
+            obj=model()
+            obj.title=entry.title
+            obj.body=entry.description
+            if entry.summary:
+                obj.abstract=entry.summary
+            obj.input_type='WYSIWYG'
+            slug=slugify(entry.title)
+            while (model.objects.filter(slug=slug).exists()):
+                slug=slug+str(random.randrange(1,1000+1))
+            obj.slug=slug
+            obj.state="submitted"
+            obj.save()
+            user=User.objects.get_or_create(username=('Feed : '+feed.title))
+            obj.authors.add(user[0])
+            obj.save()
