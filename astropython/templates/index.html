@@ -26,7 +26,6 @@ Welcome to
                 <img src="{% static 'images/home/slider/slide1/saturn.jpg'%}" class="slider-cloud1" alt="slider image">
                 <img src="{% static 'images/home/slider/slide1/jupiter.jpg'%}" class="slider-cloud2" alt="slider image">
                 <img src="{% static 'images/home/slider/slide1/mars.jpg'%}" class="slider-cloud3" alt="slider image">
-                <img src="{% static 'images/home/slider/slide1/meteor.svg' %}" class="slider-sun" alt="slider image">
                 <img src="{% static 'images/home/satellite.png'%}" class="slider-cycle" alt="">
             </div>
         </div>
@@ -38,31 +37,36 @@ Welcome to
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="single-service">
+				<a href="{% url 'timeline' 'tl' %}">
+                    <div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
                             <img src="{% static 'images/home/icon1.png' %}" alt="">
                         </div>
                         <h2>Teach & Learn</h2>
                         <p>Tutorials , Educational Resources , Code Snippets and much more !</p>
                     </div>
+					</a>
                 </div>
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                    <div class="single-service">
+				<a href="{% url 'timeline' 'forum' %}">
+                    <div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
                             <img src="{% static 'images/home/icon2.jpg' %}" alt="">
                         </div>
                         <h2>Forum</h2>
                         <p>Broadcast to the world with Blogs, News, Announcements and Events !</p>
                     </div>
+					</a>
                 </div>
                 <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
-                    <div class="single-service">
+                    <a href="{% url 'all' 'packages' %}">
+					<div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
                             <img src="{% static 'images/home/icon3.png' %}" alt="">
                         </div>
                         <h2>Packages</h2>
                         <p>Your helping bots !</p>
-                    </div>
+                    </div></a>
                 </div>
             </div>
         </div>

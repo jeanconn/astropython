@@ -40,7 +40,7 @@
 					<li><a href="{% url 'all' 'packages' %}">Packages</a></li>	
 					<li><a href="/qa">Q & A(DEV)</a></li>						
 					{% if request.user.is_authenticated %}
-					<li><a href="{% url 'user_posts' %}">My Posts</a></li>
+					<li><a href="{% url 'user_posts' %}">{{request.user.username}}'s Posts</a></li>
 					<li><a href="{% url 'logout' %}">Logout</i></a></li>
 					{% endif %}
 				</ul>
