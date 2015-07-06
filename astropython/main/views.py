@@ -16,7 +16,7 @@ from taggit.models import Tag,TaggedItem
 
 def home(request):
 	template = 'index.html'
-	context = locals()
+	context = {'posts':get_all_objects("all")[:5]}
 	return render(request, template, context)
 
 def logout_view(request):
