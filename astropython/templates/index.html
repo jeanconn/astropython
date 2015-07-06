@@ -3,6 +3,7 @@
 {% block head_title %}
 Welcome to
 {% endblock %}
+{% load custom_tags %}
 {% block styles %}
 {% endblock %}
 {% block content %}
@@ -11,7 +12,7 @@ Welcome to
             <div class="main-slider">
                 <div class="slide-text">
                     <h1>Python for Astronomers</h1>
-                    <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides lists of useful resources, a forum for general discussion, advice, or relevant news items, collecting users' code snippets or scripts, and longer tutorials on specific topics. The topics within these pages are presented in a list view with the ability to sort by date or topic.</p>
+                    <p>The purpose of this web site is to act as a community knowledge base for performing astronomy research with Python. It provides a variety of tutorials,code snippets, resources ,lists of useful packages, a Q/A forum for general discussion, advice, and also features news items, event information and announcements.</p>
 					{% if request.user.is_authenticated %}
 					<h2>Welcome @{{request.user.username}}</h2>
 					{% else %}
@@ -36,7 +37,7 @@ Welcome to
     <section id="services">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
 				<a href="{% url 'timeline' 'tl' %}">
                     <div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
@@ -47,7 +48,7 @@ Welcome to
                     </div>
 					</a>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
 				<a href="{% url 'timeline' 'forum' %}">
                     <div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
@@ -58,7 +59,7 @@ Welcome to
                     </div>
 					</a>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                     <a href="{% url 'all' 'packages' %}">
 					<div class="single-service" style="color:black">
                         <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
@@ -66,6 +67,16 @@ Welcome to
                         </div>
                         <h2>Packages</h2>
                         <p>Your helping bots !</p>
+                    </div></a>
+                </div>
+				<div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="1200ms">
+                    <a href="/qa">
+					<div class="single-service" style="color:black">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                            <img src="{% static 'images/home/icon4.gif' %}" alt="">
+                        </div>
+                        <h2>Q & A</h2>
+                        <p> The best place to find a solution to all your Astronomy + Python problems!</p>
                     </div></a>
                 </div>
             </div>
@@ -94,22 +105,17 @@ Welcome to
     <section id="features">
         <div class="container">
             <div class="row text-center">
-			<div class="col-md-6 col-sm-5">
 			<h1> Latest Posts </h1>
 			<hr/>
+			{% for post in posts %}
                 <div class="single-features">
                     <div class="col-sm-12 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Post 1</h2>
-                        <P>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</P>
+                        <a href="{{post.get_absolute_url}}"><h2>{{post.title}}</h2></a>
+						{% filter truncatechars:350 %}
+								<p>{{post.body|raw_content}}</p>{% endfilter %}
                     </div>
                 </div>
-            </div>
-			<div class="col-md-6 col-sm-5">
-			<h1> Social </h1>
-			<hr/>
-			<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/AstroPython" data-widget-id="618041910058352640">Tweets by @AstroPython</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			</div>
+			{% endfor %}
 			</div>
         </div>
     </section>
@@ -122,10 +128,22 @@ Welcome to
                     <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
                         <p><img src="{% static 'images/home/clients.png' %}" class="img-responsive" alt=""></p>
                         <h1 class="title">Contribute</h1>
-                        <p>Contributions from the community are strongly encouraged. If you are interested please contact the AstroPython team via the Contribute page.<br/> We can either post material on your behalf or give you an astropython.org user account to allow your own postings.</p>
+                        <p>Contributions from the community are strongly encouraged. Dive into any of the sections and start creating and contributing.If you wish to add the feed of your blog to our list of aggregated blogs fill in the contribution form below!</p>
                     </div>
                 </div>
             </div>
         </div>
      </section>
+	 <section id="features">
+        <div class="container">
+            <div class="row text-center">
+			<h1> Social </h1>
+			<hr/>
+			<div class="col-md-6 col-sm-5" style="margin-top:50px;margin-bottom:50px">
+			<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/AstroPython" data-widget-id="618041910058352640">Tweets by @AstroPython</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+			</div>
+        </div>
+    </section>
 {% endblock %}
