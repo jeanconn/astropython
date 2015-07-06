@@ -38,10 +38,14 @@ INSTALLED_APPS += (
     'crispy_forms',
     'compressor',
     'watson',
+    'tinymce',
     'django.contrib.sites',
     'moderation', # Adding moderations
+    'django_extensions',
+    'sorl.thumbnail',
     'main',
-    'social.apps.django_app.default', #Social  Authentication
+    'social.apps.django_app.default',#Social  Authentication
+    'newsletter',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -122,4 +126,9 @@ INPUT_CHOICES = (
  )
 
 
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+NEWSLETTER_CONFIRM_EMAIL = False
+
+NEWSLETTER_RICHTEXT_WIDGET = "tinymce.widgets.TinyMCE"
