@@ -4,7 +4,15 @@
 Welcome to
 {% endblock %}
 {% load custom_tags %}
-{% block styles %}
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+	if (screen.width < 1000)
+	{
+	 $(".main-slider>img").remove();
+	}
+	})
+</script>
 {% endblock %}
 {% block content %}
 <div id="fb-root"></div>

@@ -578,8 +578,8 @@ ul.sub-menu {
   width: 100px;
   height:100px;
   position: absolute;
-  right: 500px;
-  bottom: 150px;
+  right: 40%;
+  bottom: 30%;
 }
 
 .animate-in .slider-cycle {
