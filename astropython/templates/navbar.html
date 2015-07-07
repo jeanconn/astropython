@@ -1,5 +1,16 @@
 {% load staticfiles %}
-<header id="header">      
+<header id="header">     
+	<div class="container" style="margin:0px;padding:0px;">
+            <div class="row" style="margin:0px;padding:0px;">
+                   <div class="social-icons pull-right" style="margin:0px;padding:0px;">
+					{% if request.user.is_authenticated %}
+                        <p>Welcome {{request.user.username}} !</p>
+					{% else %}
+						Login &nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-facebook"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/google-oauth2"><i class="fa fa-google"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-github"></i></a>
+					{% endif %}
+                    </div> 
+             </div>
+        </div>
 	<div class="navbar navbar-inverse" role="banner">
 		<div class="container">
 			<div class="navbar-header">
@@ -40,7 +51,7 @@
 					<li><a href="{% url 'all' 'packages' %}">Packages</a></li>	
 					<li><a href="/qa">Q & A(DEV)</a></li>						
 					{% if request.user.is_authenticated %}
-					<li><a href="{% url 'user_posts' %}">{{request.user.username}}'s Posts</a></li>
+					<li><a href="{% url 'user_posts' %}">My Posts</a></li>
 					<li><a href="{% url 'logout' %}">Logout</i></a></li>
 					{% endif %}
 				</ul>

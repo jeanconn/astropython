@@ -7,6 +7,14 @@ Welcome to
 {% block styles %}
 {% endblock %}
 {% block content %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=827954303966365";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <section id="home-slider">
         <div class="container">
             <div class="main-slider">
@@ -72,7 +80,7 @@ Welcome to
 				<div class="col-sm-3 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="1200ms">
                     <a href="/qa">
 					<div class="single-service" style="color:black">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
+                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="1200ms">
                             <img src="{% static 'images/home/icon4.gif' %}" alt="">
                         </div>
                         <h2>Q & A</h2>
@@ -142,6 +150,9 @@ Welcome to
 			<div class="col-md-6 col-sm-5" style="margin-top:50px;margin-bottom:50px">
 			<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/AstroPython" data-widget-id="618041910058352640">Tweets by @AstroPython</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+			<div class="col-md-6 col-sm-5" style="margin-top:50px;margin-bottom:50px">
+<div class="fb-page" data-href="https://www.facebook.com/astropython" data-width="500" data-height="350" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/astropython"><a href="https://www.facebook.com/astropython">AstroPython</a></blockquote></div></div>
 			</div>
 			</div>
         </div>
