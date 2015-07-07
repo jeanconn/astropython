@@ -1,12 +1,12 @@
 {% load staticfiles %}
 <header id="header">     
-	<div class="container" style="margin:0px;padding:0px;">
-            <div class="row" style="margin:0px;padding:0px;">
-                   <div class="social-icons pull-right" style="margin:0px;padding:0px;">
+	<div class="container">
+            <div class="row">
+                   <div class="social-icons pull-right" >
 					{% if request.user.is_authenticated %}
                         <p>Welcome {{request.user.username}} !</p>
 					{% else %}
-						Login &nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-facebook"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/google-oauth2"><i class="fa fa-google"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-github"></i></a>
+						Login &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-facebook"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/google-oauth2"><i class="fa fa-google"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-github"></i></a>
 					{% endif %}
                     </div> 
              </div>
