@@ -25,7 +25,8 @@
 
 
   a{
-    color:#CCCC7A;
+	font-weight: bold;
+    color:#F6EFB1;
   }
 
   a:hover {
@@ -80,7 +81,7 @@
   .btn-common {
     font-size: 14px;
     color: #797979;
-    border: 1px solid #CCCC7A;
+    border: 1px solid #F6EFB1;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     padding: 10px 25px;
@@ -100,7 +101,7 @@
     outline: none;
     background: none;
     box-shadow: none;
-    color: #CCCC7A;
+    color: #F6EFB1;
   }
 
   .align-right{
@@ -1234,7 +1235,7 @@ Blog Default
 }
 
 a.read-more{
-  color: #CCCC7A;
+  color: #F6EFB1;
   font-weight: 300;
 }
 
@@ -1307,7 +1308,7 @@ Blog with right sidebar
 }
 
 .post-nav li a i{
-  color: #CCCC7A;
+  color: #F6EFB1;
   margin-right: 8px;
 }
 
