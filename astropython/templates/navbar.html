@@ -4,7 +4,7 @@
             <div class="row">
                    <div class="social-icons pull-right" >
 					{% if request.user.is_authenticated %}
-                        <p>Welcome {{request.user.username}} !</p>
+                        <p><b>Welcome {{request.user.username}} !</b></p>
 					{% else %}
 						Login &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-facebook"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/google-oauth2"><i class="fa fa-google"></i></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/login/facebook"><i class="fa fa-github"></i></a>
 					{% endif %}
@@ -29,7 +29,7 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="{% url 'timeline' 'all'%}">Timeline</a></li>
-					<li class="dropdown"><a>Teach and Learn  <i class="fa fa-angle-down"></i></a>
+					<li class="dropdown"><a><i class="fa fa-angle-down"></i>Teach and Learn</a>
 						<ul role="menu" class="sub-menu">
 							<li><a href="{% url 'timeline' 'tl' %}">All Posts</a></li>
 							<li><a href="{% url 'all' 'tutorials' %}">Tutorials</a></li>
@@ -39,7 +39,7 @@
 							<li><a href="{% url 'all' 'wiki' %}">All Wiki Pages</a></li>
                         </ul>
 					</li>
-					<li class="dropdown"><a href="{% url 'timeline' 'forum'%}">Forum<i class="fa fa-angle-down"></i></a>
+					<li class="dropdown"><a><i class="fa fa-angle-down"></i>Forum</a>
 						<ul role="menu" class="sub-menu">
 							<li><a href="{% url 'timeline' 'forum' %}">All Posts</a></li>
 							<li><a href="{% url 'all' 'blog' %}">Blog</a></li>

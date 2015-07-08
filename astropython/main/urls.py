@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^feeds/rss$',RSSFeed(),name="rss_feed"),
     url(r'^feeds/atom$',ATOMFeed(),name="atom_feed"),
     url(r'^feeds/update$',update_feed,name="update_feed"),
+    url(r'^feeds/list$',display_feed_list,name="list_feed"),
     )

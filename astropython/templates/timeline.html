@@ -39,7 +39,7 @@ BLOG CONTENT
 			<div class="timeline-divider overflow padding-bottom">
 			{% for obj in data %}
 			{% if obj|isEven:data %}
-				<div class="col-sm-6 padding-right arrow-right wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms" style="height:350px">
+				<div class="col-sm-6 padding-right arrow-right wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms" style="height:400px">
 					<div class="single-blog timeline">
 						<div class="post-content overflow">
 							<h2 class="post-title bold"><a href="{{obj.get_absolute_url}}">{{obj.title}}</a></h2>
@@ -67,7 +67,7 @@ BLOG CONTENT
 					</div>
 				</div>
 			{% else %}
-			<div class="col-sm-6 padding-left arrow-left wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="300ms" style="height:350px">
+			<div class="col-sm-6 padding-left arrow-left wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="300ms" style="height:400px">
 					<div class="single-blog timeline">
 						<div class="post-content overflow">
 							<h2 class="post-title bold"><a href="{{obj.get_absolute_url}}">{{obj.title}}</a></h2>

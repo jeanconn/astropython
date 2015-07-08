@@ -201,3 +201,15 @@ def contact(request):
 def update_feed(request):
     update_feeds()
     return render(request,'complete.html',{'state':'feed_update','name':'Feed Update'})
+
+def display_feed_list(request):
+    obj_list=Feed.objects.all()
+    length=len(obj_list)
+    paginator = Paginator(obj_list,10)
+    page = request.GET.get('page')
+    try:
+        obj=paginator.page(page)
+    except:
+        obj=paginator.page(1)
+    context = {'name':'Feed List','obj':obj,'length':length,'range':range(1,obj.paginator.num_pages+1),'page':'all'}
+    return render(request,'feed_list.html',context)
