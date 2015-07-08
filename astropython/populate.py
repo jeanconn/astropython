@@ -132,7 +132,10 @@ def populate(path_localdata,obj):
             t.input_type="WYSIWYG"
             t.state="submitted"
             t.slug=slugify(title)+str(random.randrange(1,100+1))#If 2 objects have same title,this prevents the same slug from being generated
-            t.save()#Save the current state
+            try:
+                t.save()#Save the current state
+            except:
+                continue
             #t.published=datetime.datetime.strptime(date,"%Y-%m-%d") #Add publishing date
             u=User.objects.get_or_create(username=author)#If user is absent, create user
             t.save()

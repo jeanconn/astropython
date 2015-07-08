@@ -16,9 +16,10 @@ Regarding the general structure of the apps :-
 
 Quick set of commands to run the project :-
 1.Check virtual environment and Install requirements
-2.python manage.py migrate
-3.python manage.py collectstatic
-4.python populate.py
-5.python manage.py runserver
+2.python manage.py makemigrations
+3.python manage.py migrate
+4.python manage.py collectstatic
+5.python populate.py
+6.python manage.py runserver
 
 Goto /admin to access admin panel and under the tab "Django Moderations" approve all posts(especially the wiki post- that is the main Wiki Page)... It would take some time. SQLite 3 is pretty slow , let it complete
