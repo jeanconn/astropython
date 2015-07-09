@@ -9,9 +9,19 @@ Welcome to
 	$(document).ready(function(){
 	if (screen.width < 1000)
 	{
-	 $(".main-slider>img").remove();
+	 $(".main-slider>img").hide();
 	}
-	})
+	});
+	$(window).resize(function() {
+	if ($(window).width()< 1000)
+	{
+	 $(".main-slider>img").hide();
+	}
+	else
+	{
+	$(".main-slider>img").show();
+	}
+	});
 </script>
 {% endblock %}
 {% block content %}

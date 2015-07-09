@@ -499,7 +499,7 @@ ul.sub-menu {
 
 #home-slider .slider-house {
   position: absolute;
-  right: 100px;
+  right:0px;
   bottom: 0;
 }
 
