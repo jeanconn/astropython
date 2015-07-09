@@ -15,10 +15,10 @@ TITLE WRAP
 		 <div class="container">
 			<div class="row">
 				<div class="action">
-					<div class="col-sm-12">
+					<div class="col-sm-12" >
 						<h1 class="title">{{name}}</h1>
 						{% if message %}
-						<h2>{{message}}</h2>
+						<p ><a href="/{{section}}"><span class="glyphicon glyphicon-refresh" style="color:black"></span></a>&nbsp&nbsp&nbsp{{message}}</p>
 						<a href="../{{section}}/create"><img src='{% static "images/add_new.png" %}' height="50px" width="50px" style="position: absolute;right: 0px;bottom:25px;"> </a>
 						{% else %}
 						<a href="../{{section}}/create"><img src='{% static "images/add_new.png" %}' height="50px" width="50px" style="position: absolute;right: 0px;bottom:0px;"> </a>

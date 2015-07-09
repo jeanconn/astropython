@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponseRedirect,Http404,RequestContext
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 from moderation.helpers import automoderate
 
@@ -100,13 +101,15 @@ General listing of all sections
 def all(request,section,**kwargs):
     model=get_model(section)
     name=get_name(section)
+    t=None
+    s=None
+    f=None
     message=""
     if 'sort' in request.GET:
         sort=request.GET['sort']
+        s=sort
         message+="Ordered by "+sort+"   "
-        if sort=="popularity":
-            obj_list=model.objects.all().filter(state="submitted").order_by('-hits')
-        elif sort=="ratings":
+        if sort=="ratings":
             obj_list=model.objects.all().filter(state="submitted").order_by('-total_upvotes')
         elif sort=="recommended" and section=="packages":
             obj_list=model.objects.all().filter(category="Recommended").order_by('-created')
@@ -116,12 +119,23 @@ def all(request,section,**kwargs):
             obj_list=model.objects.all().filter(state="submitted").order_by('-created')
     if 'tags' in request.GET:
         tags=request.GET['tags']
-        message+="Filtered by tags : "+tags
+        t=tags
+        if message=="":
+            message+="Filtered by tags : "+tags
+        else:
+            message+=",Filtered by tags : "+tags
         tag=tags.split(',')
         for tag_elem in tag:
             tag_list=[]
             tag_list.append(tag_elem)
             obj_list=obj_list.filter(tags__name__in=tag_list).distinct()
+    if 'filter' in request.GET:
+        f=request.GET['filter']
+        message+="(Showing "+f+" posts)"
+        if f=='native':
+            obj_list=obj_list.filter(~Q(authors__username__startswith = "Feed")).distinct()
+        elif f=='feeds':
+            obj_list=obj_list.filter(authors__username__startswith = "Feed").distinct()
     length=len(obj_list)
     if section=="packages":
         paginator = Paginator(obj_list,30)
@@ -136,9 +150,9 @@ def all(request,section,**kwargs):
     for ob in obj_list:
         tags += ob.tags.all()
     tags=list(set(tags))
-    popular=model.objects.all().filter(state="submitted").order_by('-hits')[:5]
     recent=model.objects.all().filter(state="submitted").order_by('-created')[:5]
-    context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'popular':popular}
+    get={'tags':t,'filter':f,'sort':s}
+    context = {'name':name,'obj':obj,'section':section,'length':length,'message':message,'tags':tags,'range':range(1,obj.paginator.num_pages+1),'page':'all','recent':recent,'get':get}
     return render(request,'all.html',context)
 
 def search(request):
