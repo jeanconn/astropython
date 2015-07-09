@@ -161,6 +161,7 @@ secretballot.enable_voting_on(News)
 secretballot.enable_voting_on(Blog)
 secretballot.enable_voting_on(Event)
 secretballot.enable_voting_on(EducationalResource)
+secretballot.enable_voting_on(Package)
 
 watson.register(Tutorial)
 watson.register(Snippet)
