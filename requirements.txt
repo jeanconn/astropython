@@ -16,7 +16,7 @@ django-taggit==0.14.0
 django-tinymce==1.5.3
 django-watson==1.1.8
 django-webtest==1.7.8
-feedparser==5.2.0
+feedparser==5.2.0.post1
 httplib2==0.9.1
 Markdown==2.6.2
 mistune==0.3.1
