@@ -12,9 +12,15 @@ class Moderator(GenericModerator):
     auto_reject_for_groups=['Banned Users']
 
     def is_auto_approve(self, obj, user):
+            return self.reason('Evaluation Phase')
+
+
+"""
+Replace with the following to add moderation back !
         if obj.state == "raw":
             return self.reason('Not Submitted Yet !')
         super(Moderator, self).is_auto_approve(obj, user)
+"""
 
 moderation.register(Tutorial,Moderator)
 moderation.register(Snippet,Moderator)
