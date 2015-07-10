@@ -95,14 +95,7 @@ USE_TZ = False
 
 SITE_ID =1
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'astropython'
-EMAIL_HOST_PASSWORD = 'astropython2015'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Static and Media files configuration (CSS, JavaScript, Images)
 
