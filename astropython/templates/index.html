@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head_title %}
-Welcome to
 {% endblock %}
 {% load custom_tags %}
 {% block js %}
 <script type="text/javascript">
 	$(document).ready(function(){
-	if (screen.width < 1000)
+	if ($(window).width() < 1000)
 	{
 	 $(".main-slider>img").hide();
 	}
