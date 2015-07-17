@@ -38,14 +38,10 @@ INSTALLED_APPS += (
     'crispy_forms',
     'compressor',
     'watson',
-    'tinymce',
     'django.contrib.sites',
     'moderation', # Adding moderations
-    'django_extensions',
-    'sorl.thumbnail',
     'main',
     'social.apps.django_app.default',#Social  Authentication
-    'newsletter',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -96,8 +92,6 @@ USE_TZ = False
 
 SITE_ID =1
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # Static and Media files configuration (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
@@ -126,13 +120,15 @@ INPUT_CHOICES = (
 	('Markdown', 'Markdown'),
  )
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'astropython'
+EMAIL_HOST_PASSWORD = 'astropython2015'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-NEWSLETTER_CONFIRM_EMAIL = False
-
-NEWSLETTER_RICHTEXT_WIDGET = "tinymce.widgets.TinyMCE"
 
 SOCIAL_AUTH_PIPELINE =(
     'social.pipeline.social_auth.social_details',
