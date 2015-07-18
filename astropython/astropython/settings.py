@@ -123,8 +123,8 @@ INPUT_CHOICES = (
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'astropython'
-EMAIL_HOST_PASSWORD = 'astropython2015'
+EMAIL_HOST_USER = 'astropython-*****'
+EMAIL_HOST_PASSWORD = '****astropython'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
