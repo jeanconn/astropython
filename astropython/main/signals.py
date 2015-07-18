@@ -18,9 +18,8 @@ def moderation_approval(sender,instance,status,**kwargs):
         send_mail(subject,message,from_email,[str(user.email) for user in instance.authors.all()], fail_silently=False,html_message=html_m)
 
 
-@receiver(post_save)
+@receiver(signals.post_moderation)
 def add_content(sender,instance,**kwargs):
-    if instance.state=="submitted":
         subject="New AstroPython Post!"
         message="New post at AstroPython"
         html_m='<hr /><h2 style="text-align:center"><code><tt><span style="font-family:trebuchet ms,helvetica,sans-serif"><strong>AstroPython - Python for Astronomers</strong></span></tt></code></h2><hr /><p>A Post "'+instance.title+'"&nbsp;&nbsp;has&nbsp;been added. It has been auto-approved (preview-phase bypassing) !</p><p>Access it <a href="http://amanjhunjhunwala.pythonanywhere.com'+instance.get_absolute_url()+'">here</a> !</p><p>Thank you,</p><p><strong>AstroPython Team</strong></p><hr /><p style="text-align:right"><span style="font-size:10px">Currently , you cannot unsubscribe to these emails</span></p>'
