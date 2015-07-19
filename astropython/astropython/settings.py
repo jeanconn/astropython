@@ -99,6 +99,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = (
 
 #Add social auth options here
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'social.backends.google.GoogleOAuth2',
     'social.backends.github.GithubOAuth2',
     'social.backends.yahoo.YahooOAuth',
