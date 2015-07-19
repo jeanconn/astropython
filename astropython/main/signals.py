@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 def add_to_preview(sender,instance,**kwargs):
     instance.groups.add(Group.objects.get(name="Preview Users"))
 
-@receiver(signals.post_moderation)
+@receiver(signals.post_moderation,dispatch_uid="moderation_approval")
 def moderation_approval(sender,instance,status,**kwargs):
     try:
         if instance.state=="submitted":
@@ -21,7 +21,7 @@ def moderation_approval(sender,instance,status,**kwargs):
         print "No Email Provided"
 
 
-@receiver(signals.post_moderation)
+@receiver(signals.post_moderation,dispatch_uid="add_content")
 def add_content(sender,instance,**kwargs):
     try:
         subject="New AstroPython Post!"
